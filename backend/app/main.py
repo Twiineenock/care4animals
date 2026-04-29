@@ -4,7 +4,7 @@ from .config import settings
 from .database import engine
 from . import models
 
-# Import routers - ensuring we don't have duplicate registrations
+# Import routers
 from .routers.health import router as health_router
 from .routers.content import router as content_router
 from .routers.sms import router as sms_router
@@ -18,17 +18,22 @@ app = FastAPI(
 )
 
 # 2. Ensure Database Tables are created
-# This satisfies the requirement to verify and create the SMSLog schema
 models.Base.metadata.create_all(bind=engine)
 
 # 3. Configure CORS for the React Dashboard
+# We include both localhost and 127.0.0.1 for all common Vite ports
 origins = [
-    getattr(settings, "frontend_url", "http://localhost:5173"),
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:5174",
     "http://127.0.0.1:5174",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
+
+# Add the specific frontend_url from settings if it exists
+if hasattr(settings, "frontend_url"):
+    origins.append(settings.frontend_url)
 
 app.add_middleware(
     CORSMiddleware,
@@ -39,10 +44,9 @@ app.add_middleware(
 )
 
 # 4. Register Routers
-# Note: Ensure prefixing is consistent so the frontend calls the right URL
 app.include_router(health_router)
 app.include_router(content_router)
-app.include_router(sms_router) # Handles /sms/incoming and /sms/send-lesson
+app.include_router(sms_router) 
 app.include_router(analytics_router, prefix="/analytics", tags=["Analytics"])
 app.include_router(lessons_router, prefix="/api/v1/lessons", tags=["Lessons"])
 

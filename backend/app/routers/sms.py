@@ -1,22 +1,28 @@
-from fastapi import APIRouter, Depends, HTTPException, Form  # Added Form
+from fastapi import APIRouter, Depends, HTTPException, Form
 from sqlalchemy.orm import Session
 from .. import models, schemas
 from ..database import get_db
 from ..services.sms_service import send_and_log_sms
 import json
+from typing import List
 
 router = APIRouter(prefix="/sms", tags=["sms"])
 
+@router.get("/logs")
+def get_sms_logs(db: Session = Depends(get_db), limit: int = 20):
+    """
+    Fetches the most recent SMS logs for the frontend dashboard.
+    """
+    return db.query(models.SMSLog).order_by(models.SMSLog.id.desc()).limit(limit).all()
+
 @router.post("/incoming")
 def handle_incoming_sms(
-    from_: str = Form(None, alias="from"),  # Africa's Talking uses 'from'
-    text: str = Form(None, alias="text"),  # Africa's Talking uses 'text'
+    from_: str = Form(None, alias="from"),
+    text: str = Form(None, alias="text"),
     db: Session = Depends(get_db)
 ):
     # Basic validation for the Form data
     if not from_ or not text:
-        # If testing via Swagger (JSON), fallback to checking body
-        # but for production AT hits, we need these Form fields.
         raise HTTPException(status_code=422, detail="Missing Form data (from/text)")
 
     sender = from_
