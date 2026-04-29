@@ -1,0 +1,1226 @@
+[
+  {
+    "code": "L91",
+    "title": "Introduction to Infectious Diseases",
+    "content": "Infectious diseases are illnesses caused by bacteria, viruses, fungi, or parasites.\nThese diseases can spread quickly within herds or flocks.\nEarly detection saves lives and improves productivity.\nMedia: 1-min animation: “What Are Infectious Diseases?”",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Infectious diseases are illnesses caused by bacteria, viruses, fungi, or parasites. These diseases can spread quickly within herds or flocks. Early detection saves lives and improves productivity. Media: 1-min animation: “What Are Infectious Diseases?”",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "L92",
+    "title": "How Infectious Diseases Spread",
+    "content": "Diseases spread through direct contact, dirty housing, contaminated food/water, insects, and tools.\nSick animals can infect healthy ones rapidly.\nInfographic: Transmission routes (animal ↔ animal, feed, water, equipment).",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Diseases spread through direct contact, dirty housing, contaminated food/water, insects, and tools. Sick animals can infect healthy ones rapidly. Infographic: Transmission routes (animal ↔ animal, feed, water, equipment).",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "L93",
+    "title": "Common Signs & Symptoms",
+    "content": "Fever, loss of appetite, coughing, diarrhea, wounds, sudden death.\nIsolation behavior is a warning sign.\nActivity: “Spot the symptom” image identification.",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Fever, loss of appetite, coughing, diarrhea, wounds, sudden death. Isolation behavior is a warning sign. Activity: “Spot the symptom” image identification.",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "L94",
+    "title": "Major Infectious Diseases (Examples)",
+    "content": "Anthrax, foot-and-mouth disease, brucellosis, rabies, PPR, Newcastle disease.\nEach disease has unique signs every farmer should learn.\nMedia: Short audio summaries per disease.",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Anthrax, foot-and-mouth disease, brucellosis, rabies, PPR, Newcastle disease. Each disease has unique signs every farmer should learn. Media: Short audio summaries per disease.",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "L95",
+    "title": "Preventing Disease Spread",
+    "content": "Clean and disinfect housing regularly.\nProvide clean drinking water.\nAvoid sharing tools between sick and healthy animals.\nInfographic: Daily hygiene checklist.",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Clean and disinfect housing regularly. Provide clean drinking water. Avoid sharing tools between sick and healthy animals. Infographic: Daily hygiene checklist.",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "L96",
+    "title": "Vaccination & Deworming",
+    "content": "Vaccines prevent major infectious diseases.\nDeworming reduces parasite load and reduces spread.\nFollow a regular schedule with a veterinary professional.\nMedia: Vet officer video on vaccination routines.",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Vaccines prevent major infectious diseases. Deworming reduces parasite load and reduces spread. Follow a regular schedule with a veterinary professional. Media: Vet officer video on vaccination routines.",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "L97",
+    "title": "Quarantine & Isolation",
+    "content": "Isolate new animals for 10–14 days before mixing with the herd.\nKeep sick animals separately until recovery.\nChecklist: How to set up a simple quarantine pen.",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Isolate new animals for 10–14 days before mixing with the herd. Keep sick animals separately until recovery. Checklist: How to set up a simple quarantine pen.",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "L98",
+    "title": "Zoonotic Diseases (One Health)",
+    "content": "Some diseases (e.g., anthrax, brucellosis, rabies) pass from animals to humans.\nWear gloves, wash hands, cook meat well, boil milk.\nComic/story: “Why One Health matters.”",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Some diseases (e.g., anthrax, brucellosis, rabies) pass from animals to humans. Wear gloves, wash hands, cook meat well, boil milk. Comic/story: “Why One Health matters.”",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "L99",
+    "title": "Reporting & Seeking Help",
+    "content": "Report sudden deaths or strange symptoms immediately.\nEarly veterinary help reduces loss and saves herd health.\nActivity: “When should I call a vet?” quiz.",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Report sudden deaths or strange symptoms immediately. Early veterinary help reduces loss and saves herd health. Activity: “When should I call a vet?” quiz.",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "L910",
+    "title": "Record Keeping for Disease Control",
+    "content": "Record symptoms, treatments, deaths, vaccinations, and feed changes.\nHelps detect disease patterns early.\nTemplate: Simple farm health logbook.\n💬 SMS-Based Microlessons (Offline Learning)\nEach SMS is ≤ 480 characters and accessible via Care4Animals SMS codes (e.g., DISEASE1–DISEASE10).\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Acholi, Kiswahili\nAudience: Farmers, para-vets, village health teams, agriculture students\nChannels:\nCare4Animals mobile app (videos, quizzes, infographics)\nSMS offline learning (short lessons)\nPartners: Bugema University, district veterinary offices, community radio\nStandards: WOAH (OIE) One Health, FAO animal health guidelines\nGoal: Reduce livestock mortality and improve welfare through early detection and prevention of infectious diseases.",
+    "theme": "Infectious Diseases",
+    "language": "en",
+    "sms_content": "Record symptoms, treatments, deaths, vaccinations, and feed changes. Helps detect disease patterns early. Template: Simple farm health logbook. 💬 SMS-Based Microlessons (Offline Learning) Each SMS is ≤ 480 characters and accessible via Care4Animals SMS codes (e.g., DISEASE1–DISEASE10). 🌍 Localization & Implementation Notes Languages: English, Luganda, Runyankole, Acholi, Kiswahili Audience: Farmers, para-vets, village health teams, agriculture st",
+    "module": "Infectious Diseases"
+  },
+  {
+    "code": "AC1",
+    "title": "Introduction to Animal Care",
+    "content": "Definition: Animal care = daily actions to maintain animal health, comfort, and well-being.\nGood care ensures proper nutrition, environment, health, and humane handling.\nMedia: Intro animation on 'What is Animal Care?'",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Definition: Animal care = daily actions to maintain animal health, comfort, and well-being. Good care ensures proper nutrition, environment, health, and humane handling. Media: Intro animation on 'What is Animal Care?'",
+    "module": "Animal Care"
+  },
+  {
+    "code": "AC2",
+    "title": "The Relationship Between Care and Welfare",
+    "content": "Animal care supports welfare by meeting animals’ physical and emotional needs.\nPoor care = poor welfare; neglect causes stress and disease.\nActivity: Identify welfare issues linked to poor care.",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Animal care supports welfare by meeting animals’ physical and emotional needs. Poor care = poor welfare; neglect causes stress and disease. Activity: Identify welfare issues linked to poor care.",
+    "module": "Animal Care"
+  },
+  {
+    "code": "AC3",
+    "title": "Understanding Animal Needs",
+    "content": "Every species and individual animal has unique needs (food, shelter, space, companionship).\nRecognize behavioral and physiological signs of unmet needs.\nInteractive quiz: Match species to their basic care needs.",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Every species and individual animal has unique needs (food, shelter, space, companionship). Recognize behavioral and physiological signs of unmet needs. Interactive quiz: Match species to their basic care needs.",
+    "module": "Animal Care"
+  },
+  {
+    "code": "AC4",
+    "title": "Nutrition and Feeding",
+    "content": "Provide clean water, balanced diet, and regular feeding schedules.\nAvoid overfeeding or underfeeding. Adjust diet by species, age, and purpose.\nMedia: video demo on balanced livestock feeding.",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Provide clean water, balanced diet, and regular feeding schedules. Avoid overfeeding or underfeeding. Adjust diet by species, age, and purpose. Media: video demo on balanced livestock feeding.",
+    "module": "Animal Care"
+  },
+  {
+    "code": "AC5",
+    "title": "Housing and Environment",
+    "content": "Shelters must protect from rain, wind, heat, and predators.\nEnsure proper ventilation, space, and hygiene.\nInfographic: ideal animal housing setup.",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Shelters must protect from rain, wind, heat, and predators. Ensure proper ventilation, space, and hygiene. Infographic: ideal animal housing setup.",
+    "module": "Animal Care"
+  },
+  {
+    "code": "AC6",
+    "title": "Routine Care and Observation",
+    "content": "Observe animals daily for changes in behavior, appetite, or injuries.\nRoutine care includes grooming, hoof trimming, cleaning, and rest.\nChecklist: daily animal care routine.",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Observe animals daily for changes in behavior, appetite, or injuries. Routine care includes grooming, hoof trimming, cleaning, and rest. Checklist: daily animal care routine.",
+    "module": "Animal Care"
+  },
+  {
+    "code": "AC7",
+    "title": "Health and Disease Prevention",
+    "content": "Keep animals vaccinated, dewormed, and parasite-free.\nIsolate sick animals and seek veterinary help early.\nActivity: identify signs of common animal diseases.",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Keep animals vaccinated, dewormed, and parasite-free. Isolate sick animals and seek veterinary help early. Activity: identify signs of common animal diseases.",
+    "module": "Animal Care"
+  },
+  {
+    "code": "AC8",
+    "title": "Human–Animal Interaction",
+    "content": "Treat animals gently and calmly. Avoid fear or pain during handling.\nPositive interaction improves productivity and welfare.\nMedia: video of calm vs. rough handling impacts.",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Treat animals gently and calmly. Avoid fear or pain during handling. Positive interaction improves productivity and welfare. Media: video of calm vs. rough handling impacts.",
+    "module": "Animal Care"
+  },
+  {
+    "code": "AC9",
+    "title": "Record Keeping in Animal Care",
+    "content": "Record feeding, health checks, and breeding to improve management.\nHelps monitor productivity and detect issues early.\nTemplate: example daily care log sheet.",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Record feeding, health checks, and breeding to improve management. Helps monitor productivity and detect issues early. Template: example daily care log sheet.",
+    "module": "Animal Care"
+  },
+  {
+    "code": "AC10",
+    "title": "The Role of Animal Health Professionals",
+    "content": "Veterinarians and para-vets support farmers with expert guidance.\nThey promote good care practices, disease prevention, and training.\nMedia: interview with a local veterinary officer.\n💬 SMS-Based Microlessons (Offline Learning)\nThese SMS lessons summarize the same topics for offline learners. Each message is limited to 480 characters and accessible through the WTS‑LEARN SMS code system (e.g., WTS AC1–AC10).\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili\n• Target Audience: Farmers, para-vets, students, and community animal health workers\n• Delivery: WTS‑LEARN app (online) and SMS (offline)\n• Partners: Bugema University, MAAIF, and local cooperatives\n• Duration: 3–5 minutes (app), 1–2 minutes (SMS)\n• Standards: FAO & WOAH animal welfare and care principles\n• Objective: Promote humane, effective, and sustainable animal care practices.",
+    "theme": "Animal Care",
+    "language": "en",
+    "sms_content": "Veterinarians and para-vets support farmers with expert guidance. They promote good care practices, disease prevention, and training. Media: interview with a local veterinary officer. 💬 SMS-Based Microlessons (Offline Learning) These SMS lessons summarize the same topics for offline learners. Each message is limited to 480 characters and accessible through the WTS‑LEARN SMS code system (e.g., WTS AC1–AC10). 🌍 Localization & Implementation Notes L",
+    "module": "Animal Care"
+  },
+  {
+    "code": "TRA1",
+    "title": "Introduction to Animal Transport",
+    "content": "Definition: Movement of animals from one location to another for trade, slaughter, or breeding.\nObjective: Ensure safety, welfare, and minimal stress during movement.\nMedia: Introductory animation on humane transport importance.",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Definition: Movement of animals from one location to another for trade, slaughter, or breeding. Objective: Ensure safety, welfare, and minimal stress during movement. Media: Introductory animation on humane transport importance.",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "TRA2",
+    "title": "Principles of Animal Welfare in Transport",
+    "content": "Provide adequate space, ventilation, and comfort.\nAvoid overcrowding and prolonged travel without rest.\nInteractive diagram: animal comfort zones during travel.",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Provide adequate space, ventilation, and comfort. Avoid overcrowding and prolonged travel without rest. Interactive diagram: animal comfort zones during travel.",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "TRA3",
+    "title": "Preparation Before Transport",
+    "content": "Animals should be healthy, fit to travel, and inspected by a veterinarian.\nProvide water and rest before loading.\nChecklist: pre-transport health inspection steps.",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Animals should be healthy, fit to travel, and inspected by a veterinarian. Provide water and rest before loading. Checklist: pre-transport health inspection steps.",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "TRA4",
+    "title": "Loading and Unloading Practices",
+    "content": "Use ramps with gentle slopes and non-slip surfaces.\nHandle animals calmly—no shouting or hitting.\nVideo demonstration: low-stress loading techniques.",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Use ramps with gentle slopes and non-slip surfaces. Handle animals calmly—no shouting or hitting. Video demonstration: low-stress loading techniques.",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "TRA5",
+    "title": "Vehicle Design and Equipment",
+    "content": "Vehicles must provide adequate ventilation and protection from weather.\nPartitions prevent injury and allow separation by species or size.\nInfographic: ideal livestock transport truck layout.",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Vehicles must provide adequate ventilation and protection from weather. Partitions prevent injury and allow separation by species or size. Infographic: ideal livestock transport truck layout.",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "TRA6",
+    "title": "Duration and Rest Periods",
+    "content": "Plan journeys to minimize travel time.\nProvide water and feed on long trips (>8 hours).\nInteractive quiz: rest intervals by animal type.",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Plan journeys to minimize travel time. Provide water and feed on long trips (>8 hours). Interactive quiz: rest intervals by animal type.",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "TRA7",
+    "title": "Handling During Transit",
+    "content": "Avoid harsh driving or sudden stops.\nMonitor animals regularly for signs of distress or injury.\nActivity: identify unsafe transport behaviors.",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Avoid harsh driving or sudden stops. Monitor animals regularly for signs of distress or injury. Activity: identify unsafe transport behaviors.",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "TRA8",
+    "title": "Emergencies and Animal Health",
+    "content": "Carry first aid kit and emergency contacts for vets.\nStop transport if animals are injured or sick.\nMedia: emergency response guide animation.",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Carry first aid kit and emergency contacts for vets. Stop transport if animals are injured or sick. Media: emergency response guide animation.",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "TRA9",
+    "title": "Documentation and Legal Requirements",
+    "content": "Transporters must carry movement permits and health certificates.\nComply with national animal welfare laws and veterinary regulations.\nTemplate: sample animal transport permit form.",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Transporters must carry movement permits and health certificates. Comply with national animal welfare laws and veterinary regulations. Template: sample animal transport permit form.",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "TRA10",
+    "title": "Responsibilities and Ethics",
+    "content": "Handlers must act responsibly, prioritizing animal welfare over profit.\nTrain drivers and workers in humane transport.\nVideo: case study of good vs. poor transport practices.\n💬 SMS-Based Microlessons (Offline Learning)\nThese SMS lessons summarize the key concepts from the 'Animal Transport' module for farmers and transporters without smartphones. Each message is under 480 characters and accessible through the WTS‑LEARN SMS code system (e.g., WTS TRA1–TRA10).\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili\n• Target Users: Livestock farmers, animal transporters, and veterinary students\n• Delivery Channels: WTS‑LEARN app (online) and SMS gateway (offline)\n• Partnerships: Bugema University, local veterinary offices, and farmer cooperatives\n• Duration: 3–5 minutes per app lesson or 1–2 minutes per SMS message\n• Alignment: FAO & OIE animal welfare transport standards",
+    "theme": "Animal Transport",
+    "language": "en",
+    "sms_content": "Handlers must act responsibly, prioritizing animal welfare over profit. Train drivers and workers in humane transport. Video: case study of good vs. poor transport practices. 💬 SMS-Based Microlessons (Offline Learning) These SMS lessons summarize the key concepts from the 'Animal Transport' module for farmers and transporters without smartphones. Each message is under 480 characters and accessible through the WTS‑LEARN SMS code system (e.g., WTS ",
+    "module": "Animal Transport"
+  },
+  {
+    "code": "AWA1",
+    "title": "Understanding Animal Welfare",
+    "content": "Welfare = how an animal is coping physically & mentally with its environment.\nThe Five Freedoms: freedom from hunger/thirst, discomfort, pain/injury, fear, and to express natural behavior.\nGood welfare = healthy body, positive mental state, ability to adapt.\nMedia: Intro video with animal care animations.\nQuiz: Name two of the Five Freedoms.",
+    "theme": "Animal Welfare Assessment",
+    "language": "en",
+    "sms_content": "Welfare = how an animal is coping physically & mentally with its environment. The Five Freedoms: freedom from hunger/thirst, discomfort, pain/injury, fear, and to express natural behavior. Good welfare = healthy body, positive mental state, ability to adapt. Media: Intro video with animal care animations. Quiz: Name two of the Five Freedoms.",
+    "module": "Animal Welfare Assessment"
+  },
+  {
+    "code": "AWA2",
+    "title": "The Five Domains Model",
+    "content": "Nutrition, Environment, Health, Behavior, Mental State – the holistic approach to welfare.\nActivity: Tap each domain to see real examples.\nReflection: How can good feeding improve mental state?",
+    "theme": "Animal Welfare Assessment",
+    "language": "en",
+    "sms_content": "Nutrition, Environment, Health, Behavior, Mental State – the holistic approach to welfare. Activity: Tap each domain to see real examples. Reflection: How can good feeding improve mental state?",
+    "module": "Animal Welfare Assessment"
+  },
+  {
+    "code": "AWA3",
+    "title": "Welfare Indicators",
+    "content": "Types: Animal-based (body condition, injuries), Resource-based (space, water, shelter), Management-based (handling).\nInfographic shows examples in cattle, goats, pigs.",
+    "theme": "Animal Welfare Assessment",
+    "language": "en",
+    "sms_content": "Types: Animal-based (body condition, injuries), Resource-based (space, water, shelter), Management-based (handling). Infographic shows examples in cattle, goats, pigs.",
+    "module": "Animal Welfare Assessment"
+  },
+  {
+    "code": "AWA4",
+    "title": "Welfare Assessment Tools",
+    "content": "Welfare Quality®, WSAVA, OIE guidelines.\nInteractive icons explain each tool.\nQuiz: Which tool is for companion animals?",
+    "theme": "Animal Welfare Assessment",
+    "language": "en",
+    "sms_content": "Welfare Quality®, WSAVA, OIE guidelines. Interactive icons explain each tool. Quiz: Which tool is for companion animals?",
+    "module": "Animal Welfare Assessment"
+  },
+  {
+    "code": "AWA5",
+    "title": "Steps in Conducting a Welfare Assessment",
+    "content": "1 Prepare (select animals & indicators).\n2 Observe environment.\n3 Score indicators.\n4 Record & compare.\n5 Give feedback.\nMedia: Animated farm assessment.",
+    "theme": "Animal Welfare Assessment",
+    "language": "en",
+    "sms_content": "1 Prepare (select animals & indicators). 2 Observe environment. 3 Score indicators. 4 Record & compare. 5 Give feedback. Media: Animated farm assessment.",
+    "module": "Animal Welfare Assessment"
+  },
+  {
+    "code": "AWA6",
+    "title": "Interpreting Welfare Scores",
+    "content": "Scoring scale 0 = good → 2 = poor.\nSummarize results under feeding, housing, health, behavior.\nActivity: Practice scoring example animals.",
+    "theme": "Animal Welfare Assessment",
+    "language": "en",
+    "sms_content": "Scoring scale 0 = good → 2 = poor. Summarize results under feeding, housing, health, behavior. Activity: Practice scoring example animals.",
+    "module": "Animal Welfare Assessment"
+  },
+  {
+    "code": "AWA7",
+    "title": "Ethics & Human–Animal Interaction",
+    "content": "Compassionate care reduces stress & improves performance.\nRecognize animal emotions and treat kindly.\nVideo: Farmer–animal trust story.",
+    "theme": "Animal Welfare Assessment",
+    "language": "en",
+    "sms_content": "Compassionate care reduces stress & improves performance. Recognize animal emotions and treat kindly. Video: Farmer–animal trust story.",
+    "module": "Animal Welfare Assessment"
+  },
+  {
+    "code": "AWA8",
+    "title": "Reporting & Continuous Improvement",
+    "content": "Share results & plan improvements.\nMonitor changes after implementation.\nUpload sample welfare report.\nQuiz: Why monitor progress?\n💬 SMS-Based Microlessons (Offline Learning)\nEach microlesson fits in 3–4 SMS messages (≤480 characters). Farmers access by texting codes (e.g., WTS AWARE1–AWARE9).\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili.\n• Cultural Fit: Examples from smallholder systems (cattle, goats, pigs, poultry).\n• Integration: Farmer groups & radio broadcast.\n• Offline Access: SMS keywords like 'WTS AWARE5' for lesson retrieval.\n• Ethical Oversight: Bugema University ensures humane communication & consent.",
+    "theme": "Animal Welfare Assessment",
+    "language": "en",
+    "sms_content": "Share results & plan improvements. Monitor changes after implementation. Upload sample welfare report. Quiz: Why monitor progress? 💬 SMS-Based Microlessons (Offline Learning) Each microlesson fits in 3–4 SMS messages (≤480 characters). Farmers access by texting codes (e.g., WTS AWARE1–AWARE9). 🌍 Localization & Implementation Notes Languages: English, Luganda, Runyankole, Kiswahili. • Cultural Fit: Examples from smallholder systems (cattle, goats,",
+    "module": "Animal Welfare Assessment"
+  },
+  {
+    "code": "LAW1",
+    "title": "What Is Animal Welfare Legislation?",
+    "content": "Animal welfare legislation defines the rights and protection animals receive under law.\nIt ensures humane treatment, prevents cruelty, and promotes responsible ownership.\nMedia: Intro video with farmer-vet discussions.\nQuiz: Why is animal welfare law important?",
+    "theme": "Animal Welfare Legislation",
+    "language": "en",
+    "sms_content": "Animal welfare legislation defines the rights and protection animals receive under law. It ensures humane treatment, prevents cruelty, and promotes responsible ownership. Media: Intro video with farmer-vet discussions. Quiz: Why is animal welfare law important?",
+    "module": "Animal Welfare Legislation"
+  },
+  {
+    "code": "LAW2",
+    "title": "International Legal Frameworks",
+    "content": "Global organizations: OIE/WOAH, FAO, and the Universal Declaration on Animal Welfare.\nThese set standards for humane treatment and trade in animals.\nInteractive map: Click regions to view key laws.\nReflection: How do global standards influence national laws?",
+    "theme": "Animal Welfare Legislation",
+    "language": "en",
+    "sms_content": "Global organizations: OIE/WOAH, FAO, and the Universal Declaration on Animal Welfare. These set standards for humane treatment and trade in animals. Interactive map: Click regions to view key laws. Reflection: How do global standards influence national laws?",
+    "module": "Animal Welfare Legislation"
+  },
+  {
+    "code": "LAW3",
+    "title": "African & Regional Frameworks",
+    "content": "African Union (AU-IBAR) promotes animal welfare in livestock development.\nRegional trade laws require humane transport and slaughter.\nCase example: East African Community standards for animal transport.",
+    "theme": "Animal Welfare Legislation",
+    "language": "en",
+    "sms_content": "African Union (AU-IBAR) promotes animal welfare in livestock development. Regional trade laws require humane transport and slaughter. Case example: East African Community standards for animal transport.",
+    "module": "Animal Welfare Legislation"
+  },
+  {
+    "code": "LAW4",
+    "title": "National Legislation (Uganda Example)",
+    "content": "Uganda Animal Diseases Act (Cap. 38): Prevents cruelty, regulates transport, slaughter, and treatment.\nAnimal Welfare Bill: Emphasizes humane care and penalties for neglect.\nMedia: Infographic of farmer responsibilities.\nQuiz: What are key legal duties of animal owners?",
+    "theme": "Animal Welfare Legislation",
+    "language": "en",
+    "sms_content": "Uganda Animal Diseases Act (Cap. 38): Prevents cruelty, regulates transport, slaughter, and treatment. Animal Welfare Bill: Emphasizes humane care and penalties for neglect. Media: Infographic of farmer responsibilities. Quiz: What are key legal duties of animal owners?",
+    "module": "Animal Welfare Legislation"
+  },
+  {
+    "code": "LAW5",
+    "title": "Enforcement & Compliance",
+    "content": "Who enforces? Veterinary officers, police, and courts.\nInspections ensure compliance with welfare and disease laws.\nActivity: Drag and drop roles of each authority.\nQuiz: Who should report animal abuse?",
+    "theme": "Animal Welfare Legislation",
+    "language": "en",
+    "sms_content": "Who enforces? Veterinary officers, police, and courts. Inspections ensure compliance with welfare and disease laws. Activity: Drag and drop roles of each authority. Quiz: Who should report animal abuse?",
+    "module": "Animal Welfare Legislation"
+  },
+  {
+    "code": "LAW6",
+    "title": "Penalties & Legal Consequences",
+    "content": "Acts of cruelty attract fines or imprisonment.\nExamples: Overloading, starvation, and beating animals.\nMedia: Story-based simulation – identify violations.\nQuiz: What is the penalty for animal cruelty?",
+    "theme": "Animal Welfare Legislation",
+    "language": "en",
+    "sms_content": "Acts of cruelty attract fines or imprisonment. Examples: Overloading, starvation, and beating animals. Media: Story-based simulation – identify violations. Quiz: What is the penalty for animal cruelty?",
+    "module": "Animal Welfare Legislation"
+  },
+  {
+    "code": "LAW7",
+    "title": "Farmer Rights and Responsibilities",
+    "content": "Farmers must provide food, water, shelter, and medical care.\nAnimals are recognized as sentient beings deserving care.\nTask: Interactive checklist of daily welfare duties.\nQuiz: Which actions show compliance?",
+    "theme": "Animal Welfare Legislation",
+    "language": "en",
+    "sms_content": "Farmers must provide food, water, shelter, and medical care. Animals are recognized as sentient beings deserving care. Task: Interactive checklist of daily welfare duties. Quiz: Which actions show compliance?",
+    "module": "Animal Welfare Legislation"
+  },
+  {
+    "code": "LAW8",
+    "title": "Ethical Principles and Community Action",
+    "content": "Ethics complement laws by promoting compassion and social responsibility.\nCommunity watch groups can help report and prevent cruelty.\nMedia: Roleplay of community awareness event.",
+    "theme": "Animal Welfare Legislation",
+    "language": "en",
+    "sms_content": "Ethics complement laws by promoting compassion and social responsibility. Community watch groups can help report and prevent cruelty. Media: Roleplay of community awareness event.",
+    "module": "Animal Welfare Legislation"
+  },
+  {
+    "code": "LAW9",
+    "title": "Continuous Education & Advocacy",
+    "content": "Stay informed through extension services and local government.\nParticipate in awareness campaigns to strengthen welfare culture.\nActivity: Upload your community welfare pledge.\n💬 SMS-Based Microlessons (Offline Learning)\nEach SMS lesson fits within 3–4 messages (≤480 characters). Farmers can text lesson codes (e.g., WTS LAW1–LAW9) to receive the content.\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Kiswahili, Runyankole.\n• Regional Fit: Reflects Ugandan and East African legal frameworks.\n• Integration: Farmer radio programs, school outreach, and community extension.\n• Offline Access: Farmers text lesson codes (e.g., 'WTS LAW5') to receive content.\n• Oversight: Bugema University ensures ethical standards and legal accuracy.",
+    "theme": "Animal Welfare Legislation",
+    "language": "en",
+    "sms_content": "Stay informed through extension services and local government. Participate in awareness campaigns to strengthen welfare culture. Activity: Upload your community welfare pledge. 💬 SMS-Based Microlessons (Offline Learning) Each SMS lesson fits within 3–4 messages (≤480 characters). Farmers can text lesson codes (e.g., WTS LAW1–LAW9) to receive the content. 🌍 Localization & Implementation Notes Languages: English, Luganda, Kiswahili, Runyankole. • R",
+    "module": "Animal Welfare Legislation"
+  },
+  {
+    "code": "CE1",
+    "title": "What Is a Clinical Examination?",
+    "content": "Understand the meaning and purpose of clinical examination.\nDefinition: Evaluation of an animal’s general state and physiological parameters.\nPurpose: Assess health, welfare, diagnose disease, and monitor therapy.\nInteractive Task: Watch explainer animation showing a vet examining cattle.\nQuiz: Why is a clinical examination important for animal welfare?",
+    "theme": "Clinical Examination",
+    "language": "en",
+    "sms_content": "Understand the meaning and purpose of clinical examination. Definition: Evaluation of an animal’s general state and physiological parameters. Purpose: Assess health, welfare, diagnose disease, and monitor therapy. Interactive Task: Watch explainer animation showing a vet examining cattle. Quiz: Why is a clinical examination important for animal welfare?",
+    "module": "Clinical Examination"
+  },
+  {
+    "code": "CE2",
+    "title": "Roles and Responsibilities",
+    "content": "Differentiate between the roles of animal keepers and professionals.\nAnimal keepers detect abnormalities; animal health professionals perform full exams.\nStress from poor handling affects results and welfare.\nTask: Identify examples of animal stressors.\nQuiz: Who should perform a full clinical examination?",
+    "theme": "Clinical Examination",
+    "language": "en",
+    "sms_content": "Differentiate between the roles of animal keepers and professionals. Animal keepers detect abnormalities; animal health professionals perform full exams. Stress from poor handling affects results and welfare. Task: Identify examples of animal stressors. Quiz: Who should perform a full clinical examination?",
+    "module": "Clinical Examination"
+  },
+  {
+    "code": "CE3",
+    "title": "Safety and Handling",
+    "content": "Identify safety practices during an examination.\nObserve animal behavior before touching.\nUse verbal, physical, or chemical restraint as appropriate.\nCalm handling prevents injuries and improves accuracy.\nVideo: Safe approach techniques.",
+    "theme": "Clinical Examination",
+    "language": "en",
+    "sms_content": "Identify safety practices during an examination. Observe animal behavior before touching. Use verbal, physical, or chemical restraint as appropriate. Calm handling prevents injuries and improves accuracy. Video: Safe approach techniques.",
+    "module": "Clinical Examination"
+  },
+  {
+    "code": "CE4",
+    "title": "Tools of the Trade",
+    "content": "Recognize essential veterinary equipment.\nBasic tools: stethoscope, thermometer, watch, gloves.\nAdvanced tools: camera, syringes, sample containers.\nMost important tool: your senses.\nInteractive labeling of tools and their functions.",
+    "theme": "Clinical Examination",
+    "language": "en",
+    "sms_content": "Recognize essential veterinary equipment. Basic tools: stethoscope, thermometer, watch, gloves. Advanced tools: camera, syringes, sample containers. Most important tool: your senses. Interactive labeling of tools and their functions.",
+    "module": "Clinical Examination"
+  },
+  {
+    "code": "CE5",
+    "title": "Step-by-Step Examination",
+    "content": "Learn the systematic procedure.\n1. Signalment  2. Medical History  3. Physical Exam  4. Tests  5. Diagnosis  6. Treatment.\nInteractive flow diagram with step explanations.\nQuiz: Which step comes first?",
+    "theme": "Clinical Examination",
+    "language": "en",
+    "sms_content": "Learn the systematic procedure. 1. Signalment 2. Medical History 3. Physical Exam 4. Tests 5. Diagnosis 6. Treatment. Interactive flow diagram with step explanations. Quiz: Which step comes first?",
+    "module": "Clinical Examination"
+  },
+  {
+    "code": "CE6",
+    "title": "Recognizing Vital Signs",
+    "content": "Know how to measure respiration, heart rate, perfusion, hydration, and temperature.\nLearn normal parameters for each species.\nUnderstand signs of dehydration and stress.\nInfographic chart of normal vital signs.\nActivity: Measure respiration (15 s × 4 rule).",
+    "theme": "Clinical Examination",
+    "language": "en",
+    "sms_content": "Know how to measure respiration, heart rate, perfusion, hydration, and temperature. Learn normal parameters for each species. Understand signs of dehydration and stress. Infographic chart of normal vital signs. Activity: Measure respiration (15 s × 4 rule).",
+    "module": "Clinical Examination"
+  },
+  {
+    "code": "CE7",
+    "title": "Physical Examination",
+    "content": "Apply the 'Hands-off to Hands-on' approach.\nObserve posture and coat before touching.\nPalpate, percuss, and auscultate step-by-step.\nVideo: Demonstration of stethoscope placement.\nQuiz: What should you check before touching an animal?",
+    "theme": "Clinical Examination",
+    "language": "en",
+    "sms_content": "Apply the 'Hands-off to Hands-on' approach. Observe posture and coat before touching. Palpate, percuss, and auscultate step-by-step. Video: Demonstration of stethoscope placement. Quiz: What should you check before touching an animal?",
+    "module": "Clinical Examination"
+  },
+  {
+    "code": "CE8",
+    "title": "Diagnosis and Treatment",
+    "content": "Understand the flow from observation to treatment.\nList possible causes = differential diagnosis.\nUse tests to confirm findings.\nFollow up and monitor recovery.\nQuiz: What is the goal of a differential diagnosis?",
+    "theme": "Clinical Examination",
+    "language": "en",
+    "sms_content": "Understand the flow from observation to treatment. List possible causes = differential diagnosis. Use tests to confirm findings. Follow up and monitor recovery. Quiz: What is the goal of a differential diagnosis?",
+    "module": "Clinical Examination"
+  },
+  {
+    "code": "CE9",
+    "title": "Review and Field Practice",
+    "content": "Reinforce learning through real cases.\nApply in farmer groups with supervision.\nRecord examination results using provided forms.\nFinal self-assessment and summary.\n💬 SMS-Based Microlessons (Offline Learning)\nEach microlesson fits within 3–4 SMS messages (≤480 characters total). Farmers reply with short codes to proceed to the next lesson.\n🌍 Localization & Delivery Notes\nLanguages: English, Luganda, Kiswahili, Runyankole (for pilot translation).\n• Cultural Context: Examples include cattle, goats, and dogs common in East Africa.\n• Integration: Use with radio broadcasts and farmer groups.\n• Offline Access: Farmers can text lesson codes (e.g., WTS CLINEXM5) to receive SMS content.\n• Monitoring: Track progress through app analytics and SMS code responses.",
+    "theme": "Clinical Examination",
+    "language": "en",
+    "sms_content": "Reinforce learning through real cases. Apply in farmer groups with supervision. Record examination results using provided forms. Final self-assessment and summary. 💬 SMS-Based Microlessons (Offline Learning) Each microlesson fits within 3–4 SMS messages (≤480 characters total). Farmers reply with short codes to proceed to the next lesson. 🌍 Localization & Delivery Notes Languages: English, Luganda, Kiswahili, Runyankole (for pilot translation). •",
+    "module": "Clinical Examination"
+  },
+  {
+    "code": "EUT1",
+    "title": "Understanding Euthanasia",
+    "content": "Definition: Humane termination of an animal’s life to relieve incurable pain or suffering.\nGoal: Minimize pain, distress, and anxiety before loss of consciousness.\nMedia: Introductory animation showing euthanasia as a welfare measure.\nQuiz: What does humane euthanasia mean?",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Definition: Humane termination of an animal’s life to relieve incurable pain or suffering. Goal: Minimize pain, distress, and anxiety before loss of consciousness. Media: Introductory animation showing euthanasia as a welfare measure. Quiz: What does humane euthanasia mean?",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "EUT2",
+    "title": "Ethical Principles in Euthanasia",
+    "content": "Euthanasia decisions must balance animal welfare, human safety, and compassion.\nConsider suffering, prognosis, and quality of life.\nInteractive reflection: Discuss when euthanasia becomes ethically justified.",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Euthanasia decisions must balance animal welfare, human safety, and compassion. Consider suffering, prognosis, and quality of life. Interactive reflection: Discuss when euthanasia becomes ethically justified.",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "EUT3",
+    "title": "Decision-Making Criteria",
+    "content": "Euthanasia should be considered if pain is unmanageable, disease incurable, or suffering severe.\nVeterinary assessment and owner consent are mandatory.\nQuiz: List two valid reasons for euthanasia.",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Euthanasia should be considered if pain is unmanageable, disease incurable, or suffering severe. Veterinary assessment and owner consent are mandatory. Quiz: List two valid reasons for euthanasia.",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "EUT4",
+    "title": "Animal Welfare Considerations",
+    "content": "Ensure minimal handling stress, quiet environment, and familiar caretaker presence.\nAnimals should not witness euthanasia of others.\nMedia: Video demonstrating low-stress animal handling before euthanasia.",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Ensure minimal handling stress, quiet environment, and familiar caretaker presence. Animals should not witness euthanasia of others. Media: Video demonstrating low-stress animal handling before euthanasia.",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "EUT5",
+    "title": "Euthanasia Methods Overview",
+    "content": "Methods: Chemical (injectable agents) and physical (gunshot, captive bolt).\nChoice depends on species, size, temperament, and available resources.\nActivity: Match species to suitable method.",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Methods: Chemical (injectable agents) and physical (gunshot, captive bolt). Choice depends on species, size, temperament, and available resources. Activity: Match species to suitable method.",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "EUT6",
+    "title": "Chemical Methods",
+    "content": "Common agents: barbiturates, anaesthetic overdoses, potassium chloride (under anaesthesia).\nAdvantages: rapid unconsciousness, minimal pain, reliability.\nQuiz: What is the preferred chemical for euthanasia in small animals?",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Common agents: barbiturates, anaesthetic overdoses, potassium chloride (under anaesthesia). Advantages: rapid unconsciousness, minimal pain, reliability. Quiz: What is the preferred chemical for euthanasia in small animals?",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "EUT7",
+    "title": "Physical Methods",
+    "content": "Captive bolt or firearm for large livestock and wildlife.\nRequire trained personnel, correct placement, and safety precautions.\nInteractive visual: target placement diagram for cattle and goats.",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Captive bolt or firearm for large livestock and wildlife. Require trained personnel, correct placement, and safety precautions. Interactive visual: target placement diagram for cattle and goats.",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "EUT8",
+    "title": "Confirmation of Death",
+    "content": "Check absence of heartbeat, respiration, and reflexes before disposal.\nRecord time and method of euthanasia.\nQuiz: Name two signs confirming death.",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Check absence of heartbeat, respiration, and reflexes before disposal. Record time and method of euthanasia. Quiz: Name two signs confirming death.",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "EUT9",
+    "title": "Disposal and Biosecurity",
+    "content": "Carcass disposal: burial, incineration, rendering per regulations.\nAvoid environmental contamination and disease spread.\nInfographic: safe carcass disposal flowchart.",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Carcass disposal: burial, incineration, rendering per regulations. Avoid environmental contamination and disease spread. Infographic: safe carcass disposal flowchart.",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "EUT10",
+    "title": "Emotional Support and Debriefing",
+    "content": "Recognize emotional impact on handlers and owners.\nOffer counseling or peer support after euthanasia procedures.\nMedia: short testimonial from a vet on compassion fatigue.\nQuiz: Why is emotional support important post-euthanasia?\n💬 SMS-Based Microlessons (Offline Learning)\nThese SMS lessons summarize each app-based topic in short, easy-to-understand messages. Each message fits within 480 characters and is accessible by texting codes (e.g., WTS EUT1–EUT10).\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili\n• Target Audience: Farmers, para-vets, and animal welfare students\n• Delivery: WTS‑LEARN app (online) and SMS gateway (offline)\n• Context: Designed for smallholder farmers & veterinary training under Bugema University ethics\n• Focus: Humane, compassionate, and lawful handling of euthanasia in East Africa.",
+    "theme": "Euthanasia",
+    "language": "en",
+    "sms_content": "Recognize emotional impact on handlers and owners. Offer counseling or peer support after euthanasia procedures. Media: short testimonial from a vet on compassion fatigue. Quiz: Why is emotional support important post-euthanasia? 💬 SMS-Based Microlessons (Offline Learning) These SMS lessons summarize each app-based topic in short, easy-to-understand messages. Each message fits within 480 characters and is accessible by texting codes (e.g., WTS EU",
+    "module": "Euthanasia"
+  },
+  {
+    "code": "FISH1",
+    "title": "Understanding Fish Welfare",
+    "content": "Definition: Fish welfare = physical and mental well-being of fish in farming or capture systems.\nKey principle: Treat fish as sentient beings capable of feeling pain and stress.\nMedia: Animation explaining fish perception and welfare importance.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Definition: Fish welfare = physical and mental well-being of fish in farming or capture systems. Key principle: Treat fish as sentient beings capable of feeling pain and stress. Media: Animation explaining fish perception and welfare importance.",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "FISH2",
+    "title": "The Five Freedoms of Fish Welfare",
+    "content": "Freedom from hunger/thirst, discomfort, pain/injury, fear/distress, and to express natural behavior.\nInteractive checklist: assess each freedom in a fishpond context.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Freedom from hunger/thirst, discomfort, pain/injury, fear/distress, and to express natural behavior. Interactive checklist: assess each freedom in a fishpond context.",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "FISH3",
+    "title": "Water Quality and Environment",
+    "content": "Water parameters (temperature, oxygen, pH, ammonia) directly affect welfare.\nGood water = healthy fish = better productivity.\nDiagram: ideal water conditions for tilapia and catfish.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Water parameters (temperature, oxygen, pH, ammonia) directly affect welfare. Good water = healthy fish = better productivity. Diagram: ideal water conditions for tilapia and catfish.",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "FISH4",
+    "title": "Stocking Density",
+    "content": "Overcrowding increases stress, disease, and mortality.\nFollow species-specific density guidelines.\nMedia: video comparing overcrowded vs. optimal fish tanks.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Overcrowding increases stress, disease, and mortality. Follow species-specific density guidelines. Media: video comparing overcrowded vs. optimal fish tanks.",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "FISH5",
+    "title": "Feeding and Nutrition",
+    "content": "Provide balanced diet, proper feeding times, and clean feed.\nAvoid overfeeding to prevent water pollution.\nQuiz: how feeding behavior indicates fish stress.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Provide balanced diet, proper feeding times, and clean feed. Avoid overfeeding to prevent water pollution. Quiz: how feeding behavior indicates fish stress.",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "FISH6",
+    "title": "Handling and Transport",
+    "content": "Use soft nets; avoid rough handling and temperature shock.\nReduce transport duration and maintain oxygen levels.\nMedia: demonstration of safe fish handling.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Use soft nets; avoid rough handling and temperature shock. Reduce transport duration and maintain oxygen levels. Media: demonstration of safe fish handling.",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "FISH7",
+    "title": "Disease Prevention and Health Monitoring",
+    "content": "Observe behavior: appetite, swimming, and gill color indicate health.\nImplement biosecurity measures and isolate sick fish.\nInfographic: daily fish health checklist.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Observe behavior: appetite, swimming, and gill color indicate health. Implement biosecurity measures and isolate sick fish. Infographic: daily fish health checklist.",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "FISH8",
+    "title": "Humane Harvesting and Slaughter",
+    "content": "Fish should be stunned before killing to prevent pain.\nAvoid asphyxiation or freezing of live fish.\nVideo: humane slaughter methods for aquaculture.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Fish should be stunned before killing to prevent pain. Avoid asphyxiation or freezing of live fish. Video: humane slaughter methods for aquaculture.",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "FISH9",
+    "title": "Record Keeping and Traceability",
+    "content": "Keep records of feed, health, and mortality for farm management and compliance.\nTemplate: daily welfare record sheet example.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Keep records of feed, health, and mortality for farm management and compliance. Template: daily welfare record sheet example.",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "FISH10",
+    "title": "Ethics and Sustainability",
+    "content": "Fish welfare supports environmental sustainability and food safety.\nRespect local ecosystems and avoid pollution.\nInteractive reflection: why welfare = better aquaculture.\n💬 SMS-Based Microlessons (Offline Learning)\nThese SMS lessons summarize the app-based topics into short, simple texts for rural farmers or learners without smartphones. Each message is under 480 characters and accessible by texting WTS FW1–FW10.\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili\n• Target Audience: Fish farmers, aquaculture extension officers, and students\n• Delivery: WTS‑LEARN mobile app (online) and SMS gateway (offline)\n• Partners: Bugema University, fisheries departments, local cooperatives\n• Duration: 3–5 minutes (app), 1–2 minutes (SMS)\n• Standards: FAO, WOAH, and Uganda’s fisheries welfare guidelines\n• Outcome: Promote humane, ethical, and sustainable aquaculture practices.",
+    "theme": "Introduction to Fish Welfare",
+    "language": "en",
+    "sms_content": "Fish welfare supports environmental sustainability and food safety. Respect local ecosystems and avoid pollution. Interactive reflection: why welfare = better aquaculture. 💬 SMS-Based Microlessons (Offline Learning) These SMS lessons summarize the app-based topics into short, simple texts for rural farmers or learners without smartphones. Each message is under 480 characters and accessible by texting WTS FW1–FW10. 🌍 Localization & Implementation ",
+    "module": "Introduction to Fish Welfare"
+  },
+  {
+    "code": "HS1",
+    "title": "Introduction to Humane Slaughter",
+    "content": "Definition: Humane slaughter ensures animals are killed with minimal pain, fear, or distress.\nGoal: Welfare, food quality, and ethical responsibility.\nMedia: Animated overview of humane slaughter process.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "Definition: Humane slaughter ensures animals are killed with minimal pain, fear, or distress. Goal: Welfare, food quality, and ethical responsibility. Media: Animated overview of humane slaughter process.",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "HS2",
+    "title": "Animal Welfare and Ethics",
+    "content": "Welfare = physical and psychological well-being before, during, and after slaughter.\nAnimals should be calm, comfortable, and free from unnecessary suffering.\nActivity: Identify welfare breaches in sample abattoir scenarios.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "Welfare = physical and psychological well-being before, during, and after slaughter. Animals should be calm, comfortable, and free from unnecessary suffering. Activity: Identify welfare breaches in sample abattoir scenarios.",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "HS3",
+    "title": "Pre-Slaughter Handling",
+    "content": "Handle animals calmly; avoid shouting or striking.\nProvide water, avoid overcrowding, and rest animals before slaughter.\nMedia: Video on low-stress animal handling techniques.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "Handle animals calmly; avoid shouting or striking. Provide water, avoid overcrowding, and rest animals before slaughter. Media: Video on low-stress animal handling techniques.",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "HS4",
+    "title": "Facilities and Equipment",
+    "content": "Use properly designed pens, races, and stunning areas.\nEquipment should be well-maintained and used by trained personnel.\nInfographic: design of an ideal slaughter facility.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "Use properly designed pens, races, and stunning areas. Equipment should be well-maintained and used by trained personnel. Infographic: design of an ideal slaughter facility.",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "HS5",
+    "title": "Stunning Methods Overview",
+    "content": "Purpose: Render animal unconscious before killing to prevent pain.\nMethods: captive bolt, electrical, and CO₂ stunning (species-dependent).\nInteractive quiz: match stunning methods with animal types.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "Purpose: Render animal unconscious before killing to prevent pain. Methods: captive bolt, electrical, and CO₂ stunning (species-dependent). Interactive quiz: match stunning methods with animal types.",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "HS6",
+    "title": "Captive Bolt Stunning",
+    "content": "Used for cattle, sheep, and goats.\nPlace bolt correctly on the skull; ensure immediate collapse.\nMedia: diagram of proper bolt placement.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "Used for cattle, sheep, and goats. Place bolt correctly on the skull; ensure immediate collapse. Media: diagram of proper bolt placement.",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "HS7",
+    "title": "Electrical Stunning",
+    "content": "Used for pigs and poultry.\nApply correct voltage and duration; avoid repeated shocks.\nInteractive activity: check parameters for species-specific stunning.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "Used for pigs and poultry. Apply correct voltage and duration; avoid repeated shocks. Interactive activity: check parameters for species-specific stunning.",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "HS8",
+    "title": "Bleeding and Exsanguination",
+    "content": "Bleeding must be rapid to ensure death without recovery from stunning.\nCut major blood vessels in the neck or chest immediately after stunning.\nVideo: demonstration of safe and quick bleeding procedures.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "Bleeding must be rapid to ensure death without recovery from stunning. Cut major blood vessels in the neck or chest immediately after stunning. Video: demonstration of safe and quick bleeding procedures.",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "HS9",
+    "title": "Post-Slaughter Verification",
+    "content": "Confirm death: no breathing, reflexes, or blinking.\nDo not begin dressing until death is verified.\nChecklist: indicators confirming death post-stunning.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "Confirm death: no breathing, reflexes, or blinking. Do not begin dressing until death is verified. Checklist: indicators confirming death post-stunning.",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "HS10",
+    "title": "Worker Training and Ethics",
+    "content": "All slaughter personnel should be trained and certified.\nMaintain respect, professionalism, and compassion at all times.\nMedia: testimonial video from a humane slaughter trainer.\n💬 SMS-Based Microlessons (Offline Learning)\nThese SMS lessons summarize the humane slaughter principles for quick access by farmers, butchers, and transporters. Each message is ≤480 characters and available via codes (e.g., WTS HS1–HS10).\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili\n• Target Audience: Farmers, butchers, abattoir workers, and vet trainees\n• Delivery: WTS‑LEARN app and SMS gateway (offline)\n• Partnerships: Bugema University, Ministry of Agriculture, and local abattoirs\n• Duration: 3–5 minutes (app), 1–2 minutes (SMS)\n• Compliance: OIE, FAO, and national animal welfare laws\n• Objective: Reduce suffering, improve welfare, ensure safe, ethical meat production.",
+    "theme": "Humane Slaughter",
+    "language": "en",
+    "sms_content": "All slaughter personnel should be trained and certified. Maintain respect, professionalism, and compassion at all times. Media: testimonial video from a humane slaughter trainer. 💬 SMS-Based Microlessons (Offline Learning) These SMS lessons summarize the humane slaughter principles for quick access by farmers, butchers, and transporters. Each message is ≤480 characters and available via codes (e.g., WTS HS1–HS10). 🌍 Localization & Implementation ",
+    "module": "Humane Slaughter"
+  },
+  {
+    "code": "AW1",
+    "title": "Understanding Animal Welfare",
+    "content": "Definition: Animal welfare = the physical and psychological state of an animal in relation to its environment.\nGoal: 3\nMedia: Introductory animation explaining animal welfare concepts.",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "Definition: Animal welfare = the physical and psychological state of an animal in relation to its environment. Goal: 3 Media: Introductory animation explaining animal welfare concepts.",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "AW2",
+    "title": "Importance of Animal Welfare",
+    "content": "Good welfare benefits animals, farmers, consumers, and the environment.\nHealthy, well-treated animals are more productive and resilient.\nActivity: Match welfare benefits to examples (milk yield, reproduction, growth).",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "Good welfare benefits animals, farmers, consumers, and the environment. Healthy, well-treated animals are more productive and resilient. Activity: Match welfare benefits to examples (milk yield, reproduction, growth).",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "AW3",
+    "title": "Animal Sentience and Emotions",
+    "content": "Animals can feel pain, fear, and pleasure—they are sentient beings.\nRespecting sentience is the foundation of welfare.\nMedia: video showing positive and negative animal behaviors.",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "Animals can feel pain, fear, and pleasure—they are sentient beings. Respecting sentience is the foundation of welfare. Media: video showing positive and negative animal behaviors.",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "AW4",
+    "title": "The Five Freedoms Framework",
+    "content": "1) Freedom from hunger/thirst\n2) Freedom from discomfort\n3) Freedom from pain/injury\n4) Freedom from fear/distress\n5) Freedom to express normal behavior.\nInteractive quiz: identify which freedom is violated in sample scenarios.",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "1) Freedom from hunger/thirst 2) Freedom from discomfort 3) Freedom from pain/injury 4) Freedom from fear/distress 5) Freedom to express normal behavior. Interactive quiz: identify which freedom is violated in sample scenarios.",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "AW5",
+    "title": "The Five Domains Model",
+    "content": "Expands the Five Freedoms to include mental states (nutrition, environment, health, behavior, and mental experience).\nHelps assess both positive and negative welfare.\nInfographic: The Five Domains wheel diagram.",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "Expands the Five Freedoms to include mental states (nutrition, environment, health, behavior, and mental experience). Helps assess both positive and negative welfare. Infographic: The Five Domains wheel diagram.",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "AW6",
+    "title": "Human–Animal Relationship",
+    "content": "Human handling and care affect welfare outcomes.\nPositive interaction reduces fear and increases productivity.\nMedia: demonstration of gentle vs. rough handling impacts.",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "Human handling and care affect welfare outcomes. Positive interaction reduces fear and increases productivity. Media: demonstration of gentle vs. rough handling impacts.",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "AW7",
+    "title": "Animal Welfare and Ethics",
+    "content": "Ethics: treating animals with compassion and respect as living beings.\nMoral responsibility of humans to minimize harm and promote well-being.\nReflection: Discuss why animal welfare is a moral duty.",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "Ethics: treating animals with compassion and respect as living beings. Moral responsibility of humans to minimize harm and promote well-being. Reflection: Discuss why animal welfare is a moral duty.",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "AW8",
+    "title": "Welfare Assessment Indicators",
+    "content": "Use behavioral, physiological, and environmental indicators to assess welfare.\nExample: posture, vocalization, feeding habits, injury signs.\nChecklist: sample welfare observation form.",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "Use behavioral, physiological, and environmental indicators to assess welfare. Example: posture, vocalization, feeding habits, injury signs. Checklist: sample welfare observation form.",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "AW9",
+    "title": "The Role of Animal Health Professionals",
+    "content": "Vets and para-vets are key advocates for welfare—ensure humane care, treatment, and prevention.\nEncourage education, policy support, and farmer training.\nMedia: interview with vet on promoting welfare in practice.",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "Vets and para-vets are key advocates for welfare—ensure humane care, treatment, and prevention. Encourage education, policy support, and farmer training. Media: interview with vet on promoting welfare in practice.",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "AW10",
+    "title": "Global and Local Welfare Standards",
+    "content": "Refer to OIE/WOAH guidelines, FAO frameworks, and national welfare acts.\nLocal adaptation ensures relevance to cultural and economic contexts.\nActivity: identify your country’s animal welfare law or policy.\n💬 SMS-Based Microlessons (Offline Learning)\nThese SMS lessons summarize key concepts in simple language for offline learners. Each message is under 480 characters and is accessed via codes WTS AW1–AW10.\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili\n• Target Audience: Farmers, students, para-vets, and community leaders\n• Delivery: WTS‑LEARN mobile app (online) and SMS gateway (offline)\n• Duration: 3–5 min (app), 1–2 min (SMS)\n• Partners: Bugema University, Ministry of Agriculture, Animal Industry & Fisheries\n• Goal: Foster humane treatment, productivity, and compassion toward all animals.",
+    "theme": "Introduction to Animal Welfare",
+    "language": "en",
+    "sms_content": "Refer to OIE/WOAH guidelines, FAO frameworks, and national welfare acts. Local adaptation ensures relevance to cultural and economic contexts. Activity: identify your country’s animal welfare law or policy. 💬 SMS-Based Microlessons (Offline Learning) These SMS lessons summarize key concepts in simple language for offline learners. Each message is under 480 characters and is accessed via codes WTS AW1–AW10. 🌍 Localization & Implementation Notes La",
+    "module": "Introduction to Animal Welfare"
+  },
+  {
+    "code": "PM1",
+    "title": "Understanding Animal Pain",
+    "content": "Pain is a sensory and emotional experience related to tissue damage.\nAnimals experience pain similarly to humans; lack of visible signs doesn’t mean absence of pain.\nAdaptive vs. maladaptive pain: short-term protective vs. chronic harmful.\nMedia: Animated demonstration of animal reactions to pain stimuli.\nQuiz: Which type of pain has no healing purpose?",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Pain is a sensory and emotional experience related to tissue damage. Animals experience pain similarly to humans; lack of visible signs doesn’t mean absence of pain. Adaptive vs. maladaptive pain: short-term protective vs. chronic harmful. Media: Animated demonstration of animal reactions to pain stimuli. Quiz: Which type of pain has no healing purpose?",
+    "module": "Pain Management"
+  },
+  {
+    "code": "PM2",
+    "title": "Welfare and Pain Relationship",
+    "content": "Pain lowers animal welfare and productivity.\nGood welfare helps reduce perceived pain (positive mental state).\nMedia: Chart linking pain to welfare outcomes (healing speed, productivity).\nQuiz: How does stress affect pain perception?",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Pain lowers animal welfare and productivity. Good welfare helps reduce perceived pain (positive mental state). Media: Chart linking pain to welfare outcomes (healing speed, productivity). Quiz: How does stress affect pain perception?",
+    "module": "Pain Management"
+  },
+  {
+    "code": "PM3",
+    "title": "Basics of Pain Physiology",
+    "content": "Nociceptors detect harmful stimuli; pain perception occurs in the brain.\nStress can either dull (SIA) or amplify (SIH) pain sensation.\nInteractive diagram of the pain pathway: stimulus → transmission → perception.\nQuiz: What is the difference between nociception and pain perception?",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Nociceptors detect harmful stimuli; pain perception occurs in the brain. Stress can either dull (SIA) or amplify (SIH) pain sensation. Interactive diagram of the pain pathway: stimulus → transmission → perception. Quiz: What is the difference between nociception and pain perception?",
+    "module": "Pain Management"
+  },
+  {
+    "code": "PM4",
+    "title": "Detecting Pain in Animals",
+    "content": "Pain signs vary by species, breed, and temperament.\nBehavioural signs: restlessness, aggression, isolation, loss of appetite.\nPhysiological signs: increased heart rate, respiration, temperature.\nMedia: Comparison of pain expressions across species.\nQuiz: What are three physiological indicators of pain?",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Pain signs vary by species, breed, and temperament. Behavioural signs: restlessness, aggression, isolation, loss of appetite. Physiological signs: increased heart rate, respiration, temperature. Media: Comparison of pain expressions across species. Quiz: What are three physiological indicators of pain?",
+    "module": "Pain Management"
+  },
+  {
+    "code": "PM5",
+    "title": "Pain Assessment Tools",
+    "content": "Use pain scoring systems to evaluate severity.\nSimple descriptive, numerical, and facial expression scales are common tools.\nActivity: Match the facial cues with pain intensity levels.\nQuiz: What is the advantage of facial expression scales?",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Use pain scoring systems to evaluate severity. Simple descriptive, numerical, and facial expression scales are common tools. Activity: Match the facial cues with pain intensity levels. Quiz: What is the advantage of facial expression scales?",
+    "module": "Pain Management"
+  },
+  {
+    "code": "PM6",
+    "title": "Pain Alleviation Strategies",
+    "content": "Pain management must be individual, integrative, and pre-emptive.\nMethods: pharmacological, non-pharmacological, care and environment.\nVideo: Demonstration of integrative pain management in cattle.\nQuiz: Why is multimodal pain management recommended?",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Pain management must be individual, integrative, and pre-emptive. Methods: pharmacological, non-pharmacological, care and environment. Video: Demonstration of integrative pain management in cattle. Quiz: Why is multimodal pain management recommended?",
+    "module": "Pain Management"
+  },
+  {
+    "code": "PM7",
+    "title": "Pharmacological Approaches",
+    "content": "Mild to strong analgesics: NSAIDs, corticosteroids, opioids, ketamine.\nUse appropriate drug combination (multimodal therapy).\nInteractive: Build a treatment plan for acute vs. chronic pain.\nQuiz: Which drug group provides anti-inflammatory benefits?",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Mild to strong analgesics: NSAIDs, corticosteroids, opioids, ketamine. Use appropriate drug combination (multimodal therapy). Interactive: Build a treatment plan for acute vs. chronic pain. Quiz: Which drug group provides anti-inflammatory benefits?",
+    "module": "Pain Management"
+  },
+  {
+    "code": "PM8",
+    "title": "Non-Drug Pain Relief",
+    "content": "Methods: heat/cold therapy, physiotherapy, acupuncture, stress reduction.\nGood housing and calm handling enhance recovery.\nMedia: Video on alternative care methods.\nQuiz: List two non-pharmacological methods for pain relief.",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Methods: heat/cold therapy, physiotherapy, acupuncture, stress reduction. Good housing and calm handling enhance recovery. Media: Video on alternative care methods. Quiz: List two non-pharmacological methods for pain relief.",
+    "module": "Pain Management"
+  },
+  {
+    "code": "PM9",
+    "title": "Painful Routine Procedures",
+    "content": "Examples: castration, dehorning, tail docking, branding.\nApply the 3S approach: Suppress, Substitute, Soothe.\nInteractive scenario: Plan pain control for dehorning.\nQuiz: What does the 3S approach stand for?",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Examples: castration, dehorning, tail docking, branding. Apply the 3S approach: Suppress, Substitute, Soothe. Interactive scenario: Plan pain control for dehorning. Quiz: What does the 3S approach stand for?",
+    "module": "Pain Management"
+  },
+  {
+    "code": "PM10",
+    "title": "Role of Animal Health Professionals",
+    "content": "Vets should detect, prevent, and treat pain proactively.\nEducate animal keepers on pain signs and prevention.\nEncourage humane practices and research in pain management.\nQuiz: Why is early pain detection critical to welfare?\n💬 SMS-Based Microlessons (Offline Learning)\nFarmers can access these brief lessons via SMS by texting codes (e.g., WTS PM1–PM10). Each message is under 480 characters and available in English, Luganda, Runyankole, and Kiswahili.\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili\n• Focus: Livestock farmers and para-vets in Uganda & East Africa\n• Access: via WTS‑LEARN app or SMS gateway (offline mode)\n• Oversight: Bugema University ensures ethics, translation quality, and farmer engagement\n• Dissemination: Radio talk shows, vet outreach, farmer group discussions.",
+    "theme": "Pain Management",
+    "language": "en",
+    "sms_content": "Vets should detect, prevent, and treat pain proactively. Educate animal keepers on pain signs and prevention. Encourage humane practices and research in pain management. Quiz: Why is early pain detection critical to welfare? 💬 SMS-Based Microlessons (Offline Learning) Farmers can access these brief lessons via SMS by texting codes (e.g., WTS PM1–PM10). Each message is under 480 characters and available in English, Luganda, Runyankole, and Kiswahi",
+    "module": "Pain Management"
+  },
+  {
+    "code": "AM1",
+    "title": "Introduction to Antimicrobials",
+    "content": "Antimicrobials are medicines that kill or inhibit bacteria, viruses, fungi, and parasites.\nExamples: antibiotics, antivirals, antifungals, antiparasitics.\nVideo: Overview of how antimicrobials work.\nQuiz: What is the difference between antibiotics and antimicrobials?",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "Antimicrobials are medicines that kill or inhibit bacteria, viruses, fungi, and parasites. Examples: antibiotics, antivirals, antifungals, antiparasitics. Video: Overview of how antimicrobials work. Quiz: What is the difference between antibiotics and antimicrobials?",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "AM2",
+    "title": "Why Responsible Use Matters",
+    "content": "Antimicrobial resistance (AMR) occurs when pathogens adapt and stop responding to drugs.\nAMR leads to treatment failure and disease spread.\nInteractive graph: trends in AMR cases globally.\nReflection: How does misuse of antibiotics affect animal welfare?",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "Antimicrobial resistance (AMR) occurs when pathogens adapt and stop responding to drugs. AMR leads to treatment failure and disease spread. Interactive graph: trends in AMR cases globally. Reflection: How does misuse of antibiotics affect animal welfare?",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "AM3",
+    "title": "The One Health Concept",
+    "content": "One Health links human, animal, and environmental health.\nFarm-level misuse contributes to human infections through food chains.\nVideo: One Health in action – protecting all species.\nQuiz: Why is antibiotic use in animals a global concern?",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "One Health links human, animal, and environmental health. Farm-level misuse contributes to human infections through food chains. Video: One Health in action – protecting all species. Quiz: Why is antibiotic use in animals a global concern?",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "AM4",
+    "title": "When to Use Antimicrobials",
+    "content": "Only use antimicrobials under veterinary prescription.\nTreat bacterial infections – not viral, fungal, or parasitic conditions.\nInteractive decision tree: When is antibiotic use justified?\nQuiz: Can antibiotics cure viral diseases?",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "Only use antimicrobials under veterinary prescription. Treat bacterial infections – not viral, fungal, or parasitic conditions. Interactive decision tree: When is antibiotic use justified? Quiz: Can antibiotics cure viral diseases?",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "AM5",
+    "title": "Alternatives to Antimicrobials",
+    "content": "Good hygiene, vaccination, nutrition, and welfare reduce disease need for drugs.\nMedia: Farmer testimony on vaccination vs. treatment.\nQuiz: Name two ways to reduce dependence on antibiotics.",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "Good hygiene, vaccination, nutrition, and welfare reduce disease need for drugs. Media: Farmer testimony on vaccination vs. treatment. Quiz: Name two ways to reduce dependence on antibiotics.",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "AM6",
+    "title": "Correct Dosage and Administration",
+    "content": "Follow veterinary dosage and full treatment duration.\nAvoid underdosing and overuse – both encourage resistance.\nInteractive simulation: Correct dose calculator.\nQuiz: What happens when treatment is stopped early?",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "Follow veterinary dosage and full treatment duration. Avoid underdosing and overuse – both encourage resistance. Interactive simulation: Correct dose calculator. Quiz: What happens when treatment is stopped early?",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "AM7",
+    "title": "Storage and Disposal of Antimicrobials",
+    "content": "Store in cool, dry places; never share between animals.\nDispose of expired drugs safely – not in water or soil.\nInfographic: Safe drug storage practices.\nQuiz: Why should you avoid using leftover antibiotics?",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "Store in cool, dry places; never share between animals. Dispose of expired drugs safely – not in water or soil. Infographic: Safe drug storage practices. Quiz: Why should you avoid using leftover antibiotics?",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "AM8",
+    "title": "Understanding Withdrawal Periods",
+    "content": "Withdrawal period = time between last drug dose and food consumption.\nPrevents residues in milk, meat, and eggs.\nInteractive activity: Identify withdrawal times for common drugs.\nQuiz: Why is respecting withdrawal time essential?",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "Withdrawal period = time between last drug dose and food consumption. Prevents residues in milk, meat, and eggs. Interactive activity: Identify withdrawal times for common drugs. Quiz: Why is respecting withdrawal time essential?",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "AM9",
+    "title": "Recognizing Antimicrobial Resistance",
+    "content": "Signs: repeated infections, reduced drug effectiveness, slow healing.\nVideo: Case example from poultry farm.\nQuiz: How can farmers detect resistance early?",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "Signs: repeated infections, reduced drug effectiveness, slow healing. Video: Case example from poultry farm. Quiz: How can farmers detect resistance early?",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "AM10",
+    "title": "Farmers’ and Veterinarians’ Roles",
+    "content": "Farmers must follow vet instructions and keep treatment records.\nVets must diagnose, prescribe, and monitor treatment outcomes.\nMedia: Farm–vet collaboration success story.\nQuiz: What are two farmer responsibilities in antimicrobial use?\n💬 SMS-Based Microlessons (Offline Learning)\nEach SMS lesson is under 480 characters and sent through text codes (e.g., WTS AM1–AM10). These concise lessons reach farmers without smartphones.\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili\n• Focus: Smallholder farmers, extension workers, and vet trainees\n• Dissemination: App lessons, radio talk shows, SMS codes, and community vet clinics\n• Oversight: Bugema University ethical review and AMR experts\n• Partnership: WTS‑LEARN, FAO, WOAH, and local veterinary networks.",
+    "theme": "Responsible Use of Antimicrobials",
+    "language": "en",
+    "sms_content": "Farmers must follow vet instructions and keep treatment records. Vets must diagnose, prescribe, and monitor treatment outcomes. Media: Farm–vet collaboration success story. Quiz: What are two farmer responsibilities in antimicrobial use? 💬 SMS-Based Microlessons (Offline Learning) Each SMS lesson is under 480 characters and sent through text codes (e.g., WTS AM1–AM10). These concise lessons reach farmers without smartphones. 🌍 Localization & Impl",
+    "module": "Responsible Use of Antimicrobials"
+  },
+  {
+    "code": "VAC1",
+    "title": "Introduction to Vaccination",
+    "content": "Definition: Vaccination is the process of giving an antigen to stimulate immunity against disease.\nPurpose: Protect animals from infectious diseases and prevent transmission.\nBenefits: Improves productivity, welfare, and herd immunity.\nMedia: Intro video explaining how vaccines work.",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Definition: Vaccination is the process of giving an antigen to stimulate immunity against disease. Purpose: Protect animals from infectious diseases and prevent transmission. Benefits: Improves productivity, welfare, and herd immunity. Media: Intro video explaining how vaccines work.",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "VAC2",
+    "title": "Principles of Immunity",
+    "content": "Active immunity develops after vaccination or natural infection.\nPassive immunity is transferred via colostrum or maternal antibodies.\nInteractive diagram: innate vs. adaptive immune response.",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Active immunity develops after vaccination or natural infection. Passive immunity is transferred via colostrum or maternal antibodies. Interactive diagram: innate vs. adaptive immune response.",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "VAC3",
+    "title": "Types of Vaccines",
+    "content": "Live attenuated vaccines: contain weakened pathogens.\nInactivated vaccines: killed organisms or fragments.\nToxoids: inactivated toxins for diseases like tetanus.\nMedia: infographic showing examples and uses.",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Live attenuated vaccines: contain weakened pathogens. Inactivated vaccines: killed organisms or fragments. Toxoids: inactivated toxins for diseases like tetanus. Media: infographic showing examples and uses.",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "VAC4",
+    "title": "Handling and Storage of Vaccines",
+    "content": "Vaccines are sensitive to heat, light, and freezing.\nMaintain the cold chain (2–8°C) from factory to farm.\nDo not expose vaccines to sunlight or contaminated water.\nInteractive checklist: Do’s and Don’ts of vaccine storage.",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Vaccines are sensitive to heat, light, and freezing. Maintain the cold chain (2–8°C) from factory to farm. Do not expose vaccines to sunlight or contaminated water. Interactive checklist: Do’s and Don’ts of vaccine storage.",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "VAC5",
+    "title": "Vaccine Administration",
+    "content": "Routes: intramuscular, subcutaneous, oral, or intranasal.\nUse clean, sterile syringes and correct dosage per animal.\nFollow manufacturer and veterinary instructions.\nVideo demonstration: proper vaccination technique.",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Routes: intramuscular, subcutaneous, oral, or intranasal. Use clean, sterile syringes and correct dosage per animal. Follow manufacturer and veterinary instructions. Video demonstration: proper vaccination technique.",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "VAC6",
+    "title": "Vaccination Schedules",
+    "content": "Follow national or veterinary vaccination calendars.\nRepeat boosters as recommended to maintain immunity.\nInfographic: species-specific vaccination timeline.",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Follow national or veterinary vaccination calendars. Repeat boosters as recommended to maintain immunity. Infographic: species-specific vaccination timeline.",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "VAC7",
+    "title": "Common Vaccines and Target Diseases",
+    "content": "Examples: FMD, LSD, Rabies, Newcastle Disease, Anthrax, Brucellosis.\nUse approved vaccines only; avoid expired ones.\nInteractive quiz: match vaccine to disease.",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Examples: FMD, LSD, Rabies, Newcastle Disease, Anthrax, Brucellosis. Use approved vaccines only; avoid expired ones. Interactive quiz: match vaccine to disease.",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "VAC8",
+    "title": "Adverse Reactions and Management",
+    "content": "Possible reactions: swelling, mild fever, lethargy.\nSerious reactions: anaphylaxis—requires immediate vet attention.\nActivity: identify early signs of vaccine reaction.",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Possible reactions: swelling, mild fever, lethargy. Serious reactions: anaphylaxis—requires immediate vet attention. Activity: identify early signs of vaccine reaction.",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "VAC9",
+    "title": "Record Keeping and Monitoring",
+    "content": "Keep vaccination records (animal ID, vaccine, date, vet name).\nEvaluate vaccine effectiveness through follow-up inspections.\nTemplate: digital vaccination record form in app.",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Keep vaccination records (animal ID, vaccine, date, vet name). Evaluate vaccine effectiveness through follow-up inspections. Template: digital vaccination record form in app.",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "VAC10",
+    "title": "Community Awareness and Ethics",
+    "content": "Encourage participation in vaccination campaigns.\nPromote accurate information—avoid vaccine myths.\nEnsure animal welfare and humane handling during vaccination.\nVideo: success story from rural community outreach.\n💬 SMS-Based Microlessons (Offline Learning)\nThese short SMS lessons summarize the key ideas from the Vaccination module for farmers without smartphones. Each message fits within 480 characters and can be accessed by texting the corresponding code (e.g., WTS VAC1–VAC10).\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili\n• Target Users: Farmers, para-vets, and students in East Africa\n• Integration: Radio shows, SMS codes, community training & WTS‑LEARN app\n• Oversight: Bugema University ensures ethical review & welfare alignment\n• Duration: Each lesson 3–5 min (app) or 1–2 min (SMS)",
+    "theme": "Vaccinations",
+    "language": "en",
+    "sms_content": "Encourage participation in vaccination campaigns. Promote accurate information—avoid vaccine myths. Ensure animal welfare and humane handling during vaccination. Video: success story from rural community outreach. 💬 SMS-Based Microlessons (Offline Learning) These short SMS lessons summarize the key ideas from the Vaccination module for farmers without smartphones. Each message fits within 480 characters and can be accessed by texting the correspo",
+    "module": "Vaccinations"
+  },
+  {
+    "code": "WND1",
+    "title": "Introduction to Wound Management",
+    "content": "Definition of a wound: any compromise to tissue integrity.\nWound management = actions to assist healing and prevent infection.\nWounds affect animal welfare and can indicate poor management.\nMedia: animated video of common animal wounds and welfare impacts.\nQuiz: Why does wound care matter for animal welfare?",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "Definition of a wound: any compromise to tissue integrity. Wound management = actions to assist healing and prevent infection. Wounds affect animal welfare and can indicate poor management. Media: animated video of common animal wounds and welfare impacts. Quiz: Why does wound care matter for animal welfare?",
+    "module": "Wound Management"
+  },
+  {
+    "code": "WND2",
+    "title": "Stages of Wound Healing",
+    "content": "Four stages: Haemostasis, Inflammation, Proliferation, Remodelling.\nHealing can be delayed by poor nutrition, infection, or stress.\nInteractive timeline animation for each stage.\nActivity: Match each healing stage with its description.",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "Four stages: Haemostasis, Inflammation, Proliferation, Remodelling. Healing can be delayed by poor nutrition, infection, or stress. Interactive timeline animation for each stage. Activity: Match each healing stage with its description.",
+    "module": "Wound Management"
+  },
+  {
+    "code": "WND3",
+    "title": "Assessing the Patient and the Wound",
+    "content": "Assess animal’s overall health (ABC: Airways, Breathing, Circulation).\nIdentify wound cause, type, location, and infection signs.\nObservation game: identify wound types from images.\nQuiz: What are signs of an infected wound?",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "Assess animal’s overall health (ABC: Airways, Breathing, Circulation). Identify wound cause, type, location, and infection signs. Observation game: identify wound types from images. Quiz: What are signs of an infected wound?",
+    "module": "Wound Management"
+  },
+  {
+    "code": "WND4",
+    "title": "Wound Types and Classification",
+    "content": "Types: abrasion, incision, laceration, puncture, avulsion, burn, pressure wounds.\nActivity: Tap each image to see the wound type and treatment tip.\nMedia: photo guide for wound types.\nQuiz: Which wound needs open management?",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "Types: abrasion, incision, laceration, puncture, avulsion, burn, pressure wounds. Activity: Tap each image to see the wound type and treatment tip. Media: photo guide for wound types. Quiz: Which wound needs open management?",
+    "module": "Wound Management"
+  },
+  {
+    "code": "WND5",
+    "title": "Step-by-Step Wound Treatment",
+    "content": "1. Restraint and handling; 2. Lavage; 3. Debridement; 4. Closure; 5. Bandaging.\nDemonstration video on lavage and bandaging.\nTip: Always use antiseptic, nontoxic lavage fluids like 0.05% chlorhexidine.\nQuiz: Why avoid alcohol or hydrogen peroxide on open wounds?",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "1. Restraint and handling; 2. Lavage; 3. Debridement; 4. Closure; 5. Bandaging. Demonstration video on lavage and bandaging. Tip: Always use antiseptic, nontoxic lavage fluids like 0.05% chlorhexidine. Quiz: Why avoid alcohol or hydrogen peroxide on open wounds?",
+    "module": "Wound Management"
+  },
+  {
+    "code": "WND6",
+    "title": "Bandaging and Dressing Techniques",
+    "content": "Bandage layers: inner (moist), middle (padding), outer (adhesive).\nCommon dressings: honey, sugar, silver for antimicrobial action.\nInteractive: drag layers to build a bandage.\nQuiz: What’s the purpose of the inner bandage layer?",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "Bandage layers: inner (moist), middle (padding), outer (adhesive). Common dressings: honey, sugar, silver for antimicrobial action. Interactive: drag layers to build a bandage. Quiz: What’s the purpose of the inner bandage layer?",
+    "module": "Wound Management"
+  },
+  {
+    "code": "WND7",
+    "title": "Infection Control and Pain Management",
+    "content": "Signs: redness, heat, swelling, pus, smell.\nAntimicrobials only when necessary – One Health approach.\nPain relief: analgesics, rest, gentle handling, cold therapy.\nQuiz: Name one non-drug pain relief method.",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "Signs: redness, heat, swelling, pus, smell. Antimicrobials only when necessary – One Health approach. Pain relief: analgesics, rest, gentle handling, cold therapy. Quiz: Name one non-drug pain relief method.",
+    "module": "Wound Management"
+  },
+  {
+    "code": "WND8",
+    "title": "Enemies of Wound Healing",
+    "content": "Physical: pressure, motion, dead space.\nEndogenous: disease, stress, poor nutrition.\nExogenous: poor hygiene, isolation, bad human–animal interaction.\nReflection: How can welfare improvements aid healing?",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "Physical: pressure, motion, dead space. Endogenous: disease, stress, poor nutrition. Exogenous: poor hygiene, isolation, bad human–animal interaction. Reflection: How can welfare improvements aid healing?",
+    "module": "Wound Management"
+  },
+  {
+    "code": "WND9",
+    "title": "Common Myths & Role of Animal Health Professionals",
+    "content": "Myths: motor oil or kerosene heals wounds – FALSE.\nRole: educate caretakers, ensure proper hygiene, follow-up healing.\nVideo: field vet correcting misconceptions.\nQuiz: What’s wrong with tight bandaging?",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "Myths: motor oil or kerosene heals wounds – FALSE. Role: educate caretakers, ensure proper hygiene, follow-up healing. Video: field vet correcting misconceptions. Quiz: What’s wrong with tight bandaging?",
+    "module": "Wound Management"
+  },
+  {
+    "code": "WND10",
+    "title": "Collaboration and Follow-Up",
+    "content": "Good healing depends on cooperation between vet and caretaker.\nRecord progress, provide aftercare advice, promote welfare improvements.\nUpload case report feature in app.\n💬 SMS-Based Microlessons (Offline Learning)\nEach SMS lesson fits within 3–4 messages (≤480 characters). Users can text lesson codes (e.g., WTS WND1–WND10) to access short learning tips.\n🌍 Localization & Implementation Notes\nLanguages: English, Luganda, Runyankole, Kiswahili.\n• Regional Fit: Reflects rural animal care realities in Uganda and East Africa.\n• Integration: Vet extension programs, mobile app, SMS gateways, and radio.\n• Offline Access: SMS keywords (e.g., 'WTS WND5') retrieve tips.\n• Oversight: Bugema University ensures quality, ethics, and field relevance.",
+    "theme": "Wound Management",
+    "language": "en",
+    "sms_content": "Good healing depends on cooperation between vet and caretaker. Record progress, provide aftercare advice, promote welfare improvements. Upload case report feature in app. 💬 SMS-Based Microlessons (Offline Learning) Each SMS lesson fits within 3–4 messages (≤480 characters). Users can text lesson codes (e.g., WTS WND1–WND10) to access short learning tips. 🌍 Localization & Implementation Notes Languages: English, Luganda, Runyankole, Kiswahili. • R",
+    "module": "Wound Management"
+  }
+]

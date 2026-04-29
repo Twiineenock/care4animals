@@ -17,8 +17,9 @@ class UserProfile(Base):
 class Lesson(Base):
     __tablename__ = "lessons"
     id = Column(Integer, primary_key=True, index=True)
-    code = Column(String, index=True)
-    title = Column(String)
+    code = Column(String, index=True) # e.g., 'COW1'
+    title = Column(String)           # Used for the main display name
+    topic = Column(String, nullable=True) # ADDED: Matches your analytics router expectation
     content = Column(Text)
     language = Column(String, index=True)
     theme = Column(String, nullable=True)
@@ -27,7 +28,7 @@ class Lesson(Base):
 
 class SMSLog(Base):
     """
-    NEW: Tracks all outgoing SMS for Issue #10.
+    Tracks all outgoing SMS for Issue #10.
     Meets Acceptance Criteria: 'Messages are logged in the database'
     """
     __tablename__ = "sms_logs"
