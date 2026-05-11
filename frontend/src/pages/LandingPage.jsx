@@ -18,8 +18,8 @@ const LandingPage = () => {
           <a href="#partners" className="hover:text-primary transition-colors">Partners</a>
         </div>
         <div className="flex items-center gap-4">
-          <Link to="/login" className="px-6 py-2.5 rounded-full text-sm font-bold text-primary hover:bg-primary/5 transition-all">
-            Sign In
+          <Link to="/farmer/auth" className="px-6 py-2.5 rounded-full text-sm font-bold text-primary hover:bg-primary/5 transition-all">
+            Farmer Portal
           </Link>
           <Link to="/login" className="px-6 py-2.5 rounded-full text-sm font-bold bg-primary text-on-primary hover:shadow-lg hover:shadow-primary/20 transition-all">
             Admin Login
@@ -45,12 +45,12 @@ const LandingPage = () => {
               We leverage data analytics and SMS technology to bring expert veterinary knowledge directly to rural farmers, ensuring healthier livestock and sustainable livelihoods.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Link to="/login" className="px-8 py-4 bg-primary text-on-primary rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/30 transition-all flex items-center gap-2">
-                Admin Portal <span className="material-symbols-outlined">arrow_forward</span>
+              <Link to="/farmer/auth" className="px-8 py-4 bg-primary text-on-primary rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/30 transition-all flex items-center gap-2">
+                Farmer Portal <span className="material-symbols-outlined">agriculture</span>
               </Link>
-              <button className="px-8 py-4 bg-white border border-outline-variant text-primary rounded-2xl font-bold text-lg hover:bg-surface-container-low transition-all">
-                View Reports
-              </button>
+              <Link to="/login" className="px-8 py-4 bg-white border border-outline-variant text-primary rounded-2xl font-bold text-lg hover:bg-surface-container-low transition-all">
+                Admin Login
+              </Link>
             </div>
           </div>
           

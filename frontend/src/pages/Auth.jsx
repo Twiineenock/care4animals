@@ -107,7 +107,14 @@ const Auth = () => {
           </button>
         </form>
 
-        <div className="pt-4 text-center border-t border-outline-variant">
+        <div className="pt-4 text-center border-t border-outline-variant space-y-4">
+          <button 
+            onClick={() => navigate('/farmer/auth')}
+            className="text-primary font-bold text-sm hover:underline flex items-center justify-center gap-2 mx-auto"
+          >
+            <span className="material-symbols-outlined text-[18px]">agriculture</span>
+            Switch to Farmer Portal
+          </button>
           <p className="text-[11px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">
             Care4Animals Security Protocol v2.0
           </p>

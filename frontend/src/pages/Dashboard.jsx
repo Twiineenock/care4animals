@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   const confirmLogout = async () => {
     await supabase.auth.signOut();
-    navigate('/login');
+    navigate('/');
   };
 
   useEffect(() => {
