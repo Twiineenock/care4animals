@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     at_username: str = "sandbox"  # Default to sandbox for testing
     at_api_key: str = "change-me"
     
+    # Supabase Configuration
+    supabase_url: str = ""
+    supabase_anon_key: str = ""
+    
     # Other Integrations
     rapidpro_secret: str = "change-me"
     

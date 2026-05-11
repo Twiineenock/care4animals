@@ -2,18 +2,20 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from .config import settings
 
-# 1. Configure SQLite-specific arguments
-# check_same_thread=False is required for SQLite to work with FastAPI's concurrency
+# 1. Configure Connection Arguments
+# check_same_thread=False is only required for SQLite
 connect_args = {}
 if settings.database_url.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
 
-# 2. Create the engine with the proper arguments
+# 2. Create the engine
 engine = create_engine(
     settings.database_url, 
+    pool_pre_ping=True,  # Recommended for cloud DBs like Supabase
     future=True, 
     connect_args=connect_args
 )
+
 
 # 3. Create the Session factory
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)

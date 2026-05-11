@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts';
-import { LayoutDashboard, Users, MessageSquare, ShieldCheck, BookOpen, Activity, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { supabase } from '../supabaseClient';
+
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
-  const [logs, setLogs] = useState([]); // New state for logs
+  const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/login');
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [analyticsRes, logsRes] = await Promise.all([
-          fetch('http://127.0.0.1:8000/analytics/summary'),
-          fetch('http://127.0.0.1:8000/sms/logs')
+          fetch('http://localhost:8000/analytics/summary'),
+          fetch('http://localhost:8000/sms/logs')
         ]);
         
         const analyticsJson = await analyticsRes.json();
@@ -32,193 +40,308 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-slate-50">
+      <div className="flex h-screen items-center justify-center bg-background">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto"></div>
-          <p className="mt-4 text-slate-500 font-medium animate-pulse">Syncing Care4Animals Data...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-on-surface-variant font-medium animate-pulse">Syncing AgriAnalytics Data...</p>
         </div>
       </div>
     );
   }
 
-  const langData = Object.entries(data?.language_stats || {}).map(([name, value]) => ({
-    name: name.toUpperCase(),
-    value
-  }));
-
-  const themeData = Object.entries(data?.theme_stats || {})
-    .map(([name, value]) => ({ name, value }))
-    .sort((a, b) => b.value - a.value)
-    .slice(0, 8);
+  // Curve data for the chart
+  const curveData = [
+    { name: 'Mon', value: 30 }, { name: 'Tue', value: 45 }, { name: 'Wed', value: 35 },
+    { name: 'Thu', value: 50 }, { name: 'Fri', value: 48 }, { name: 'Sat', value: 60 },
+    { name: 'Sun', value: 55 },
+  ];
 
   return (
-    <div className="flex min-h-screen bg-slate-100 font-sans text-slate-900">
-      {/* SIDEBAR */}
-      <nav className="w-64 bg-slate-900 text-white p-6 hidden lg:flex flex-col sticky top-0 h-screen">
-        <div className="flex items-center gap-3 mb-10 border-b border-slate-800 pb-6">
-          <div className="bg-emerald-500 p-2 rounded-lg text-white shadow-lg shadow-emerald-500/20">
-            <LayoutDashboard size={20}/>
-          </div>
-          <span className="font-bold text-xl tracking-tight">Care4Animals</span>
+    <div className="flex min-h-screen bg-background text-on-background font-inter overflow-x-hidden">
+      {/* Sidebar Navigation */}
+      <aside className="fixed left-0 top-0 h-full w-[280px] bg-primary flex flex-col py-8 shadow-md z-50">
+        <div className="px-6 mb-10">
+          <h1 className="text-on-primary font-manrope text-[24px] font-bold tracking-tight">Care4Animals</h1>
+          <p className="text-on-primary-container text-[12px] font-semibold uppercase tracking-wider">Precision Farming</p>
         </div>
         
-        <div className="space-y-2 flex-1">
-          <div className="flex items-center gap-3 text-emerald-400 font-bold bg-emerald-400/10 p-3 rounded-xl cursor-pointer">
-            <Activity size={18}/> Dashboard
+        <nav className="flex-1 space-y-2 px-2">
+          <SidebarItem icon="dashboard" label="Dashboard" active />
+          <SidebarItem icon="groups" label="Farmers" />
+          <SidebarItem icon="sms" label="SMS Traffic" />
+          <SidebarItem icon="bar_chart" label="Reports" />
+          <div className="pt-4 mt-4 border-t border-primary-container/30">
+            <button 
+              onClick={handleLogout}
+              className="w-full text-on-primary-container hover:text-red-200 hover:bg-red-900/20 rounded-lg flex items-center px-6 py-3 gap-3 transition-all duration-200 active:scale-[0.98]"
+            >
+              <span className="material-symbols-outlined">logout</span>
+              <span className="font-semibold text-[12px]">Logout</span>
+            </button>
           </div>
-          <div className="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 p-3 rounded-xl transition-all cursor-pointer">
-            <Users size={18}/> Farmers
+        </nav>
+
+        <div className="px-6 py-4 border-t border-primary-container mt-auto">
+          <button className="w-full bg-secondary-fixed text-on-secondary-fixed py-2.5 rounded-lg font-semibold text-[12px] flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+            <span className="material-symbols-outlined text-[18px]">add</span>
+            New Campaign
+          </button>
+          
+          <div className="mt-6 space-y-1">
+            <FooterLink icon="settings" label="Settings" />
+            <FooterLink icon="help" label="Support" />
           </div>
-          {/* Link to the SMS section */}
-          <a href="#sms-traffic" className="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 p-3 rounded-xl transition-all cursor-pointer">
-            <MessageSquare size={18}/> SMS Traffic
-          </a>
         </div>
 
-        <div className="mt-auto pt-6 border-t border-slate-800 flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-500 font-bold">
-          <ShieldCheck size={14} className="text-emerald-500"/> Admin Verified
+        <div className="px-6 py-6 border-t border-primary-container bg-primary">
+          <p className="text-on-primary-container font-semibold uppercase tracking-wider text-[10px] mb-4">Partnered with</p>
+          <div className="flex flex-col gap-4">
+            <Partner brand="WTS Foundation" logo="/wts_logo.png" />
+            <Partner brand="Bugema University" logo="/bugema_logo.png" />
+          </div>
         </div>
-      </nav>
+      </aside>
 
-      {/* MAIN CONTENT AREA */}
-      <main className="flex-1 p-8 overflow-y-auto">
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
-          <div>
-            <h1 className="text-3xl font-black text-slate-800 tracking-tight">Analytics Overview</h1>
-            <p className="text-slate-500 font-medium italic">Partnering with Bugema University & WTS Foundation</p>
+      {/* Main Content Area */}
+      <main className="ml-[280px] min-h-screen flex-1">
+        {/* Top Navigation Bar */}
+        <header className="flex justify-between items-center h-16 px-8 bg-surface border-b border-outline-variant sticky top-0 z-40">
+          <div className="flex items-center gap-8">
+            <h2 className="text-primary font-manrope text-[24px] font-semibold whitespace-nowrap">Analytics Overview</h2>
+            <div className="h-8 w-[1px] bg-outline-variant"></div>
           </div>
           
-          <div className="flex items-center gap-4 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
-             <div className="flex flex-col items-end px-2">
-               <span className="text-[10px] font-bold text-slate-400 leading-none mb-1 uppercase tracking-tighter">Verified Partner</span>
-               <span className="text-sm font-black text-slate-700">WTS Foundation</span>
-             </div>
-             <div className="h-8 w-px bg-slate-200" />
-             <div className="flex gap-2 h-10 items-center">
-                <img src="/bugema_logo.png" alt="BU" className="h-full object-contain" />
-                <img src="/wts_logo.png" alt="WTS" className="h-8 object-contain" />
-             </div>
+          <div className="flex items-center gap-6 flex-1 justify-end">
+            <div className="relative max-w-xs w-full">
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+              <input 
+                className="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-sm w-full focus:ring-1 focus:ring-primary outline-none" 
+                placeholder="Search analytics..." 
+                type="text"
+              />
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <IconButton icon="notifications" />
+              <button className="flex items-center gap-2 p-1 pl-3 pr-1 bg-surface-container-high rounded-full hover:bg-surface-variant transition-colors">
+                <span className="font-semibold text-[12px] text-on-surface-variant">Admin</span>
+                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary">
+                  <span className="material-symbols-outlined text-[20px]">person</span>
+                </div>
+              </button>
+            </div>
           </div>
         </header>
 
-        {/* METRIC CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div className="bg-white p-6 rounded-3xl shadow-sm border-b-4 border-blue-500">
-            <div className="flex justify-between items-start mb-4">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Total Lessons</p>
-              <div className="p-2 bg-blue-50 text-blue-500 rounded-lg"><BookOpen size={16}/></div>
-            </div>
-            <p className="text-4xl font-black text-slate-800">{data?.metrics?.total_lessons || 0}</p>
-          </div>
-          
-          <div className="bg-white p-6 rounded-3xl shadow-sm border-b-4 border-emerald-500">
-            <div className="flex justify-between items-start mb-4">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Languages</p>
-              <div className="p-2 bg-emerald-50 text-emerald-500 rounded-lg"><ShieldCheck size={16}/></div>
-            </div>
-            <p className="text-4xl font-black text-slate-800">{langData.length}</p>
-          </div>
-
-          <div className="bg-white p-6 rounded-3xl shadow-sm border-b-4 border-amber-500">
-            <div className="flex justify-between items-start mb-4">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Users</p>
-              <div className="p-2 bg-amber-50 text-amber-500 rounded-lg"><Users size={16}/></div>
-            </div>
-            <p className="text-4xl font-black text-slate-800">{data?.metrics?.active_users || 0}</p>
-          </div>
-        </div>
-
-        {/* CHARTS SECTION */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-10">
-          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
-            <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-              <span className="w-2 h-6 bg-blue-500 rounded-full"></span>
-              Curriculum Engagement
-            </h3>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={themeData} layout="vertical" margin={{ left: 20 }}>
-                  <XAxis type="number" hide />
-                  <YAxis dataKey="name" type="category" width={150} tick={{fontSize: 10, fill: '#64748b'}} axisLine={false} tickLine={false} />
-                  <Tooltip cursor={{fill: '#f8fafc'}} />
-                  <Bar dataKey="value" fill="#3b82f6" radius={[0, 4, 4, 0]} barSize={12} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+        {/* Page Content */}
+        <div className="p-8 space-y-12">
+          {/* Metric Cards Row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <MetricCard 
+              label="Total Lessons" 
+              value={data?.metrics?.total_lessons || 0} 
+              icon="menu_book" 
+              trend="+12%" 
+              trendText="vs last month"
+              accentColor="border-b-blue-500"
+              iconBg="bg-blue-50"
+              iconColor="text-blue-600"
+            />
+            <MetricCard 
+              label="Languages" 
+              value={Object.keys(data?.language_stats || {}).length || 3} 
+              icon="translate" 
+              trendText="LG, EN, SW active"
+              accentColor="border-b-green-600"
+              iconBg="bg-green-50"
+              iconColor="text-green-700"
+            />
+            <MetricCard 
+              label="Active Users" 
+              value={data?.metrics?.active_users || 0} 
+              icon="person_pin_circle" 
+              trend="Awaiting Campaign" 
+              trendColor="text-error"
+              accentColor="border-b-orange-500"
+              iconBg="bg-orange-50"
+              iconColor="text-orange-600"
+            />
           </div>
 
-          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
-            <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-              <span className="w-2 h-6 bg-emerald-500 rounded-full"></span>
-              Language Distribution
-            </h3>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={langData}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8'}} />
-                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8'}} />
-                  <Tooltip cursor={{fill: '#f8fafc'}} />
-                  <Bar dataKey="value" radius={[6, 6, 0, 0]} barSize={60}>
-                    {langData.map((entry, index) => (
-                      <Cell key={index} fill={entry.name === 'LG' ? '#10b981' : entry.name === 'SW' ? '#f59e0b' : '#3b82f6'} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+          {/* Charts Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Curriculum Engagement Card */}
+            <div className="lg:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-8">
+              <div className="flex justify-between items-center mb-8">
+                <div>
+                  <h4 className="text-primary font-manrope text-[20px] font-semibold">Curriculum Engagement</h4>
+                  <p className="text-on-surface-variant text-[14px]">Engagement trends across all learning modules</p>
+                </div>
+                <div className="flex gap-2">
+                  <button className="px-3 py-1 text-[12px] font-semibold bg-surface-container rounded-lg border border-outline-variant">7 Days</button>
+                  <button className="px-3 py-1 text-[12px] font-semibold bg-primary text-on-primary rounded-lg">30 Days</button>
+                </div>
+              </div>
+              
+              <div className="h-[320px] w-full relative">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={curveData}>
+                    <defs>
+                      <linearGradient id="colorPrimary" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#012d1d" stopOpacity={0.1}/>
+                        <stop offset="95%" stopColor="#012d1d" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e1e3e4" />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#414844', fontSize: 12}} />
+                    <YAxis axisLine={false} tickLine={false} tick={{fill: '#414844', fontSize: 12}} />
+                    <Tooltip contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}} />
+                    <Area type="monotone" dataKey="value" stroke="#012d1d" strokeWidth={3} fillOpacity={1} fill="url(#colorPrimary)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Language Distribution Card */}
+            <div className="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm flex flex-col p-8">
+              <h4 className="text-primary font-manrope text-[20px] font-semibold mb-2">Language Distribution</h4>
+              <p className="text-on-surface-variant text-[14px] mb-8">Content availability by language code</p>
+              
+              <div className="flex-1 flex flex-col justify-between space-y-6">
+                <ProgressBar label="LG (Luganda)" count="136 Lessons" percentage={33} color="bg-primary" />
+                <ProgressBar label="EN (English)" count="136 Lessons" percentage={33} color="bg-secondary-fixed-dim" />
+                <ProgressBar label="SW (Swahili)" count="136 Lessons" percentage={34} color="bg-tertiary-fixed-dim" />
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-outline-variant">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded bg-tertiary-container flex items-center justify-center">
+                    <span className="material-symbols-outlined text-on-tertiary-container">public</span>
+                  </div>
+                  <div>
+                    <p className="text-on-surface font-semibold text-[14px]">Regional Expansion</p>
+                    <p className="text-on-surface-variant text-[12px]">Targeting 2 new regions in Q4</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* NEW: SMS TRAFFIC TABLE SECTION */}
-        <section id="sms-traffic" className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-          <div className="p-8 border-b border-slate-100 flex justify-between items-center">
-            <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-              <span className="w-2 h-6 bg-slate-800 rounded-full"></span>
-              Live SMS Traffic
-            </h3>
-            <span className="text-xs font-bold text-slate-400 uppercase">Last 20 Activities</span>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-50/50">
-                  <th className="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Farmer</th>
-                  <th className="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Message Body</th>
-                  <th className="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Status</th>
-                  <th className="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Time</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {logs.map((log) => (
-                  <tr key={log.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="px-8 py-4">
-                      <div className="font-bold text-slate-700">{log.phone_number}</div>
-                      <div className="text-[10px] text-slate-400 font-medium">UID: {log.user_id}</div>
-                    </td>
-                    <td className="px-8 py-4 text-sm text-slate-600 max-w-xs truncate">
-                      {log.message_body}
-                    </td>
-                    <td className="px-8 py-4">
-                      <div className={`flex items-center gap-1.5 font-bold text-[10px] uppercase px-2.5 py-1 rounded-full w-fit ${
-                        log.status === 'success' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
-                      }`}>
-                        {log.status === 'success' ? <CheckCircle2 size={12}/> : <AlertCircle size={12}/>}
-                        {log.status}
-                      </div>
-                    </td>
-                    <td className="px-8 py-4 text-xs text-slate-400 font-medium">
-                      {new Date(log.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </td>
+          {/* SMS Traffic Table */}
+          <div className="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+            <div className="p-6 border-b border-outline-variant flex justify-between items-center">
+              <h4 className="text-primary font-manrope text-[20px] font-semibold">Live SMS Traffic</h4>
+              <button className="text-primary font-semibold text-[12px] flex items-center gap-1 hover:underline">
+                View All Reports
+                <span className="material-symbols-outlined text-[18px]">arrow_right_alt</span>
+              </button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead className="bg-surface-container-low">
+                  <tr>
+                    <th className="px-6 py-4 font-semibold text-[12px] text-on-surface-variant uppercase tracking-wider">Farmer</th>
+                    <th className="px-6 py-4 font-semibold text-[12px] text-on-surface-variant uppercase tracking-wider">Message</th>
+                    <th className="px-6 py-4 font-semibold text-[12px] text-on-surface-variant uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-4 font-semibold text-[12px] text-on-surface-variant uppercase tracking-wider">Time</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-outline-variant">
+                  {logs.slice(0, 10).map((log) => (
+                    <tr key={log.id} className="hover:bg-surface-container-low transition-colors group">
+                      <td className="px-6 py-4">
+                        <div className="font-semibold text-on-surface">{log.phone_number}</div>
+                        <div className="text-[11px] text-on-surface-variant">UID: {log.user_id}</div>
+                      </td>
+                      <td className="px-6 py-4 text-[14px] text-on-surface-variant max-w-xs truncate">{log.message_body}</td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 rounded-full text-[11px] font-semibold uppercase ${
+                          log.status === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {log.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-[12px] text-on-surface-variant">
+                        {new Date(log.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
+        </div>
       </main>
     </div>
   );
 };
+
+// Helper Components
+const SidebarItem = ({ icon, label, active = false }) => (
+  <a 
+    className={`${
+      active ? 'bg-tertiary-container text-on-tertiary-container' : 'text-on-primary-container hover:text-on-primary hover:bg-primary-container'
+    } rounded-lg mx-2 flex items-center px-4 py-3 gap-3 transition-all duration-200 active:scale-[0.98] cursor-pointer`} 
+    href="#"
+  >
+    <span className="material-symbols-outlined">{icon}</span>
+    <span className="font-semibold text-[12px]">{label}</span>
+  </a>
+);
+
+const FooterLink = ({ icon, label }) => (
+  <a className="text-on-primary-container hover:text-on-primary flex items-center gap-3 py-2 text-sm cursor-pointer" href="#">
+    <span className="material-symbols-outlined text-[20px]">{icon}</span>
+    <span>{label}</span>
+  </a>
+);
+
+const Partner = ({ brand, logo }) => (
+  <div className="flex items-center gap-3 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer">
+    <div className="w-8 h-8 rounded bg-white flex items-center justify-center overflow-hidden p-1">
+      <img src={logo} alt={brand} className="w-full h-full object-contain" />
+    </div>
+    <span className="text-on-primary-container font-semibold text-[12px]">{brand}</span>
+  </div>
+);
+
+const IconButton = ({ icon }) => (
+  <button className="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+    <span className="material-symbols-outlined">{icon}</span>
+  </button>
+);
+
+const MetricCard = ({ label, value, icon, trend, trendText, trendColor = "text-green-600", accentColor, iconBg, iconColor }) => (
+  <div className={`bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant border-b-4 ${accentColor} flex flex-col justify-between hover:shadow-md transition-shadow cursor-default`}>
+    <div className="flex justify-between items-start">
+      <div>
+        <p className="text-on-surface-variant font-semibold text-[12px] uppercase tracking-wider">{label}</p>
+        <h3 className="text-primary font-manrope text-[32px] font-bold mt-1">{value}</h3>
+      </div>
+      <div className={`p-2 ${iconBg} ${iconColor} rounded-lg`}>
+        <span className="material-symbols-outlined">{icon}</span>
+      </div>
+    </div>
+    <div className="mt-4 flex items-center gap-2">
+      {trend && <span className={`${trendColor} font-semibold text-[12px]`}>{trend}</span>}
+      <span className="text-on-surface-variant text-[12px]">{trendText}</span>
+    </div>
+  </div>
+);
+
+const ProgressBar = ({ label, count, percentage, color }) => (
+  <div className="space-y-2">
+    <div className="flex justify-between text-[12px] font-semibold">
+      <span className="text-on-surface">{label}</span>
+      <span className="text-primary">{count}</span>
+    </div>
+    <div className="h-4 bg-surface-container rounded-full overflow-hidden">
+      <div 
+        className={`h-full ${color} rounded-full transition-all duration-1000`} 
+        style={{ width: `${percentage}%` }} 
+      />
+    </div>
+  </div>
+);
 
 export default Dashboard;

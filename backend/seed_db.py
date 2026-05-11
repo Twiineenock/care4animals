@@ -8,13 +8,13 @@ def seed_lessons():
     files = ["lessons_en.json", "lessons_lg.json", "lessons_sw.json"]
     
     total_added = 0
-    print("🌱 Starting massive seed operation for 400+ lessons...")
+    print("Starting massive seed operation for 400+ lessons...")
 
     try:
         for file_name in files:
             full_path = os.path.join(seed_path, file_name)
             if not os.path.exists(full_path):
-                print(f"⚠️ Missing: {file_name}")
+                print(f"Missing: {file_name}")
                 continue
 
             with open(full_path, "r", encoding="utf-8") as f:
@@ -36,12 +36,13 @@ def seed_lessons():
                         db.add(new_lesson)
                         file_count += 1
                         total_added += 1
-                print(f"✅ Loaded {file_count} lessons from {file_name}")
+                print(f"Loaded {file_count} lessons from {file_name}")
             
         db.commit()
-        print(f"🚀 SUCCESS: {total_added} new lessons added to the database.")
+        print(f"SUCCESS: {total_added} new lessons added to the database.")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
+
         db.rollback()
     finally:
         db.close()
