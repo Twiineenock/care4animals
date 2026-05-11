@@ -42,38 +42,43 @@ def verify_password(plain_password, hashed_password):
 
 @router.post("/signup", response_model=FarmerResponse, status_code=status.HTTP_201_CREATED)
 def signup(farmer_data: FarmerSignup, db: Session = Depends(get_db)):
-    # Check if username, email or phone already exists
-    existing_user = db.query(Farmer).filter(
-        (Farmer.username == farmer_data.username) | 
-        (Farmer.email == farmer_data.email) |
-        (Farmer.phone_number == farmer_data.phone_number)
-    ).first()
-    
-    if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Username, Email or Phone Number already registered"
-        )
-    
-    # Create new farmer
-    new_farmer = Farmer(
-        username=farmer_data.username,
-        email=farmer_data.email,
-        phone_number=farmer_data.phone_number,
-        password_hash=get_password_hash(farmer_data.password)
-    )
-    
     try:
+        # Check if username, email or phone already exists
+        existing_user = db.query(Farmer).filter(
+            (Farmer.username == farmer_data.username) | 
+            (Farmer.email == farmer_data.email) |
+            (Farmer.phone_number == farmer_data.phone_number)
+        ).first()
+        
+        if existing_user:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Username, Email or Phone Number already registered"
+            )
+        
+        # Create new farmer
+        new_farmer = Farmer(
+            username=farmer_data.username,
+            email=farmer_data.email,
+            phone_number=farmer_data.phone_number,
+            password_hash=get_password_hash(farmer_data.password)
+        )
+        
         db.add(new_farmer)
         db.commit()
         db.refresh(new_farmer)
         return new_farmer
+    except HTTPException as he:
+        raise he
     except Exception as e:
         db.rollback()
+        # Log the error for Render logs
+        print(f"SIGNUP ERROR: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Database error: {str(e)}"
+            detail=f"Database error during signup: {str(e)}"
         )
+
 
 
 @router.post("/login")

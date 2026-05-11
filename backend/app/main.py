@@ -22,9 +22,14 @@ app = FastAPI(
 print("INFO: Synchronizing database schema...")
 try:
     models.Base.metadata.create_all(bind=engine)
-    print("INFO: Database schema synchronized successfully.")
+    # Verify table existence
+    from sqlalchemy import text
+    with engine.connect() as conn:
+        conn.execute(text("SELECT 1 FROM farmers LIMIT 1"))
+    print("INFO: Database schema synchronized and verified.")
 except Exception as e:
-    print(f"ERROR: Database synchronization failed: {e}")
+    print(f"ERROR: Database verification failed: {e}")
+
 
 # 3. Configure CORS for the React Dashboard
 origins = [
