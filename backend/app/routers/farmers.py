@@ -11,7 +11,8 @@ router = APIRouter(
 )
 
 # Password hashing configuration
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Password hashing configuration - using pbkdf2_sha256 for maximum compatibility
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 # Pydantic schemas
 class FarmerSignup(BaseModel):
