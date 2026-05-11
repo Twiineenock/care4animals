@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
 import Auth from './pages/Auth';
+import FarmerAuth from './pages/FarmerAuth';
 
 const ProtectedRoute = ({ children }) => {
   const [session, setSession] = useState(null);
@@ -37,6 +38,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Auth />} />
+        <Route path="/farmer/auth" element={<FarmerAuth />} />
+
         <Route 
           path="/dashboard" 
           element={

@@ -3,16 +3,20 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from .database import Base
 
-class UserProfile(Base):
-    __tablename__ = "user_profiles"
+class Farmer(Base):
+    __tablename__ = "farmers"
 
     id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    email = Column(String, unique=True, index=True)
     phone_number = Column(String, unique=True, index=True)
+    password_hash = Column(String)
     preferred_language = Column(String, default="en")
     last_interaction = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     
     # Relationship to track this user's SMS history
     sms_history = relationship("SMSLog", back_populates="recipient")
+
 
 class Lesson(Base):
     __tablename__ = "lessons"
@@ -34,7 +38,7 @@ class SMSLog(Base):
     __tablename__ = "sms_logs"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("user_profiles.id"))
+    user_id = Column(Integer, ForeignKey("farmers.id"))
     phone_number = Column(String, index=True)
     message_body = Column(Text)
     
@@ -50,7 +54,7 @@ class SMSLog(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
-    recipient = relationship("UserProfile", back_populates="sms_history")
+    recipient = relationship("Farmer", back_populates="sms_history")
 
 class Analytics(Base):
     __tablename__ = "analytics"

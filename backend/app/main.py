@@ -10,6 +10,7 @@ from .routers.content import router as content_router
 from .routers.sms import router as sms_router
 from .routers.analytics import router as analytics_router
 from .routers.lessons import router as lessons_router
+from .routers.farmers import router as farmers_router
 
 # 1. Initialize the FastAPI instance
 app = FastAPI(
@@ -50,6 +51,7 @@ app.include_router(content_router)
 app.include_router(sms_router) 
 app.include_router(analytics_router, prefix="/analytics", tags=["Analytics"])
 app.include_router(lessons_router, prefix="/api/v1/lessons", tags=["Lessons"])
+app.include_router(farmers_router)
 
 # 5. Root Endpoint
 @app.get("/")
