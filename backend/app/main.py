@@ -29,6 +29,8 @@ origins = [
     "http://127.0.0.1:5174",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://care4animals.vercel.app",
+    "https://care4animals.vercel.app/",
 ]
 
 # Add specific frontend URL from settings
