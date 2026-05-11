@@ -21,7 +21,6 @@ app = FastAPI(
 models.Base.metadata.create_all(bind=engine)
 
 # 3. Configure CORS for the React Dashboard
-# We include both localhost and 127.0.0.1 for all common Vite ports
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -31,17 +30,19 @@ origins = [
     "http://127.0.0.1:3000",
 ]
 
-# Add the specific frontend_url from settings if it exists
-if hasattr(settings, "frontend_url"):
+# Add specific frontend URL from settings
+if settings.frontend_url and settings.frontend_url not in origins:
     origins.append(settings.frontend_url)
 
+print(f"INFO: CORS Origins configured: {origins}")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"] if settings.frontend_url == "*" else origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # 4. Register Routers
 app.include_router(health_router)

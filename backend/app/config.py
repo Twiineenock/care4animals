@@ -7,7 +7,8 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+psycopg://care4animals:care4animals@localhost:5432/care4animals"
     
     # Frontend/CORS Configuration
-    frontend_url: str = "http://localhost:5173"
+    frontend_url: str = "*" # Default to allow all for easier setup, can be restricted in Render env
+
     
     # SMS Gateway Configuration (Issue #10)
     # These will be automatically populated from your .env file

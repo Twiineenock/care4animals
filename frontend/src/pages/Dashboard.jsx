@@ -24,8 +24,8 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const [analyticsRes, logsRes] = await Promise.all([
-          fetch('http://localhost:8000/analytics/summary'),
-          fetch('http://localhost:8000/sms/logs')
+          fetch(`${import.meta.env.VITE_API_URL}/analytics/summary`),
+          fetch(`${import.meta.env.VITE_API_URL}/sms/logs`)
         ]);
         
         const analyticsJson = await analyticsRes.json();

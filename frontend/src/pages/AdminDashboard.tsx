@@ -16,7 +16,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('http://localhost:8000/analytics/summary');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/analytics/summary`);
         const result = await response.json();
         setRawStats(result);
         
