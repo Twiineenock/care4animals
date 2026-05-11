@@ -24,14 +24,18 @@ const FarmerDashboard = () => {
     const fetchLessons = async () => {
       try {
         const response = await fetch(`${API_URL}/api/v1/lessons`);
+        if (!response.ok) throw new Error("Failed to fetch");
         const data = await response.json();
-        setLessons(data);
+        // Ensure data is an array
+        setLessons(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Error fetching lessons:", err);
+        setLessons([]); // Fallback to empty array
       } finally {
         setLoading(false);
       }
     };
+
 
     fetchLessons();
   }, [navigate, API_URL]);
