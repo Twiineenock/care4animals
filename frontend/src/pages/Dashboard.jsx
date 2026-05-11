@@ -8,9 +8,14 @@ const Dashboard = () => {
   const [data, setData] = useState(null);
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
+  const handleLogoutClick = () => {
+    setShowLogoutConfirm(true);
+  };
+
+  const confirmLogout = async () => {
     await supabase.auth.signOut();
     navigate('/login');
   };
@@ -72,7 +77,7 @@ const Dashboard = () => {
           <SidebarItem icon="bar_chart" label="Reports" />
           <div className="pt-4 mt-4 border-t border-primary-container/30">
             <button 
-              onClick={handleLogout}
+              onClick={handleLogoutClick}
               className="w-full text-on-primary-container hover:text-red-200 hover:bg-red-900/20 rounded-lg flex items-center px-6 py-3 gap-3 transition-all duration-200 active:scale-[0.98]"
             >
               <span className="material-symbols-outlined">logout</span>
@@ -124,7 +129,7 @@ const Dashboard = () => {
             <div className="flex items-center gap-2">
               <IconButton icon="notifications" />
               <button 
-                onClick={handleLogout}
+                onClick={handleLogoutClick}
                 className="flex items-center gap-2 p-1 pl-3 pr-1 bg-surface-container-high rounded-full hover:bg-red-50 hover:text-red-600 transition-colors group"
                 title="Logout"
               >
@@ -276,6 +281,42 @@ const Dashboard = () => {
           </div>
         </div>
       </main>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" 
+            onClick={() => setShowLogoutConfirm(false)}
+          />
+          <div className="relative bg-surface-container-lowest rounded-[32px] shadow-2xl border border-outline-variant p-8 max-w-sm w-full animate-in zoom-in-95 duration-200">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="material-symbols-outlined text-[32px]">logout</span>
+              </div>
+              <h3 className="text-primary font-manrope text-[24px] font-bold mb-2">Sign Out?</h3>
+              <p className="text-on-surface-variant text-[14px] mb-8">
+                Are you sure you want to end your session? You will need to login again to access the dashboard.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <button 
+                  onClick={() => setShowLogoutConfirm(false)}
+                  className="py-3 px-4 bg-surface-container-high hover:bg-surface-variant text-on-surface rounded-2xl font-bold text-[14px] transition-colors"
+                >
+                  Stay Logged In
+                </button>
+                <button 
+                  onClick={confirmLogout}
+                  className="py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold text-[14px] transition-all shadow-lg shadow-red-200"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
