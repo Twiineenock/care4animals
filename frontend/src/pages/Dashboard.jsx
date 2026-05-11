@@ -123,10 +123,14 @@ const Dashboard = () => {
             
             <div className="flex items-center gap-2">
               <IconButton icon="notifications" />
-              <button className="flex items-center gap-2 p-1 pl-3 pr-1 bg-surface-container-high rounded-full hover:bg-surface-variant transition-colors">
-                <span className="font-semibold text-[12px] text-on-surface-variant">Admin</span>
-                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary">
-                  <span className="material-symbols-outlined text-[20px]">person</span>
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 p-1 pl-3 pr-1 bg-surface-container-high rounded-full hover:bg-red-50 hover:text-red-600 transition-colors group"
+                title="Logout"
+              >
+                <span className="font-semibold text-[12px] text-on-surface-variant group-hover:text-red-600">Admin</span>
+                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary group-hover:bg-red-600">
+                  <span className="material-symbols-outlined text-[20px]">logout</span>
                 </div>
               </button>
             </div>
