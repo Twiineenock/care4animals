@@ -38,11 +38,12 @@ if settings.frontend_url and settings.frontend_url not in origins:
 print(f"INFO: CORS Origins configured: {origins}")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] if settings.frontend_url == "*" else origins,
-    allow_credentials=True,
+    allow_origins=origins if settings.frontend_url != "*" else ["*"],
+    allow_credentials=True if settings.frontend_url != "*" else False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 # 4. Register Routers
