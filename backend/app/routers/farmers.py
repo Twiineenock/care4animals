@@ -63,10 +63,18 @@ def signup(farmer_data: FarmerSignup, db: Session = Depends(get_db)):
         password_hash=get_password_hash(farmer_data.password)
     )
     
-    db.add(new_farmer)
-    db.commit()
-    db.refresh(new_farmer)
-    return new_farmer
+    try:
+        db.add(new_farmer)
+        db.commit()
+        db.refresh(new_farmer)
+        return new_farmer
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Database error: {str(e)}"
+        )
+
 
 @router.post("/login")
 def login(credentials: FarmerLogin, db: Session = Depends(get_db)):

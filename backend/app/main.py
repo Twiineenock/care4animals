@@ -19,7 +19,12 @@ app = FastAPI(
 )
 
 # 2. Ensure Database Tables are created
-models.Base.metadata.create_all(bind=engine)
+print("INFO: Synchronizing database schema...")
+try:
+    models.Base.metadata.create_all(bind=engine)
+    print("INFO: Database schema synchronized successfully.")
+except Exception as e:
+    print(f"ERROR: Database synchronization failed: {e}")
 
 # 3. Configure CORS for the React Dashboard
 origins = [
