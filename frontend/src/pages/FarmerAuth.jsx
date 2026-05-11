@@ -158,7 +158,7 @@ const FarmerAuth = () => {
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Phone Number</label>
                     <div className="flex gap-2">
-                      <div className="relative w-32 shrink-0">
+                      <div className="relative w-44 shrink-0">
                         <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                         <select
                           className="w-full pl-9 pr-2 py-4 bg-[#F8FAFB] border-2 border-transparent rounded-2xl outline-none transition-all font-semibold text-slate-700 appearance-none cursor-pointer"
@@ -166,7 +166,7 @@ const FarmerAuth = () => {
                           onChange={(e) => setFormData({...formData, country_code: e.target.value})}
                         >
                           {countryCodes.map(c => (
-                            <option key={c.code} value={c.code}>{c.flag} {c.code}</option>
+                            <option key={c.code} value={c.code}>{c.country} ({c.code})</option>
                           ))}
                         </select>
                       </div>
