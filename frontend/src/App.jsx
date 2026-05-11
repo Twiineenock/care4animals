@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
 import Auth from './pages/Auth';
 import FarmerAuth from './pages/FarmerAuth';
+import FarmerDashboard from './pages/FarmerDashboard';
 
 const ProtectedRoute = ({ children }) => {
   const [session, setSession] = useState(null);
@@ -48,6 +49,7 @@ function App() {
             </ProtectedRoute>
           } 
         />
+        <Route path="/farmer/dashboard" element={<FarmerDashboard />} />
         {/* Redirect unknown routes to landing */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

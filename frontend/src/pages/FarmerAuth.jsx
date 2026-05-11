@@ -79,7 +79,7 @@ const FarmerAuth = () => {
 
       if (isLogin) {
         localStorage.setItem('farmer_user', JSON.stringify(data.user));
-        navigate('/dashboard'); 
+        navigate('/farmer/dashboard'); 
       } else {
         setIsLogin(true);
         setError('Account created! Please login.');
