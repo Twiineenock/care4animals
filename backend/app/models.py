@@ -16,6 +16,7 @@ class Farmer(Base):
     
     # Relationship to track this user's SMS history
     sms_history = relationship("SMSLog", back_populates="recipient")
+    progress = relationship("LessonProgress", back_populates="farmer")
 
 
 class Lesson(Base):
@@ -28,6 +29,7 @@ class Lesson(Base):
     language = Column(String, index=True)
     theme = Column(String, nullable=True)
     sms_text = Column(String, nullable=True)
+    checklist = Column(Text, nullable=True) # JSON string of checklist items
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 class SMSLog(Base):
@@ -55,6 +57,17 @@ class SMSLog(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     recipient = relationship("Farmer", back_populates="sms_history")
+
+class LessonProgress(Base):
+    __tablename__ = "lesson_progress"
+
+    id = Column(Integer, primary_key=True, index=True)
+    farmer_id = Column(Integer, ForeignKey("farmers.id"))
+    lesson_id = Column(Integer, ForeignKey("lessons.id"))
+    completed_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    farmer = relationship("Farmer", back_populates="progress")
+    lesson = relationship("Lesson")
 
 class Analytics(Base):
     __tablename__ = "analytics"

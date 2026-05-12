@@ -19,16 +19,3 @@ def get_topics():
         {"id": 4, "slug": "feeding-nutrition", "title": "Feeding & Nutrition"},
         {"id": 5, "slug": "transport-handling", "title": "Transport & Handling"},
     ]
-
-@router.get("/lessons")
-def get_lessons(language: str = "en"):
-    return [
-        {
-            "id": 1,
-            "slug": "recognising-sick-animals",
-            "title": "Recognising Sick Animals",
-            "language": language,
-            "body": "Observe appetite, movement, wounds, and unusual behaviour daily.",
-            "sms_part_count": 2,
-        }
-    ]

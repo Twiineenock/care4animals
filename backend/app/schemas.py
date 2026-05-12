@@ -44,6 +44,7 @@ class LessonBase(BaseModel):
     language: str
     theme: Optional[str] = None
     sms_text: Optional[str] = None
+    checklist: Optional[str] = None
 
 class LessonCreate(LessonBase):
     pass
@@ -64,3 +65,23 @@ class TopicResponse(TopicBase):
 
     class Config:
         from_attributes = True
+
+# --- Progress & Stats Schemas ---
+class LessonProgressBase(BaseModel):
+    lesson_id: int
+
+class LessonProgressCreate(LessonProgressBase):
+    pass
+
+class LessonProgressResponse(LessonProgressBase):
+    id: int
+    completed_at: datetime
+
+    class Config:
+        from_attributes = True
+
+class FarmerDashboardStats(BaseModel):
+    lessons_available: int
+    lessons_completed: int
+    last_activity: Optional[datetime] = None
+    completed_lesson_ids: List[int] = []

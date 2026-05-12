@@ -4,6 +4,7 @@ from pydantic import BaseModel, EmailStr
 from passlib.context import CryptContext
 from ..database import get_db
 from ..models import Farmer
+from .. import models, schemas
 
 router = APIRouter(
     prefix="/farmers",
@@ -100,4 +101,28 @@ def login(credentials: FarmerLogin, db: Session = Depends(get_db)):
             "username": farmer.username,
             "email": farmer.email
         }
+    }
+
+@router.get("/{farmer_id}/stats", response_model=schemas.FarmerDashboardStats)
+def get_farmer_stats(farmer_id: int, db: Session = Depends(get_db)):
+    farmer = db.query(Farmer).filter(Farmer.id == farmer_id).first()
+    if not farmer:
+        raise HTTPException(status_code=404, detail="Farmer not found")
+    
+    # Get preferred language or default to 'en'
+    lang = farmer.preferred_language or "en"
+    
+    lessons_available = db.query(models.Lesson).filter(models.Lesson.language == lang).count()
+    
+    progress = db.query(models.LessonProgress).filter(models.LessonProgress.farmer_id == farmer_id).all()
+    completed_lesson_ids = [p.lesson_id for p in progress]
+    lessons_completed = len(completed_lesson_ids)
+    
+    last_activity = farmer.last_interaction
+    
+    return {
+        "lessons_available": lessons_available,
+        "lessons_completed": lessons_completed,
+        "last_activity": last_activity,
+        "completed_lesson_ids": completed_lesson_ids
     }

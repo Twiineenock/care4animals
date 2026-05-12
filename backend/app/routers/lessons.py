@@ -23,7 +23,7 @@ def create_lesson(lesson: schemas.LessonCreate, db: Session = Depends(get_db)):
     db.refresh(db_lesson)
     return db_lesson
 
-@router.get("/", response_model=List[schemas.LessonResponse])
+@router.get("", response_model=List[schemas.LessonResponse])
 def get_lessons(language: Optional[str] = None, db: Session = Depends(get_db)):
     query = db.query(models.Lesson)
     if language:

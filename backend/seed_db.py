@@ -24,6 +24,18 @@ def seed_lessons():
                     # Avoid duplicates by checking the unique lesson code
                     existing = db.query(models.Lesson).filter(models.Lesson.code == item['code'], models.Lesson.language == item.get('language')).first()
                     if not existing:
+                        # Extract checklist from content (lines starting with bullets or just first few lines)
+                        content_lines = item.get('content', '').split('\n')
+                        checklist_items = [line.strip().replace('- ', '').replace('• ', '') for line in content_lines if len(line.strip()) > 5 and 'Media:' not in line and 'Activity:' not in line]
+                        # If no suitable lines, use theme-based defaults
+                        if not checklist_items:
+                            checklist_items = [
+                                f"Review {item.get('theme', 'livestock')} safety standards",
+                                "Monitor animal behavior daily",
+                                "Maintain clean water and feed",
+                                "Consult a vet for any abnormalities"
+                            ]
+                        
                         new_lesson = models.Lesson(
                             code=item.get('code'),
                             title=item.get('title'),
@@ -31,9 +43,24 @@ def seed_lessons():
                             content=item.get('content'),
                             language=item.get('language'),
                             theme=item.get('theme'),
-                            sms_text=item.get('sms_text') or item.get('sms_content')
+                            sms_text=item.get('sms_text') or item.get('sms_content'),
+                            checklist=json.dumps(checklist_items[:4])
                         )
                         db.add(new_lesson)
+                        file_count += 1
+                        total_added += 1
+                    else:
+                        # Update checklist for existing lessons
+                        content_lines = item.get('content', '').split('\n')
+                        checklist_items = [line.strip().replace('- ', '').replace('• ', '') for line in content_lines if len(line.strip()) > 5 and 'Media:' not in line and 'Activity:' not in line]
+                        if not checklist_items:
+                             checklist_items = [
+                                f"Review {item.get('theme', 'livestock')} safety standards",
+                                "Monitor animal behavior daily",
+                                "Maintain clean water and feed",
+                                "Consult a vet for any abnormalities"
+                            ]
+                        existing.checklist = json.dumps(checklist_items[:4])
                         file_count += 1
                         total_added += 1
                 print(f"Loaded {file_count} lessons from {file_name}")
