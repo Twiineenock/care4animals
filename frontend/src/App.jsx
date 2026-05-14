@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
 import Auth from './pages/Auth';
 import FarmerAuth from './pages/FarmerAuth';
 import FarmerDashboard from './pages/FarmerDashboard';
+import ModulesPage from './pages/farmer/ModulesPage';
+import LessonPage from './pages/farmer/LessonPage';
 
 const ProtectedRoute = ({ children }) => {
   const [session, setSession] = useState(null);
@@ -24,13 +26,17 @@ const ProtectedRoute = ({ children }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  if (loading) return null; // Or a loading spinner
-
-  if (!session) {
-    return <Navigate to="/login" replace />;
-  }
-
+  if (loading) return null;
+  if (!session) return <Navigate to="/login" replace />;
   return children;
+};
+
+// Decides whether to show the modules list or the lesson reader
+// based on URL params: ?module=X&lesson=Y → LessonPage, ?module=X → ModulesPage
+const FarmerDashboardRouter = () => {
+  const [searchParams] = useSearchParams();
+  const hasLesson = searchParams.get('lesson');
+  return hasLesson ? <LessonPage /> : <ModulesPage />;
 };
 
 function App() {
@@ -40,17 +46,16 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/farmer/auth" element={<FarmerAuth />} />
-
-        <Route 
-          path="/dashboard" 
+        <Route
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route path="/farmer/dashboard" element={<FarmerDashboard />} />
-        {/* Redirect unknown routes to landing */}
+        {/* Farmer dashboard — URL-driven routing */}
+        <Route path="/farmer/dashboard" element={<FarmerDashboardRouter />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

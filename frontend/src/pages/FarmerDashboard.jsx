@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Search, LogOut, User, Layout, ChevronRight, PlayCircle, Clock, X, Languages, Info, Sparkles, CheckCircle2 } from 'lucide-react';
+import { BookOpen, Search, LogOut, User, Layout, ChevronRight, ChevronDown, PlayCircle, Clock, X, Languages, Info, Sparkles, CheckCircle2, FolderOpen, Folder } from 'lucide-react';
 
 const FarmerDashboard = () => {
-  const [lessons, setLessons] = useState([]);
+  const [modules, setModules] = useState([]);       // lightweight: [{module, lesson_count}]
+  const [lessonCache, setLessonCache] = useState({}); // { "ModuleName": [...lessons] }
+  const [loadingModules, setLoadingModules] = useState({});
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [farmer, setFarmer] = useState(null);
@@ -17,7 +19,44 @@ const FarmerDashboard = () => {
   });
   const [recentActivity, setRecentActivity] = useState([]);
   const [isMarking, setIsMarking] = useState(false);
+  const [selectedAnimal, setSelectedAnimal] = useState('cow');
+  const [showSettings, setShowSettings] = useState(false);
+  const [isUpdatingAnimals, setIsUpdatingAnimals] = useState(false);
+  const [openModules, setOpenModules] = useState(new Set());
   const navigate = useNavigate();
+
+  const toggleModule = (moduleName) => {
+    setOpenModules(prev => {
+      const next = new Set(prev);
+      if (next.has(moduleName)) {
+        next.delete(moduleName);
+      } else {
+        next.add(moduleName);
+        // Lazy-load lessons for this module if not already cached
+        if (!lessonCache[moduleName]) {
+          fetchModuleLessons(moduleName);
+        }
+      }
+      return next;
+    });
+  };
+
+  const fetchModuleLessons = async (moduleName) => {
+    setLoadingModules(prev => ({ ...prev, [moduleName]: true }));
+    try {
+      const res = await fetch(
+        `${API_URL}/api/v1/lessons/by-module?module=${encodeURIComponent(moduleName)}&language=${languageFilter}`
+      );
+      if (res.ok) {
+        const data = await res.json();
+        setLessonCache(prev => ({ ...prev, [moduleName]: data }));
+      }
+    } catch (err) {
+      console.error(`Error loading lessons for ${moduleName}:`, err);
+    } finally {
+      setLoadingModules(prev => ({ ...prev, [moduleName]: false }));
+    }
+  };
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -37,25 +76,28 @@ const FarmerDashboard = () => {
       return;
     }
 
-    // Fetch lessons and stats
-    const fetchData = async () => {
+    // Fetch modules list (lightweight) and stats in parallel
+    const fetchData = async (lang = 'en') => {
       const f = JSON.parse(storedFarmer);
       try {
-        const [lessonsRes, statsRes] = await Promise.all([
-          fetch(`${API_URL}/api/v1/lessons`),
+        const [modulesRes, statsRes] = await Promise.all([
+          fetch(`${API_URL}/api/v1/lessons/modules?language=${lang}`),
           fetch(`${API_URL}/farmers/${f.id}/stats`)
         ]);
 
-        if (lessonsRes.ok) {
-          const lessonsData = await lessonsRes.json();
-          setLessons(Array.isArray(lessonsData) ? lessonsData : []);
+        if (modulesRes.ok) {
+          const modulesData = await modulesRes.json();
+          setModules(Array.isArray(modulesData) ? modulesData : []);
         }
 
         if (statsRes.ok) {
           const statsData = await statsRes.json();
           setStats(statsData);
-          if (statsData.preferred_language) {
-            setLanguageFilter(statsData.preferred_language);
+          const preferredLang = statsData.preferred_language || 'en';
+          if (preferredLang !== lang) {
+            setLanguageFilter(preferredLang);
+            fetchData(preferredLang);
+            return;
           }
         }
       } catch (err) {
@@ -65,8 +107,19 @@ const FarmerDashboard = () => {
       }
     };
 
-    fetchData();
+    fetchData(languageFilter);
   }, [navigate, API_URL]);
+
+  // Reload modules and clear lesson cache when language changes
+  useEffect(() => {
+    if (!farmer) return;
+    setLessonCache({});
+    setOpenModules(new Set());
+    fetch(`${API_URL}/api/v1/lessons/modules?language=${languageFilter}`)
+      .then(r => r.ok ? r.json() : [])
+      .then(data => setModules(Array.isArray(data) ? data : []))
+      .catch(console.error);
+  }, [languageFilter, API_URL, farmer]);
 
   // Live Activity Polling
   useEffect(() => {
@@ -126,14 +179,14 @@ const FarmerDashboard = () => {
     );
   }
 
-  const filteredLessons = lessons.filter(lesson => 
-    (lesson.language === languageFilter) && (
-      lesson.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lesson.topic?.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+  // Filter modules by search query (module name match)
+  const filteredModules = modules.filter(m =>
+    !searchQuery || m.module.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const dailyTip = lessons.find(l => l.language === languageFilter) || lessons[0];
+  // For the daily tip, use the first cached lesson we have, or null
+  const allCachedLessons = Object.values(lessonCache).flat();
+  const dailyTip = allCachedLessons[0] || null;
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-outfit">
@@ -148,7 +201,7 @@ const FarmerDashboard = () => {
 
         <nav className="flex-1 space-y-2">
           <NavItem icon={<BookOpen />} label="My Lessons" active />
-          <NavItem icon={<User />} label="My Profile" />
+          <NavItem icon={<User />} label="My Settings" onClick={() => setShowSettings(true)} />
           
           <div className="mt-12 pt-8 border-t border-slate-100">
             <div className="flex items-center gap-2 mb-6">
@@ -256,7 +309,7 @@ const FarmerDashboard = () => {
             <div>
               <h2 className="text-2xl font-black text-[#1A1C1E] tracking-tight">Your Knowledge Library</h2>
               <p className="text-slate-400 font-bold text-sm uppercase tracking-widest mt-1">
-                Showing {filteredLessons.length} modules
+                {filteredModules.length} module{filteredModules.length !== 1 ? 's' : ''} · {stats.lessons_available} lessons
               </p>
             </div>
 
@@ -282,70 +335,158 @@ const FarmerDashboard = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {filteredLessons.map((lesson) => (
-              <div 
-                key={lesson.id}
-                onClick={() => setSelectedLesson(lesson)}
-                className="group bg-white rounded-[32px] border border-slate-100 p-6 shadow-[0_16px_32px_-12px_rgba(0,0,0,0.02)] hover:shadow-[0_32px_64px_-16px_rgba(45,90,39,0.08)] hover:border-[#2D5A27]/10 transition-all cursor-pointer flex flex-col h-full"
+          {/* Animal Switcher */}
+          <div className="flex overflow-x-auto pb-2 gap-4">
+            {(stats.farmed_animals || 'cow').split(',').map((animal) => (
+              <button
+                key={animal}
+                onClick={() => setSelectedAnimal(animal)}
+                className={`px-8 py-3 rounded-2xl text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap ${
+                  selectedAnimal === animal
+                  ? 'bg-orange-100 text-orange-700 shadow-sm border border-orange-200'
+                  : 'bg-white text-slate-400 border border-slate-100 hover:border-orange-200'
+                }`}
               >
-                <div className="flex items-start justify-between mb-6">
-                  <div className="w-14 h-14 bg-[#F2F8F3] text-[#2D5A27] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <BookOpen className="w-7 h-7" />
-                  </div>
-                  {stats.completed_lesson_ids.includes(lesson.id) ? (
-                    <div className="flex items-center gap-1.5 text-white font-black text-[10px] uppercase tracking-widest bg-[#2D5A27] px-3 py-1.5 rounded-full">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      Completed
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1.5 text-slate-400 font-black text-[10px] uppercase tracking-widest bg-slate-50 px-3 py-1.5 rounded-full">
-                      <BookOpen className="w-3.5 h-3.5" />
-                      Ready
-                    </div>
-                  )}
-                </div>
-                
-                <div className="flex-1 mb-8">
-                  <span className="px-3 py-1 bg-slate-100 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-500 mb-3 inline-block">
-                    {lesson.theme || 'Livestock Health'}
-                  </span>
-                  <h3 className="text-xl font-bold text-[#1A1C1E] mb-2 group-hover:text-[#2D5A27] transition-colors">
-                    {lesson.title}
-                  </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
-                    {lesson.content?.substring(0, 120)}...
-                  </p>
-                </div>
-                
-                <div className="flex items-center justify-between pt-6 border-t border-slate-50">
-                  <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest">
-                    <Clock className="w-4 h-4" />
-                    5 MIN READ
-                  </div>
-                  <div className="w-10 h-10 bg-[#F8FAFB] rounded-full flex items-center justify-center text-[#2D5A27] group-hover:bg-[#2D5A27] group-hover:text-white transition-all">
-                    <PlayCircle className="w-6 h-6" />
-                  </div>
-                </div>
-              </div>
+                <div className={`w-2 h-2 rounded-full ${selectedAnimal === animal ? 'bg-orange-500' : 'bg-slate-200'}`} />
+                {animal.charAt(0).toUpperCase() + animal.slice(1)}s
+              </button>
             ))}
+            <button 
+              onClick={() => setShowSettings(true)}
+              className="px-6 py-3 rounded-2xl text-sm font-black text-[#2D5A27] bg-green-50 hover:bg-green-100 transition-colors flex items-center gap-2 whitespace-nowrap"
+            >
+              <Info className="w-4 h-4" />
+              Manage Animals
+            </button>
           </div>
 
-          {filteredLessons.length === 0 && (
-            <div className="text-center py-20 bg-white rounded-[40px] border-2 border-dashed border-slate-100">
-              <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Search className="w-10 h-10 text-slate-200" />
+          {/* Module Accordion */}
+          <div className="space-y-4">
+            {filteredModules.length === 0 ? (
+              <div className="text-center py-20 bg-white rounded-[40px] border-2 border-dashed border-slate-100">
+                <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Search className="w-10 h-10 text-slate-200" />
+                </div>
+                <h3 className="text-xl font-bold text-[#1A1C1E] mb-2">No modules found</h3>
+                <p className="text-slate-400 font-medium max-w-sm mx-auto">
+                  We couldn't find any modules in {languageFilter === 'en' ? 'English' : languageFilter === 'lg' ? 'Luganda' : 'Swahili'} matching your search.
+                </p>
+                <button onClick={() => setSearchQuery('')} className="mt-6 text-[#2D5A27] font-black hover:underline">
+                  Clear Search
+                </button>
               </div>
-              <h3 className="text-xl font-bold text-[#1A1C1E] mb-2">No lessons found</h3>
-              <p className="text-slate-400 font-medium max-w-sm mx-auto">We couldn't find any lessons in {languageFilter === 'en' ? 'English' : languageFilter === 'lg' ? 'Luganda' : 'Swahili'} matching your search.</p>
-              <button 
-                onClick={() => setSearchQuery('')}
-                className="mt-6 text-[#2D5A27] font-black hover:underline"
-              >
-                Clear Search
-              </button>
-            </div>
-          )}
+            ) : (
+              filteredModules.map(({ module: moduleName, lesson_count }) => {
+                const isOpen = openModules.has(moduleName);
+                const isLoadingModule = loadingModules[moduleName];
+                const moduleLessons = lessonCache[moduleName] || [];
+                const completedCount = moduleLessons.filter(l => stats.completed_lesson_ids.includes(l.id)).length;
+                const progress = moduleLessons.length > 0 ? Math.round((completedCount / moduleLessons.length) * 100) : 0;
+
+                return (
+                  <div key={moduleName} className="bg-white rounded-[28px] border border-slate-100 overflow-hidden shadow-[0_4px_16px_-4px_rgba(0,0,0,0.04)]">
+                    {/* Module Header — click to toggle */}
+                    <button
+                      onClick={() => toggleModule(moduleName)}
+                      className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-50/60 transition-colors group"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${isOpen ? 'bg-[#2D5A27] text-white' : 'bg-[#F2F8F3] text-[#2D5A27]'}`}>
+                          {isOpen ? <FolderOpen className="w-6 h-6" /> : <Folder className="w-6 h-6" />}
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-black text-[#1A1C1E] group-hover:text-[#2D5A27] transition-colors">
+                            {moduleName}
+                          </h3>
+                          <div className="flex items-center gap-3 mt-1">
+                            <span className="text-xs font-bold text-slate-400">
+                              {lesson_count} lesson{lesson_count !== 1 ? 's' : ''}
+                            </span>
+                            {completedCount > 0 && (
+                              <span className="text-xs font-bold text-[#2D5A27]">
+                                · {completedCount} completed
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        {/* Progress bar — only shown once lessons are loaded */}
+                        {moduleLessons.length > 0 && (
+                          <div className="hidden md:flex items-center gap-3">
+                            <div className="w-32 h-2 bg-slate-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-[#2D5A27] rounded-full transition-all duration-500"
+                                style={{ width: `${progress}%` }}
+                              />
+                            </div>
+                            <span className="text-xs font-black text-slate-400">{progress}%</span>
+                          </div>
+                        )}
+                        <div className={`w-9 h-9 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                          <ChevronDown className="w-5 h-5" />
+                        </div>
+                      </div>
+                    </button>
+
+                    {/* Lessons inside the module */}
+                    {isOpen && (
+                      <div className="border-t border-slate-100 px-6 pb-6 pt-4">
+                        {isLoadingModule ? (
+                          <div className="flex items-center justify-center py-10 gap-3 text-slate-400">
+                            <div className="w-5 h-5 border-2 border-slate-200 border-t-[#2D5A27] rounded-full animate-spin" />
+                            <span className="text-sm font-bold">Loading lessons...</span>
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                            {moduleLessons.map((lesson) => (
+                              <div
+                                key={lesson.id}
+                                onClick={() => setSelectedLesson(lesson)}
+                                className="group/card bg-[#FDFCFB] rounded-[20px] border border-slate-100 p-5 hover:border-[#2D5A27]/20 hover:shadow-md transition-all cursor-pointer flex flex-col"
+                              >
+                                <div className="flex items-start justify-between mb-4">
+                                  <div className="w-10 h-10 bg-white text-[#2D5A27] rounded-xl flex items-center justify-center border border-slate-100 group-hover/card:bg-[#2D5A27] group-hover/card:text-white transition-colors">
+                                    <BookOpen className="w-5 h-5" />
+                                  </div>
+                                  {stats.completed_lesson_ids.includes(lesson.id) ? (
+                                    <div className="flex items-center gap-1 text-white font-black text-[9px] uppercase tracking-widest bg-[#2D5A27] px-2.5 py-1 rounded-full">
+                                      <CheckCircle2 className="w-3 h-3" />
+                                      Done
+                                    </div>
+                                  ) : (
+                                    <div className="flex items-center gap-1 text-slate-400 font-black text-[9px] uppercase tracking-widest bg-slate-100 px-2.5 py-1 rounded-full">
+                                      <Clock className="w-3 h-3" />
+                                      5 min
+                                    </div>
+                                  )}
+                                </div>
+
+                                <h4 className="text-sm font-bold text-[#1A1C1E] mb-2 group-hover/card:text-[#2D5A27] transition-colors leading-snug">
+                                  {lesson.title}
+                                </h4>
+                                <p className="text-xs text-slate-400 leading-relaxed line-clamp-2 flex-1">
+                                  {lesson.content?.substring(0, 90)}...
+                                </p>
+
+                                <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
+                                  <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">
+                                    {lesson.code}
+                                  </span>
+                                  <PlayCircle className="w-5 h-5 text-slate-300 group-hover/card:text-[#2D5A27] transition-colors" />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </div>
         </div>
 
         {/* Lesson Reading Modal */}
@@ -466,13 +607,86 @@ const FarmerDashboard = () => {
             </div>
           </div>
         )}
+
+        {/* Settings Modal */}
+        {showSettings && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-[#1A1C1E]/60 backdrop-blur-xl" onClick={() => setShowSettings(false)} />
+            <div className="bg-white w-full max-w-md rounded-[40px] shadow-2xl relative z-10 p-10 animate-in fade-in zoom-in duration-200">
+              <h3 className="text-2xl font-black text-[#1A1C1E] mb-2">Farm Settings</h3>
+              <p className="text-slate-500 font-medium mb-8">Select the animals you are currently dealing with to get personalized lessons.</p>
+              
+              <div className="space-y-4 mb-10">
+                {['cow', 'dog', 'pig', 'chicken', 'goat'].map((animal) => {
+                  const isSelected = (stats.farmed_animals || 'cow').split(',').includes(animal);
+                  return (
+                    <label 
+                      key={animal}
+                      className={`flex items-center justify-between p-5 rounded-2xl border-2 transition-all cursor-pointer ${
+                        isSelected ? 'border-[#2D5A27] bg-[#F2F8F3]' : 'border-slate-100 hover:border-slate-200'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${isSelected ? 'bg-[#2D5A27] text-white' : 'bg-slate-100 text-slate-300'}`}>
+                            {isSelected && <CheckCircle2 className="w-4 h-4" />}
+                        </div>
+                        <span className={`font-bold ${isSelected ? 'text-[#1A1C1E]' : 'text-slate-400'}`}>
+                            {animal.charAt(0).toUpperCase() + animal.slice(1)}s
+                        </span>
+                      </div>
+                      <input 
+                        type="checkbox"
+                        className="hidden"
+                        checked={isSelected}
+                        onChange={async () => {
+                            const current = (stats.farmed_animals || 'cow').split(',');
+                            let updated;
+                            if (current.includes(animal)) {
+                                updated = current.filter(a => a !== animal);
+                            } else {
+                                updated = [...current, animal];
+                            }
+                            if (updated.length === 0) return; // Must have at least one
+
+                            setIsUpdatingAnimals(true);
+                            try {
+                                const res = await fetch(`${API_URL}/farmers/${farmer.id}/animals`, {
+                                    method: 'PUT',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ farmed_animals: updated.join(',') })
+                                });
+                                if (res.ok) {
+                                    const statsRes = await fetch(`${API_URL}/farmers/${farmer.id}/stats`);
+                                    const statsData = await statsRes.json();
+                                    setStats(statsData);
+                                }
+                            } catch (e) { console.error(e); }
+                            finally { setIsUpdatingAnimals(false); }
+                        }}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+
+              <button 
+                onClick={() => setShowSettings(false)}
+                className="w-full py-5 bg-[#2D5A27] text-white rounded-2xl font-black shadow-xl shadow-[#2D5A27]/20 hover:scale-[1.02] transition-all"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
 };
 
-const NavItem = ({ icon, label, active = false }) => (
-  <div className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-bold cursor-pointer transition-all ${
+const NavItem = ({ icon, label, active = false, onClick }) => (
+  <div 
+    onClick={onClick}
+    className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-bold cursor-pointer transition-all ${
     active ? 'bg-[#2D5A27] text-white shadow-lg shadow-[#2D5A27]/20' : 'text-slate-500 hover:bg-slate-50'
   }`}>
     {React.cloneElement(icon, { className: "w-5 h-5" })}
