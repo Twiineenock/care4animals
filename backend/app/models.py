@@ -12,6 +12,7 @@ class Farmer(Base):
     phone_number = Column(String, unique=True, index=True)
     password_hash = Column(String)
     preferred_language = Column(String, default="en")
+    farmed_animals = Column(String, default="cow") # Comma-separated list like "cow,dog"
     last_interaction = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     
     # Relationship to track this user's SMS history
@@ -29,6 +30,7 @@ class Lesson(Base):
     language = Column(String, index=True)
     theme = Column(String, nullable=True)
     sms_text = Column(String, nullable=True)
+    target_animals = Column(String, default="cow") # Comma-separated list like "cow,dog"
     checklist = Column(Text, nullable=True) # JSON string of checklist items
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 

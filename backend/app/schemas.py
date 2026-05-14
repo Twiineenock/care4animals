@@ -43,7 +43,9 @@ class LessonBase(BaseModel):
     content: str
     language: str
     theme: Optional[str] = None
+    topic: Optional[str] = None
     sms_text: Optional[str] = None
+    target_animals: Optional[str] = "cow"
     checklist: Optional[str] = None
 
 class LessonCreate(LessonBase):
@@ -80,8 +82,12 @@ class LessonProgressResponse(LessonProgressBase):
     class Config:
         from_attributes = True
 
+class FarmerUpdateAnimals(BaseModel):
+    farmed_animals: str
+
 class FarmerDashboardStats(BaseModel):
     lessons_available: int
     lessons_completed: int
+    farmed_animals: Optional[str] = "cow"
     last_activity: Optional[datetime] = None
     completed_lesson_ids: List[int] = []
