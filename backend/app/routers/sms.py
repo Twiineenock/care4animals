@@ -29,9 +29,15 @@ def handle_incoming_sms(
     keyword = text.strip().upper()
 
     # 1. Manage User Profile (Get or Create)
-    user = db.query(models.UserProfile).filter(models.UserProfile.phone_number == sender).first()
+    # Using 'Farmer' model which is the correct one in this project
+    user = db.query(models.Farmer).filter(models.Farmer.phone_number == sender).first()
     if not user:
-        user = models.UserProfile(phone_number=sender, preferred_language="en")
+        # Create a basic farmer profile for incoming SMS if not exists
+        user = models.Farmer(
+            phone_number=sender, 
+            username=f"sms_{sender[-4:]}", # Auto-generate a basic username
+            preferred_language="en"
+        )
         db.add(user)
         db.commit()
         db.refresh(user)
@@ -56,7 +62,7 @@ def handle_incoming_sms(
     if reply_message:
         db.commit()
         log_event(db, "language_change", {"sender": sender, "to": lang_detected})
-        sms_status = send_and_log_sms(db, user.id, sender, reply_message)
+        send_and_log_sms(db, user.id, sender, reply_message)
         return {"status": "success", "action": "language_change"}
 
     # 3. Lookup Lesson
@@ -79,8 +85,13 @@ def handle_incoming_sms(
         send_and_log_sms(db, user.id, sender, error_msg)
         return {"status": "error", "message": "Keyword not found"}
 
-    # Determine message content
-    final_text = lesson.content
+    # Determine message content - use sms_text for brevity if available
+    final_text = lesson.sms_text if lesson.sms_text else lesson.content
+    
+    # If the content is too long for a single SMS, we might want to truncate or split
+    # but Africa's Talking handles multi-part SMS if it's within limits.
+    if len(final_text) > 320:
+        final_text = final_text[:317] + "..."
 
     # Log to Analytics
     log_event(db, "lesson_request", {
@@ -97,6 +108,38 @@ def handle_incoming_sms(
         "status": sms_status.status,
         "message_id": sms_status.provider_message_id
     }
+
+@router.post("/send-lesson")
+def send_lesson_to_phone(
+    farmer_id: int,
+    lesson_id: int,
+    db: Session = Depends(get_db)
+):
+    """
+    Manually push a lesson summary to a farmer's phone.
+    Used by the 'Send to SMS' button in the dashboard.
+    """
+    farmer = db.query(models.Farmer).filter(models.Farmer.id == farmer_id).first()
+    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
+    
+    if not farmer or not lesson:
+        raise HTTPException(status_code=404, detail="Farmer or Lesson not found")
+        
+    text = lesson.sms_text if lesson.sms_text else lesson.content
+    if len(text) > 320:
+        text = text[:317] + "..."
+        
+    # Trigger SMS
+    sms_status = send_and_log_sms(db, farmer.id, farmer.phone_number, text)
+    
+    # Log to Analytics
+    log_event(db, "manual_sms_push", {
+        "farmer_id": farmer.id,
+        "lesson_id": lesson.id,
+        "phone": farmer.phone_number
+    })
+    
+    return {"status": sms_status.status, "message_id": sms_status.provider_message_id}
 
 def log_event(db: Session, event_type: str, metadata: dict):
     """Helper function to record analytics events"""

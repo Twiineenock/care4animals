@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams, useSearchParams, Link } from 'react-router-dom';
 import {
   ArrowLeft, CheckCircle2, Clock, Languages,
-  ChevronLeft, ChevronRight, Flame, Layout, LogOut, BookOpen
+  ChevronLeft, ChevronRight, Flame, Layout, LogOut, BookOpen,
+  Send, Smartphone
 } from 'lucide-react';
 import { cachedFetch, invalidateFarmerCache } from '../../utils/apiCache';
 
@@ -18,6 +19,8 @@ const FeedLessonPage = () => {
   const [loading, setLoading] = useState(true);
   const [marked, setMarked] = useState(false);
   const markedRef = useRef(false);
+  const [sendingSMS, setSendingSMS] = useState(false);
+  const [smsStatus, setSmsStatus] = useState(null);
 
   useEffect(() => {
     const stored = localStorage.getItem('farmer_user');
@@ -60,6 +63,26 @@ const FeedLessonPage = () => {
     };
     init();
   }, [code, navigate]);
+
+  const handleSendSMS = async () => {
+    if (!farmer || !lesson || sendingSMS) return;
+    setSendingSMS(true);
+    setSmsStatus(null);
+    try {
+      const res = await fetch(`${API_URL}/sms/send-lesson?farmer_id=${farmer.id}&lesson_id=${lesson.id}`, { method: 'POST' });
+      if (res.ok) {
+        setSmsStatus({ type: 'success', text: 'Sent to your phone!' });
+        setTimeout(() => setSmsStatus(null), 3000);
+      } else {
+        throw new Error('Failed to send');
+      }
+    } catch (err) {
+      setSmsStatus({ type: 'error', text: 'Failed to send SMS.' });
+      setTimeout(() => setSmsStatus(null), 3000);
+    } finally {
+      setSendingSMS(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -147,12 +170,32 @@ const FeedLessonPage = () => {
 
         {/* SMS summary */}
         {lesson.sms_text && (
-          <div className="bg-[#F8FAFB] rounded-[28px] p-6 border border-slate-100 mb-10">
-            <div className="flex items-center gap-2 mb-3 text-[#2D5A27]">
-              <Languages className="w-4 h-4" />
-              <span className="font-black text-xs uppercase tracking-widest">Quick Summary</span>
+          <div className="bg-[#F8FAFB] rounded-[28px] p-6 border border-slate-100 mb-10 relative overflow-hidden">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2 text-[#2D5A27]">
+                <Smartphone className="w-4 h-4" />
+                <span className="font-black text-xs uppercase tracking-widest">Send to Small Phone</span>
+              </div>
+              <button 
+                onClick={handleSendSMS}
+                disabled={sendingSMS}
+                className="flex items-center gap-2 px-4 py-2 bg-[#2D5A27] text-white rounded-xl text-xs font-black hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#2D5A27]/20 disabled:opacity-50"
+              >
+                {sendingSMS ? (
+                  <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <Send className="w-3 h-3" />
+                )}
+                {sendingSMS ? 'Sending...' : 'Send SMS'}
+              </button>
             </div>
-            <p className="text-slate-600 font-mono text-sm leading-relaxed italic">"{lesson.sms_text}"</p>
+            <p className="text-slate-600 font-mono text-sm leading-relaxed italic mb-1">"{lesson.sms_text}"</p>
+            
+            {smsStatus && (
+              <div className={`mt-3 text-[10px] font-black uppercase tracking-widest animate-in fade-in slide-in-from-top-1 ${smsStatus.type === 'success' ? 'text-green-600' : 'text-red-500'}`}>
+                {smsStatus.text}
+              </div>
+            )}
           </div>
         )}
 
