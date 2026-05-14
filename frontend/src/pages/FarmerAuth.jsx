@@ -70,11 +70,16 @@ const FarmerAuth = () => {
     };
 
     try {
-      const response = await fetch(`${API_URL}${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      let response;
+      try {
+        response = await fetch(`${API_URL}${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (networkErr) {
+        throw new Error('Unable to reach the server. Please try again in a moment.');
+      }
 
       const data = await response.json();
 
