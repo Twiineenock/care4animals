@@ -85,9 +85,18 @@ class LessonProgressResponse(LessonProgressBase):
 class FarmerUpdateAnimals(BaseModel):
     farmed_animals: str
 
+class FarmerUpdateProfile(BaseModel):
+    username: Optional[str] = None
+    email: Optional[str] = None
+    phone_number: Optional[str] = None
+    bio: Optional[str] = None
+    profile_picture_url: Optional[str] = None
+
 class FarmerDashboardStats(BaseModel):
     lessons_available: int
     lessons_completed: int
     farmed_animals: Optional[str] = "cow"
+    profile_picture_url: Optional[str] = None
+    bio: Optional[str] = None
     last_activity: Optional[datetime] = None
     completed_lesson_ids: List[int] = []

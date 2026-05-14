@@ -13,6 +13,8 @@ class Farmer(Base):
     password_hash = Column(String)
     preferred_language = Column(String, default="en")
     farmed_animals = Column(String, default="cow") # Comma-separated list like "cow,dog"
+    profile_picture_url = Column(String, nullable=True)
+    bio = Column(Text, nullable=True)
     last_interaction = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     
     # Relationship to track this user's SMS history

@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import {
   BookOpen, Search, LogOut, User, Layout, ChevronDown,
   PlayCircle, Clock, CheckCircle2, FolderOpen,
-  Folder, Flame, Zap, ChevronRight
+  Folder, Flame, Zap, ChevronRight, Home, Settings, Menu
 } from 'lucide-react';
 import { cachedFetch, invalidateFarmerCache } from '../../utils/apiCache';
 
@@ -157,168 +157,123 @@ const ModulesPage = () => {
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-outfit">
-      {/* Sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-100 hidden lg:flex flex-col p-8 z-50">
-        <div className="flex items-center gap-3 mb-12">
-          <div className="w-10 h-10 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white">
-            <Layout className="w-6 h-6" />
+      {/* Desktop Sidebar - Admin-style Design */}
+      <aside className="fixed left-0 top-0 h-full w-72 bg-[#012d1d] flex flex-col py-8 shadow-xl hidden lg:flex z-50 overflow-y-auto custom-scrollbar">
+        <div className="px-8 mb-12">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white shadow-lg shadow-black/20">
+              <Layout className="w-6 h-6" />
+            </div>
+            <span className="font-manrope font-black text-2xl text-white tracking-tight">Care4Animals</span>
           </div>
-          <span className="font-black text-xl text-[#1A1C1E] tracking-tight">Care4Animals</span>
+          <p className="text-[#A7C0A4] text-[10px] font-black uppercase tracking-[0.2em] ml-1">Farmer Dashboard</p>
         </div>
-        <nav className="flex-1 space-y-2">
-          <NavItem icon={<Flame />} label="Daily Feed" onClick={() => navigate('/farmer/feed')} />
-          <NavItem icon={<BookOpen />} label="All Modules" active />
-          <NavItem icon={<User />} label="My Settings" onClick={() => setShowSettings(true)} />
-          <div className="mt-12 pt-8 border-t border-slate-100">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Community Pulse</span>
-            </div>
-            <div className="space-y-4">
-              {recentActivity.length > 0 ? recentActivity.map((a, i) => (
-                <div key={i} className="pl-4 border-l-2 border-slate-100 hover:border-[#2D5A27] transition-all">
-                  <p className="text-xs font-bold text-[#1A1C1E] truncate">{a.username}</p>
-                  <p className="text-[10px] text-slate-400 font-medium truncate">Completed {a.lesson_title}</p>
-                  <p className="text-[8px] text-slate-300 font-black uppercase mt-1">
-                    {new Date(a.completed_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </p>
-                </div>
-              )) : (
-                <p className="text-[10px] text-slate-400 italic text-center py-4">Waiting for activity...</p>
-              )}
-            </div>
+
+        <nav className="flex-1 px-4 space-y-1.5">
+          <SidebarItem 
+            icon="dashboard" 
+            label="Daily Feed" 
+            active={false} 
+            onClick={() => navigate('/farmer/feed')} 
+          />
+          <SidebarItem 
+            icon="menu_book" 
+            label="All Modules" 
+            active={true} 
+            onClick={() => navigate('/farmer/dashboard')} 
+          />
+          <SidebarItem 
+            icon="person" 
+            label="My Profile" 
+            onClick={() => navigate('/farmer/profile')} 
+          />
+          <SidebarItem 
+            icon="settings" 
+            label="Settings" 
+            onClick={() => setShowSettings(true)} 
+          />
+          
+          <div className="pt-6 mt-6 border-t border-white/10">
+            <button 
+              onClick={handleLogout}
+              className="w-full flex items-center gap-3 px-6 py-4 text-red-300 hover:text-red-100 hover:bg-red-500/10 rounded-2xl transition-all group font-bold text-sm"
+            >
+              <span className="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">logout</span>
+              Sign Out
+            </button>
           </div>
         </nav>
-        <div className="pt-8 border-t border-slate-100">
-          <div className="bg-[#F8FAFB] rounded-2xl p-4 mb-6">
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Signed in as</p>
-            <p className="font-bold text-[#1A1C1E] truncate">{farmer?.username}</p>
+
+        <div className="mt-auto px-6 py-6 border-t border-white/5 bg-black/10">
+          <div className="flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/5">
+            <div className="w-10 h-10 rounded-xl bg-[#2D5A27] flex items-center justify-center text-white font-black overflow-hidden border border-white/10">
+              {stats?.profile_picture_url ? (
+                <img src={stats.profile_picture_url} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                farmer?.username?.[0]?.toUpperCase()
+              )}
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-black text-[#A7C0A4] uppercase tracking-widest leading-none mb-1">Active Farmer</p>
+              <p className="text-sm font-bold text-white truncate">{farmer?.username}</p>
+            </div>
           </div>
-          <button onClick={handleLogout} className="w-full py-4 px-4 flex items-center gap-3 text-red-500 font-bold hover:bg-red-50 rounded-2xl transition-colors">
-            <LogOut className="w-5 h-5" /> Sign Out
-          </button>
         </div>
       </aside>
 
-      {/* Main */}
-      <main className="lg:ml-72 p-6 md:p-12">
-        {/* Header */}
-        <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-          <div>
-            <h1 className="text-3xl md:text-4xl font-black text-[#1A1C1E] tracking-tight mb-2">
-              Welcome, {farmer?.username}! 👋
-            </h1>
-            <p className="text-slate-500 font-medium">Ready to learn something new about your animals today?</p>
+      {/* Mobile Top Bar */}
+      <header className="lg:hidden sticky top-0 z-[60] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white shadow-lg shadow-[#2D5A27]/20">
+            <Layout className="w-5 h-5" />
           </div>
-          <div className="relative group max-w-md w-full">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-[#2D5A27] transition-colors" />
-            <input
-              type="text"
-              placeholder="Search modules..."
-              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-3xl outline-none focus:border-[#2D5A27] focus:ring-4 focus:ring-[#2D5A27]/5 transition-all font-medium text-slate-700"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-            />
-          </div>
-        </header>
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <StatCard label="Lessons Available" value={stats.lessons_available} color="bg-blue-50 text-blue-600" />
-          <StatCard label="Lessons Completed" value={stats.lessons_completed} color="bg-green-50 text-green-600" />
-          <StatCard label="Last Activity" value={stats.last_activity ? new Date(stats.last_activity).toLocaleDateString() : 'None'} color="bg-orange-50 text-orange-600" />
+          <span className="font-black text-lg text-[#1A1C1E] tracking-tight">Care4Animals</span>
         </div>
+        <button 
+          onClick={() => setShowSettings(true)}
+          className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100"
+        >
+          <Settings className="w-5 h-5" />
+        </button>
+      </header>
 
-        {/* Daily Feed Hero */}
-        {dailyFeed && !dailyFeed.curriculum_complete && (
-          <div className="mb-10 bg-gradient-to-br from-[#2D5A27] to-[#1E3D1A] rounded-[36px] p-8 text-white relative overflow-hidden shadow-2xl shadow-[#2D5A27]/20">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl pointer-events-none" />
-            <div className="relative z-10">
-              {/* Label */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-white/90 text-xs font-black uppercase tracking-widest mb-5 backdrop-blur-md">
-                <Flame className="w-4 h-4 text-orange-400" />
-                Today's Daily Feed · Batch {dailyFeed.batch_number}
-              </div>
-
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
-                <div className="flex-1">
-                  <h2 className="text-2xl md:text-3xl font-black mb-2 leading-tight">
-                    {dailyFeed.current_module}
-                  </h2>
-                  <p className="text-white/70 font-medium mb-5">
-                    {dailyFeed.batch_lessons.filter(l => l.completed).length} of {dailyFeed.batch_lessons.length} lessons completed today
-                  </p>
-
-                  {/* Mini lesson list */}
-                  <div className="space-y-2 mb-6">
-                    {dailyFeed.batch_lessons.map((lesson, i) => (
-                      <div key={lesson.id} className="flex items-center gap-3">
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${lesson.completed ? 'bg-white text-[#2D5A27]' : 'bg-white/20 text-white/60'}`}>
-                          {lesson.completed
-                            ? <CheckCircle2 className="w-4 h-4" />
-                            : <span className="text-[10px] font-black">{i + 1}</span>
-                          }
-                        </div>
-                        <span className={`text-sm font-bold truncate ${lesson.completed ? 'text-white/50 line-through' : 'text-white'}`}>
-                          {lesson.title}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Progress bar */}
-                  <div className="flex items-center gap-3">
-                    <div className="flex-1 h-2 bg-white/20 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-white rounded-full transition-all duration-500"
-                        style={{ width: `${Math.round((dailyFeed.batch_lessons.filter(l => l.completed).length / dailyFeed.batch_lessons.length) * 100)}%` }}
-                      />
-                    </div>
-                    <span className="text-white/70 text-xs font-black">
-                      {Math.round((dailyFeed.batch_lessons.filter(l => l.completed).length / dailyFeed.batch_lessons.length) * 100)}%
-                    </span>
-                  </div>
-                </div>
-
-                {/* CTA */}
-                <div className="flex flex-col gap-3 shrink-0">
-                  <Link
-                    to="/farmer/feed"
-                    className="flex items-center gap-2 px-7 py-4 bg-white text-[#2D5A27] rounded-2xl font-black hover:scale-105 transition-transform shadow-xl"
-                  >
-                    <Zap className="w-5 h-5" />
-                    Start Learning
-                    <ChevronRight className="w-4 h-4" />
-                  </Link>
-                  <p className="text-white/50 text-xs font-bold text-center">
-                    Module progress: {dailyFeed.module_completed}/{dailyFeed.module_total} lessons
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Library header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
+      {/* Main */}
+      <main className="lg:ml-72 p-6 md:p-12 pb-32 lg:pb-12">
+        {/* Top Header - Unified branding */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
-            <h2 className="text-2xl font-black text-[#1A1C1E] tracking-tight">Your Knowledge Library</h2>
-            <p className="text-slate-400 font-bold text-sm uppercase tracking-widest mt-1">
-              {filteredModules.length} module{filteredModules.length !== 1 ? 's' : ''} · {stats.lessons_available} lessons
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 bg-[#E7F3E8] text-[#2D5A27] rounded-2xl flex items-center justify-center">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <span className="text-xs font-black uppercase tracking-[0.2em] text-[#2D5A27]">Curriculum</span>
+            </div>
+            <h1 className="text-3xl md:text-5xl font-black text-[#1A1C1E] tracking-tight mb-2">
+              Learning Library
+            </h1>
+            <p className="text-slate-500 font-medium text-lg">
+              Explore {stats?.lessons_available ?? 0} expert lessons to improve your animal welfare.
             </p>
           </div>
-          {/* Language Filter */}
-          <div className="flex bg-white p-1.5 rounded-2xl border border-slate-100 shadow-sm">
-            {[{ id: 'en', label: 'English' }, { id: 'lg', label: 'Luganda' }, { id: 'sw', label: 'Swahili' }].map(lang => (
-              <button
-                key={lang.id}
-                onClick={() => setLanguageFilter(lang.id)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-black transition-all ${languageFilter === lang.id ? 'bg-[#2D5A27] text-white shadow-lg shadow-[#2D5A27]/20' : 'text-slate-400 hover:text-slate-600'}`}
-              >
-                {lang.label}
-              </button>
-            ))}
-          </div>
+        </div>
+
+        {/* Search */}
+        <div className="relative group max-w-xl mb-10">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-[#2D5A27] transition-colors" />
+          <input
+            type="text"
+            placeholder="Search modules..."
+            className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-3xl outline-none focus:border-[#2D5A27] focus:ring-4 focus:ring-[#2D5A27]/5 transition-all font-medium text-slate-700 shadow-sm"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        {/* Stats */}
+        <div className="flex lg:grid lg:grid-cols-3 gap-4 lg:gap-6 mb-10 overflow-x-auto pb-4 lg:pb-0 no-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0">
+          <StatCard label="Available" value={stats.lessons_available} color="bg-blue-50 text-blue-600" />
+          <StatCard label="Completed" value={stats.lessons_completed} color="bg-green-50 text-green-600" />
+          <StatCard label="Last Seen" value={stats.last_activity ? new Date(stats.last_activity).toLocaleDateString([], { month: 'short', day: 'numeric' }) : 'None'} color="bg-orange-50 text-orange-600" />
         </div>
 
         {/* Module Accordion */}
@@ -341,7 +296,7 @@ const ModulesPage = () => {
                 {/* Module header row */}
                 <button
                   onClick={() => toggleModule(moduleName)}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-50/60 transition-colors group"
+                  className="w-full flex items-center justify-between p-5 lg:p-6 text-left hover:bg-slate-50/60 active:bg-slate-100/80 transition-all group"
                 >
                   <div className="flex items-center gap-4">
                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${isOpen ? 'bg-[#2D5A27] text-white' : 'bg-[#F2F8F3] text-[#2D5A27]'}`}>
@@ -418,68 +373,56 @@ const ModulesPage = () => {
         </div>
       </main>
 
-      {/* Settings Modal */}
-      {showSettings && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-[#1A1C1E]/60 backdrop-blur-xl" onClick={() => setShowSettings(false)} />
-          <div className="bg-white w-full max-w-md rounded-[40px] shadow-2xl relative z-10 p-10">
-            <h3 className="text-2xl font-black text-[#1A1C1E] mb-2">Farm Settings</h3>
-            <p className="text-slate-500 font-medium mb-8">Select the animals you farm to personalise your lessons.</p>
-            <div className="space-y-4 mb-10">
-              {['cow', 'dog', 'pig', 'chicken', 'goat'].map(animal => {
-                const isSelected = (stats.farmed_animals || 'cow').split(',').includes(animal);
-                return (
-                  <label key={animal} className={`flex items-center justify-between p-5 rounded-2xl border-2 transition-all cursor-pointer ${isSelected ? 'border-[#2D5A27] bg-[#F2F8F3]' : 'border-slate-100 hover:border-slate-200'}`}>
-                    <div className="flex items-center gap-3">
-                      <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${isSelected ? 'bg-[#2D5A27] text-white' : 'bg-slate-100 text-slate-300'}`}>
-                        {isSelected && <CheckCircle2 className="w-4 h-4" />}
-                      </div>
-                      <span className={`font-bold ${isSelected ? 'text-[#1A1C1E]' : 'text-slate-400'}`}>{animal.charAt(0).toUpperCase() + animal.slice(1)}s</span>
-                    </div>
-                    <input type="checkbox" className="hidden" checked={isSelected} onChange={async () => {
-                      const current = (stats.farmed_animals || 'cow').split(',');
-                      const updated = current.includes(animal) ? current.filter(a => a !== animal) : [...current, animal];
-                      if (updated.length === 0) return;
-                      setIsUpdatingAnimals(true);
-                      try {
-                        const res = await fetch(`${API_URL}/farmers/${farmer.id}/animals`, {
-                          method: 'PUT', headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ farmed_animals: updated.join(',') })
-                        });
-                        if (res.ok) {
-                          const s = await (await fetch(`${API_URL}/farmers/${farmer.id}/stats`)).json();
-                          setStats(s);
-                        }
-                      } finally { setIsUpdatingAnimals(false); }
-                    }} />
-                  </label>
-                );
-              })}
-            </div>
-            <button onClick={() => setShowSettings(false)} className="w-full py-5 bg-[#2D5A27] text-white rounded-2xl font-black shadow-xl shadow-[#2D5A27]/20 hover:scale-[1.02] transition-all">Done</button>
-          </div>
-        </div>
-      )}
+      {/* Mobile Bottom Navigation */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/90 backdrop-blur-xl border-t border-slate-100 px-6 py-3 flex items-center justify-between shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
+        <MobileNavItem icon={<Home />} label="Home" active onClick={() => navigate('/farmer/dashboard')} />
+        <MobileNavItem icon={<Flame />} label="Feed" onClick={() => navigate('/farmer/feed')} />
+        <MobileNavItem icon={<BookOpen />} label="Library" onClick={() => navigate('/farmer/dashboard')} />
+        <MobileNavItem icon={<User />} label="Profile" onClick={() => setShowSettings(true)} />
+      </nav>
     </div>
   );
 };
 
-const NavItem = ({ icon, label, active = false, onClick }) => (
-  <div onClick={onClick} className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-bold cursor-pointer transition-all ${active ? 'bg-[#2D5A27] text-white shadow-lg shadow-[#2D5A27]/20' : 'text-slate-500 hover:bg-slate-50'}`}>
-    {React.cloneElement(icon, { className: 'w-5 h-5' })} {label}
-  </div>
+const SidebarItem = ({ icon, label, active = false, onClick }) => (
+  <button 
+    onClick={onClick}
+    className={`${
+      active 
+        ? 'bg-[#2D5A27] text-white shadow-lg shadow-black/20' 
+        : 'text-[#A7C0A4] hover:text-white hover:bg-white/5'
+    } w-full rounded-2xl flex items-center px-6 py-4 gap-4 transition-all duration-200 active:scale-[0.98] group`}
+  >
+    <span className={`material-symbols-outlined text-[22px] transition-transform ${active ? '' : 'group-hover:scale-110'}`}>
+      {icon}
+    </span>
+    <span className="font-bold text-sm">{label}</span>
+    {active && <div className="ml-auto w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_white]" />}
+  </button>
 );
 
 const StatCard = ({ label, value, color }) => (
-  <div className="bg-white p-6 rounded-[32px] border border-slate-100 flex items-center justify-between">
+  <div className="bg-white p-5 lg:p-6 rounded-2xl lg:rounded-[32px] border border-slate-100 flex items-center justify-between min-w-[140px] lg:min-w-0 flex-1 shrink-0 lg:shrink shadow-sm lg:shadow-none">
     <div>
-      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">{label}</p>
-      <p className="text-2xl font-black text-[#1A1C1E]">{value}</p>
+      <p className="text-[10px] lg:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">{label}</p>
+      <p className="text-xl lg:text-2xl font-black text-[#1A1C1E]">{value}</p>
     </div>
-    <div className={`w-12 h-12 ${color} rounded-2xl flex items-center justify-center font-bold`}>
-      <BookOpen className="w-6 h-6" />
+    <div className={`w-10 h-10 lg:w-12 lg:h-12 ${color} rounded-xl lg:rounded-2xl flex items-center justify-center font-bold`}>
+      <BookOpen className="w-5 h-5 lg:w-6 lg:h-6" />
     </div>
   </div>
+);
+
+const MobileNavItem = ({ icon, label, active = false, onClick }) => (
+  <button 
+    onClick={onClick}
+    className={`flex flex-col items-center gap-1 transition-all ${active ? 'text-[#2D5A27]' : 'text-slate-400'}`}
+  >
+    <div className={`p-1 rounded-xl transition-all ${active ? 'bg-[#2D5A27]/10' : ''}`}>
+      {React.cloneElement(icon, { className: "w-5 h-5" })}
+    </div>
+    <span className="text-[10px] font-bold uppercase tracking-wider">{label}</span>
+  </button>
 );
 
 export default ModulesPage;

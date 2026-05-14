@@ -23,6 +23,7 @@ class FarmerSignup(BaseModel):
     email: EmailStr
     phone_number: str
     password: str
+    profile_picture_url: Optional[str] = None
 
 class FarmerLogin(BaseModel):
     username: str
@@ -33,6 +34,8 @@ class FarmerResponse(BaseModel):
     username: str
     email: str
     phone_number: str
+    profile_picture_url: Optional[str] = None
+    bio: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -63,7 +66,8 @@ def signup(farmer_data: FarmerSignup, db: Session = Depends(get_db)):
             username=farmer_data.username,
             email=farmer_data.email,
             phone_number=farmer_data.phone_number,
-            password_hash=get_password_hash(farmer_data.password)
+            password_hash=get_password_hash(farmer_data.password),
+            profile_picture_url=farmer_data.profile_picture_url
         )
 
         db.add(new_farmer)
@@ -98,21 +102,45 @@ def login(credentials: FarmerLogin, db: Session = Depends(get_db)):
             "id": farmer.id,
             "username": farmer.username,
             "email": farmer.email,
-            "farmed_animals": farmer.farmed_animals
+            "phone_number": farmer.phone_number,
+            "profile_picture_url": farmer.profile_picture_url,
+            "bio": farmer.bio
         }
     }
 
 
-@router.put("/{farmer_id}/animals")
-def update_farmer_animals(farmer_id: int, update_data: schemas.FarmerUpdateAnimals, db: Session = Depends(get_db)):
+@router.put("/{farmer_id}/profile", response_model=FarmerResponse)
+def update_farmer_profile(farmer_id: int, update_data: schemas.FarmerUpdateProfile, db: Session = Depends(get_db)):
     farmer = db.query(models.Farmer).filter(models.Farmer.id == farmer_id).first()
     if not farmer:
         raise HTTPException(status_code=404, detail="Farmer not found")
 
-    farmer.farmed_animals = update_data.farmed_animals
+    if update_data.username:
+        # Check if username is taken
+        existing = db.query(models.Farmer).filter(models.Farmer.username == update_data.username, models.Farmer.id != farmer_id).first()
+        if existing:
+            raise HTTPException(status_code=400, detail="Username already taken")
+        farmer.username = update_data.username
+    
+    if update_data.email:
+        farmer.email = update_data.email
+    
+    if update_data.phone_number:
+        farmer.phone_number = update_data.phone_number
+    
+    if update_data.bio is not None:
+        farmer.bio = update_data.bio
+        
+    if update_data.profile_picture_url is not None:
+        farmer.profile_picture_url = update_data.profile_picture_url
+
     db.commit()
     db.refresh(farmer)
-    return {"message": "Animal settings updated", "farmed_animals": farmer.farmed_animals}
+    
+    # Invalidate cache
+    cache.delete(f"farmer_stats:{farmer_id}")
+    
+    return farmer
 
 
 @router.get("/{farmer_id}/stats", response_model=schemas.FarmerDashboardStats)
@@ -139,6 +167,8 @@ def get_farmer_stats(farmer_id: int, db: Session = Depends(get_db)):
         "lessons_available": lessons_available,
         "lessons_completed": lessons_completed,
         "farmed_animals": farmer.farmed_animals,
+        "profile_picture_url": farmer.profile_picture_url,
+        "bio": farmer.bio,
         "last_activity": farmer.last_interaction,
         "completed_lesson_ids": completed_lesson_ids
     }

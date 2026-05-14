@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   CheckCircle2, Clock, ChevronRight, ArrowLeft,
-  Flame, Trophy, Layout, LogOut, User, Star, BookOpen
+  Flame, Trophy, Layout, LogOut, User, Star, BookOpen, Settings, Home
 } from 'lucide-react';
 import { cachedFetch } from '../../utils/apiCache';
 
@@ -76,25 +76,41 @@ const DailyFeedPage = () => {
         </div>
       </aside>
 
-      <main className="lg:ml-72 p-6 md:p-12">
-        {/* Back link */}
-        <Link to="/farmer/dashboard" className="inline-flex items-center gap-2 text-slate-400 font-bold text-sm hover:text-[#2D5A27] transition-colors mb-8">
+      {/* Mobile Top Bar */}
+      <header className="lg:hidden sticky top-0 z-[60] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white shadow-lg shadow-[#2D5A27]/20">
+            <Flame className="w-5 h-5" />
+          </div>
+          <span className="font-black text-lg text-[#1A1C1E] tracking-tight">Daily Feed</span>
+        </div>
+        <button 
+          onClick={() => navigate('/farmer/dashboard')}
+          className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100"
+        >
+          <Home className="w-5 h-5" />
+        </button>
+      </header>
+
+      <main className="lg:ml-72 p-6 md:p-12 pb-32">
+        {/* Back link - Desktop only */}
+        <Link to="/farmer/dashboard" className="hidden lg:inline-flex items-center gap-2 text-slate-400 font-bold text-sm hover:text-[#2D5A27] transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" /> Back to All Modules
         </Link>
 
         {/* Page header */}
-        <div className="mb-10">
+        <div className="mb-8 lg:mb-10">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 bg-orange-100 text-orange-500 rounded-2xl flex items-center justify-center">
+            <div className="w-9 h-9 lg:w-10 lg:h-10 bg-orange-100 text-orange-500 rounded-xl lg:rounded-2xl flex items-center justify-center shrink-0">
               <Flame className="w-5 h-5" />
             </div>
-            <span className="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Daily Feed</span>
+            <span className="text-[10px] lg:text-xs font-black uppercase tracking-[0.2em] text-orange-500">Today's Batch</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-black text-[#1A1C1E] tracking-tight mb-2">
-            Today's Learning Batch
+          <h1 className="text-2xl lg:text-4xl font-black text-[#1A1C1E] tracking-tight mb-2">
+            Learning Progress
           </h1>
-          <p className="text-slate-500 font-medium">
-            Complete all {BATCH_SIZE} lessons to unlock the next batch.
+          <p className="text-slate-500 text-sm lg:text-base font-medium">
+            Complete {BATCH_SIZE} lessons to unlock the next batch.
           </p>
         </div>
 
@@ -109,40 +125,40 @@ const DailyFeedPage = () => {
           </div>
         ) : (
           <>
-            {/* Progress cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+            {/* Progress cards - Responsive/Scrollable */}
+            <div className="flex lg:grid lg:grid-cols-3 gap-4 lg:gap-5 mb-10 overflow-x-auto pb-4 lg:pb-0 no-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0">
               {/* Batch progress */}
-              <div className="bg-white rounded-[28px] border border-slate-100 p-6">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Today's Batch</p>
-                <p className="text-3xl font-black text-[#1A1C1E] mb-3">{completedInBatch} / {feed?.batch_lessons?.length ?? 5}</p>
-                <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 min-w-[240px] lg:min-w-0 flex-1 shrink-0 lg:shrink shadow-sm lg:shadow-none">
+                <p className="text-[10px] lg:text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Today's Batch</p>
+                <p className="text-2xl lg:text-3xl font-black text-[#1A1C1E] mb-3">{completedInBatch} / {feed?.batch_lessons?.length ?? 5}</p>
+                <div className="h-1.5 lg:h-2 bg-slate-100 rounded-full overflow-hidden">
                   <div className="h-full bg-orange-400 rounded-full transition-all duration-500" style={{ width: `${batchProgress}%` }} />
                 </div>
-                <p className="text-xs font-bold text-slate-400 mt-2">{batchProgress}% complete</p>
+                <p className="text-[10px] lg:text-xs font-bold text-slate-400 mt-2">{batchProgress}% complete</p>
               </div>
 
               {/* Module progress */}
-              <div className="bg-white rounded-[28px] border border-slate-100 p-6">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Current Module</p>
-                <p className="text-sm font-black text-[#1A1C1E] mb-1 truncate">{feed?.current_module ?? '—'}</p>
-                <p className="text-3xl font-black text-[#1A1C1E] mb-3">{feed?.module_completed ?? 0} / {feed?.module_total ?? 0}</p>
-                <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 min-w-[240px] lg:min-w-0 flex-1 shrink-0 lg:shrink shadow-sm lg:shadow-none">
+                <p className="text-[10px] lg:text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Current Module</p>
+                <p className="text-xs lg:text-sm font-black text-[#1A1C1E] mb-1 truncate">{feed?.current_module ?? '—'}</p>
+                <p className="text-2xl lg:text-3xl font-black text-[#1A1C1E] mb-3">{feed?.module_completed ?? 0} / {feed?.module_total ?? 0}</p>
+                <div className="h-1.5 lg:h-2 bg-slate-100 rounded-full overflow-hidden">
                   <div className="h-full bg-[#2D5A27] rounded-full transition-all duration-500" style={{ width: `${moduleProgress}%` }} />
                 </div>
-                <p className="text-xs font-bold text-slate-400 mt-2">{moduleProgress}% of module done</p>
+                <p className="text-[10px] lg:text-xs font-bold text-slate-400 mt-2">{moduleProgress}% of module done</p>
               </div>
 
               {/* Overall progress */}
-              <div className="bg-white rounded-[28px] border border-slate-100 p-6">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Overall Progress</p>
-                <p className="text-3xl font-black text-[#1A1C1E] mb-3">{feed?.completed_count ?? 0} / {feed?.total_lessons ?? 0}</p>
-                <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 min-w-[240px] lg:min-w-0 flex-1 shrink-0 lg:shrink shadow-sm lg:shadow-none">
+                <p className="text-[10px] lg:text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Overall Growth</p>
+                <p className="text-2xl lg:text-3xl font-black text-[#1A1C1E] mb-3">{feed?.completed_count ?? 0} / {feed?.total_lessons ?? 0}</p>
+                <div className="h-1.5 lg:h-2 bg-slate-100 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-blue-400 rounded-full transition-all duration-500"
                     style={{ width: `${feed?.total_lessons ? Math.round((feed.completed_count / feed.total_lessons) * 100) : 0}%` }}
                   />
                 </div>
-                <p className="text-xs font-bold text-slate-400 mt-2">
+                <p className="text-[10px] lg:text-xs font-bold text-slate-400 mt-2">
                   Batch {feed?.batch_number} of {feed?.total_lessons ? Math.ceil(feed.total_lessons / BATCH_SIZE) : '—'}
                 </p>
               </div>
@@ -241,9 +257,29 @@ const DailyFeedPage = () => {
           </>
         )}
       </main>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/90 backdrop-blur-xl border-t border-slate-100 px-6 py-3 flex items-center justify-between shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
+        <MobileNavItem icon={<Home />} label="Home" onClick={() => navigate('/farmer/dashboard')} />
+        <MobileNavItem icon={<Flame />} label="Feed" active onClick={() => navigate('/farmer/feed')} />
+        <MobileNavItem icon={<BookOpen />} label="Library" onClick={() => navigate('/farmer/dashboard')} />
+        <MobileNavItem icon={<User />} label="Profile" onClick={() => {}} />
+      </nav>
     </div>
   );
 };
+
+const MobileNavItem = ({ icon, label, active = false, onClick }) => (
+  <button 
+    onClick={onClick}
+    className={`flex flex-col items-center gap-1 transition-all ${active ? 'text-[#2D5A27]' : 'text-slate-400'}`}
+  >
+    <div className={`p-1 rounded-xl transition-all ${active ? 'bg-[#2D5A27]/10' : ''}`}>
+      {React.cloneElement(icon, { className: "w-5 h-5" })}
+    </div>
+    <span className="text-[10px] font-bold uppercase tracking-wider">{label}</span>
+  </button>
+);
 
 const NavItem = ({ icon, label, active = false, onClick }) => (
   <div

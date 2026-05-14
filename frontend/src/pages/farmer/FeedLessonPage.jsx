@@ -83,65 +83,64 @@ const FeedLessonPage = () => {
     <div className="min-h-screen bg-[#FDFCFB] font-outfit">
 
       {/* ── Top nav bar ── */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 px-6 py-4">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 py-3 lg:py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between gap-4">
-          {/* Breadcrumb */}
+          {/* Breadcrumb - Simplified for Mobile */}
           <div className="flex items-center gap-2 text-sm font-bold text-slate-400 min-w-0">
             <Link
               to="/farmer/feed"
               className="hover:text-[#2D5A27] transition-colors flex items-center gap-1.5 shrink-0"
             >
               <Flame className="w-4 h-4 text-orange-400" />
-              <span className="hidden sm:inline">Daily Feed</span>
+              <span className="hidden lg:inline">Feed</span>
             </Link>
-            <ChevronRight className="w-4 h-4 shrink-0 text-slate-300" />
-            <span className="text-[#1A1C1E] truncate">{lesson.title}</span>
+            <ChevronRight className="w-3.5 h-3.5 shrink-0 text-slate-300" />
+            <span className="text-[#1A1C1E] truncate max-w-[200px] lg:max-w-xs">{lesson.title}</span>
           </div>
 
           {/* Batch position */}
-          <span className="text-xs font-black text-slate-400 shrink-0">
-            {currentIdx + 1} / {batchLessons.length}
-          </span>
+          <div className="bg-orange-50 px-3 py-1 rounded-full border border-orange-100 shrink-0">
+            <span className="text-[10px] lg:text-xs font-black text-orange-600">
+              {currentIdx + 1} / {batchLessons.length}
+            </span>
+          </div>
         </div>
 
         {/* Batch progress bar */}
-        <div className="mt-3 h-1 bg-slate-100 rounded-full overflow-hidden max-w-3xl mx-auto">
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-100 overflow-hidden">
           <div
-            className="h-full bg-orange-400 rounded-full transition-all duration-500"
+            className="h-full bg-orange-400 transition-all duration-500"
             style={{ width: `${((currentIdx + 1) / batchLessons.length) * 100}%` }}
           />
         </div>
       </nav>
 
       {/* ── Content ── */}
-      <div className="max-w-3xl mx-auto px-6 py-12">
-
+      <div className="max-w-3xl mx-auto px-6 py-8 lg:py-12">
         {/* Lesson header */}
-        <div className="mb-10">
+        <div className="mb-8 lg:mb-10">
           <div className="flex items-center gap-2 mb-4">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-500 rounded-full text-xs font-black uppercase tracking-widest">
+            <span className="inline-flex items-center gap-2 px-3 py-1 bg-orange-50 text-orange-500 rounded-full text-[10px] font-black uppercase tracking-widest">
               <Flame className="w-3.5 h-3.5" /> Daily Feed
             </span>
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#F2F8F3] text-[#2D5A27] rounded-full text-xs font-black uppercase tracking-widest">
+            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[#F2F8F3] text-[#2D5A27] rounded-full text-[10px] font-black uppercase tracking-widest">
               {lesson.theme}
             </span>
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-black text-[#1A1C1E] tracking-tight leading-tight mb-4">
+          <h1 className="text-2xl lg:text-4xl font-black text-[#1A1C1E] tracking-tight leading-tight mb-4">
             {lesson.title}
           </h1>
 
-          <div className="flex items-center gap-4 text-slate-400 text-sm font-bold">
+          <div className="flex items-center gap-4 text-slate-400 text-xs lg:text-sm font-bold">
             <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> 5 min read</span>
             <span className="text-slate-200">·</span>
-            <span className="uppercase tracking-widest text-xs">{lesson.code}</span>
+            <span className="uppercase tracking-widest text-[10px]">{lesson.code}</span>
             {(marked || lesson.completed) && (
-              <>
-                <span className="text-slate-200">·</span>
-                <span className="flex items-center gap-1.5 text-[#2D5A27]">
-                  <CheckCircle2 className="w-4 h-4" /> Completed
-                </span>
-              </>
+              <div className="flex items-center gap-1.5 text-[#2D5A27] bg-[#F2F8F3] px-2 py-0.5 rounded-full">
+                <CheckCircle2 className="w-3.5 h-3.5" /> 
+                <span className="text-[10px] uppercase tracking-wider font-black">Completed</span>
+              </div>
             )}
           </div>
         </div>
@@ -157,11 +156,13 @@ const FeedLessonPage = () => {
           </div>
         )}
 
-        {/* Full content */}
-        <article className="space-y-5 mb-12">
+        {/* Full content - Better readability on mobile */}
+        <article className="space-y-6 mb-12">
           {lesson.content?.split(/\n+/).map((para, i) =>
             para.trim() ? (
-              <p key={i} className="text-lg text-slate-700 leading-loose font-medium">{para}</p>
+              <p key={i} className="text-[17px] lg:text-lg text-slate-700 leading-relaxed lg:leading-loose font-medium">
+                {para}
+              </p>
             ) : null
           )}
         </article>
@@ -198,47 +199,43 @@ const FeedLessonPage = () => {
       </div>
 
       {/* ── Sticky bottom nav ── */}
-      <div className="sticky bottom-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-6 py-4 z-40">
-        <div className="max-w-3xl mx-auto flex items-center justify-between gap-4">
+      <div className="sticky bottom-0 bg-white/90 backdrop-blur-xl border-t border-slate-100 px-6 py-3 lg:py-4 z-40 shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
+        <div className="max-w-3xl mx-auto flex items-center justify-between gap-3 lg:gap-4">
 
           {/* Previous */}
           {prevLesson ? (
             <button
               onClick={() => goTo(prevLesson)}
-              className="flex items-center gap-3 px-5 py-3 bg-white border border-slate-200 rounded-2xl font-bold text-slate-600 hover:border-[#2D5A27] hover:text-[#2D5A27] transition-all group max-w-[45%]"
+              className="flex items-center gap-2 lg:gap-3 px-4 lg:px-5 py-2.5 lg:py-3 bg-white border border-slate-200 rounded-xl lg:rounded-2xl font-bold text-slate-600 hover:border-[#2D5A27] hover:text-[#2D5A27] transition-all group max-w-[48%] flex-1 lg:flex-none"
             >
               <ChevronLeft className="w-5 h-5 shrink-0 group-hover:-translate-x-0.5 transition-transform" />
               <div className="text-left min-w-0">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Previous</p>
-                <p className="text-sm font-bold truncate">{prevLesson.title}</p>
+                <p className="text-[8px] lg:text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Prev</p>
+                <p className="text-xs lg:text-sm font-bold truncate">{prevLesson.title}</p>
               </div>
             </button>
           ) : (
             <Link
               to="/farmer/feed"
-              className="flex items-center gap-3 px-5 py-3 bg-white border border-slate-200 rounded-2xl font-bold text-slate-600 hover:border-[#2D5A27] hover:text-[#2D5A27] transition-all group"
+              className="flex items-center gap-2 lg:gap-3 px-4 lg:px-5 py-2.5 lg:py-3 bg-white border border-slate-200 rounded-xl lg:rounded-2xl font-bold text-slate-600 hover:border-[#2D5A27] hover:text-[#2D5A27] transition-all group flex-1 lg:flex-none justify-center lg:justify-start"
             >
               <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
-              <div className="text-left">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Back to</p>
-                <p className="text-sm font-bold">Daily Feed</p>
-              </div>
+              <span className="text-xs lg:text-sm font-bold">Back</span>
             </Link>
           )}
 
-          {/* Batch dots */}
-          <div className="hidden sm:flex items-center gap-1.5">
+          {/* Batch dots - Hidden on very small screens */}
+          <div className="hidden md:flex items-center gap-1.5">
             {batchLessons.map((l, i) => (
               <button
                 key={l.id}
                 onClick={() => goTo(l)}
-                title={l.title}
                 className={`rounded-full transition-all ${
                   i === currentIdx
-                    ? 'w-6 h-2.5 bg-orange-400'
+                    ? 'w-6 h-2 bg-orange-400'
                     : l.completed || (i === currentIdx && marked)
-                    ? 'w-2.5 h-2.5 bg-[#2D5A27]/50'
-                    : 'w-2.5 h-2.5 bg-slate-200 hover:bg-slate-300'
+                    ? 'w-2 h-2 bg-[#2D5A27]/50'
+                    : 'w-2 h-2 bg-slate-200'
                 }`}
               />
             ))}
@@ -248,23 +245,20 @@ const FeedLessonPage = () => {
           {nextLesson ? (
             <button
               onClick={() => goTo(nextLesson)}
-              className="flex items-center gap-3 px-5 py-3 bg-orange-500 text-white rounded-2xl font-bold hover:bg-orange-600 transition-all group max-w-[45%] shadow-lg shadow-orange-500/20"
+              className="flex items-center gap-2 lg:gap-3 px-4 lg:px-5 py-2.5 lg:py-3 bg-orange-500 text-white rounded-xl lg:rounded-2xl font-bold hover:bg-orange-600 transition-all group max-w-[48%] flex-1 lg:flex-none shadow-lg shadow-orange-500/10"
             >
-              <div className="text-right min-w-0">
-                <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-0.5">Next</p>
-                <p className="text-sm font-bold truncate">{nextLesson.title}</p>
+              <div className="text-right min-w-0 flex-1">
+                <p className="text-[8px] lg:text-[10px] font-black uppercase tracking-widest text-white/60 mb-0.5">Next</p>
+                <p className="text-xs lg:text-sm font-bold truncate">{nextLesson.title}</p>
               </div>
               <ChevronRight className="w-5 h-5 shrink-0 group-hover:translate-x-0.5 transition-transform" />
             </button>
           ) : (
             <Link
               to="/farmer/feed"
-              className="flex items-center gap-3 px-5 py-3 bg-[#2D5A27] text-white rounded-2xl font-bold hover:bg-[#245220] transition-all group shadow-lg shadow-[#2D5A27]/20"
+              className="flex items-center gap-2 lg:gap-3 px-4 lg:px-5 py-2.5 lg:py-3 bg-[#2D5A27] text-white rounded-xl lg:rounded-2xl font-bold hover:bg-[#245220] transition-all group shadow-lg shadow-[#2D5A27]/10 flex-1 lg:flex-none justify-center"
             >
-              <div className="text-right">
-                <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-0.5">All done!</p>
-                <p className="text-sm font-bold">Back to Feed</p>
-              </div>
+              <span className="text-xs lg:text-sm font-bold">Finish</span>
               <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           )}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Lock, Mail, Phone, ChevronRight, UserPlus, LogIn, Eye, EyeOff, Globe } from 'lucide-react';
+import { User, Lock, Mail, Phone, ChevronRight, UserPlus, LogIn, Eye, EyeOff, Globe, Camera } from 'lucide-react';
+import { supabase } from '../supabaseClient';
 
 // Common country codes (A sample, can be expanded to "all" if needed via library)
 const countryCodes = [
@@ -34,8 +35,11 @@ const FarmerAuth = () => {
     confirmPassword: '',
     email: '',
     phone_number: '',
-    country_code: '+256'
+    country_code: '+256',
+    profile_picture_url: ''
   });
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = React.useRef(null);
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -60,7 +64,8 @@ const FarmerAuth = () => {
       password: formData.password,
       ...(isLogin ? {} : { 
         email: formData.email, 
-        phone_number: full_phone 
+        phone_number: full_phone,
+        profile_picture_url: formData.profile_picture_url
       })
     };
 
@@ -88,6 +93,37 @@ const FarmerAuth = () => {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    setError(null);
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `new-farmer-${Math.random()}.${fileExt}`;
+      const filePath = `profile_pictures/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('profile_pictures')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('profile_pictures')
+        .getPublicUrl(filePath);
+
+      setFormData(prev => ({ ...prev, profile_picture_url: publicUrl }));
+    } catch (err) {
+      console.error("Upload error", err);
+      setError('Failed to upload image. Account can still be created without it.');
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -181,6 +217,42 @@ const FarmerAuth = () => {
                           onChange={(e) => setFormData({...formData, phone_number: e.target.value})}
                         />
                       </div>
+                    </div>
+                  </div>
+
+                  {/* Profile Picture Upload (Optional) */}
+                  <div className="space-y-3 py-2">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Profile Picture (Optional)</label>
+                    <div className="flex items-center gap-4">
+                      <div className="relative">
+                        <div className="w-16 h-16 rounded-2xl bg-slate-50 border-2 border-slate-100 overflow-hidden flex items-center justify-center shadow-inner">
+                          {formData.profile_picture_url ? (
+                            <img src={formData.profile_picture_url} alt="Preview" className="w-full h-full object-cover" />
+                          ) : (
+                            <User className="w-8 h-8 text-slate-200" />
+                          )}
+                          {uploading && (
+                            <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
+                              <div className="w-5 h-5 border-2 border-[#2D5A27]/20 border-t-[#2D5A27] rounded-full animate-spin" />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="flex-1 px-4 py-3 bg-white border-2 border-slate-100 rounded-2xl text-slate-600 text-sm font-bold flex items-center justify-center gap-2 hover:border-[#2D5A27]/20 hover:bg-[#F2F8F3] transition-all"
+                      >
+                        <Camera className="w-4 h-4" />
+                        {formData.profile_picture_url ? 'Change Photo' : 'Add Photo'}
+                      </button>
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        className="hidden" 
+                        accept="image/*" 
+                        onChange={handleFileUpload} 
+                      />
                     </div>
                   </div>
                 </>

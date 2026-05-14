@@ -10,6 +10,7 @@ import ModulesPage from './pages/farmer/ModulesPage';
 import LessonPage from './pages/farmer/LessonPage';
 import DailyFeedPage from './pages/farmer/DailyFeedPage';
 import FeedLessonPage from './pages/farmer/FeedLessonPage';
+import ProfilePage from './pages/farmer/ProfilePage';
 
 const ProtectedRoute = ({ children }) => {
   const [session, setSession] = useState(null);
@@ -60,6 +61,7 @@ function App() {
         <Route path="/farmer/dashboard" element={<FarmerDashboardRouter />} />
         <Route path="/farmer/feed" element={<DailyFeedPage />} />
         <Route path="/farmer/feed/lesson/:code" element={<FeedLessonPage />} />
+        <Route path="/farmer/profile" element={<ProfilePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
