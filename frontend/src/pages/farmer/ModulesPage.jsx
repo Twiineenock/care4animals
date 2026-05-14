@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import {
   BookOpen, Search, LogOut, User, Layout, ChevronDown,
-  PlayCircle, Clock, Sparkles, CheckCircle2, FolderOpen,
-  Folder, Info
+  PlayCircle, Clock, CheckCircle2, FolderOpen,
+  Folder, Flame, Zap, ChevronRight
 } from 'lucide-react';
+import { cachedFetch, invalidateFarmerCache } from '../../utils/apiCache';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -25,6 +26,7 @@ const ModulesPage = () => {
   const [recentActivity, setRecentActivity] = useState([]);
   const [showSettings, setShowSettings] = useState(false);
   const [isUpdatingAnimals, setIsUpdatingAnimals] = useState(false);
+  const [dailyFeed, setDailyFeed] = useState(null);
 
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,13 +54,9 @@ const ModulesPage = () => {
   const fetchModuleLessons = async (moduleName) => {
     setLoadingModules(prev => ({ ...prev, [moduleName]: true }));
     try {
-      const res = await fetch(
-        `${API_URL}/api/v1/lessons/by-module?module=${encodeURIComponent(moduleName)}&language=${languageFilter}`
-      );
-      if (res.ok) {
-        const data = await res.json();
-        setLessonCache(prev => ({ ...prev, [moduleName]: data }));
-      }
+      const url = `${API_URL}/api/v1/lessons/by-module?module=${encodeURIComponent(moduleName)}&language=${languageFilter}`;
+      const data = await cachedFetch(url, 'static');
+      setLessonCache(prev => ({ ...prev, [moduleName]: data }));
     } catch (err) {
       console.error(`Error loading lessons for ${moduleName}:`, err);
     } finally {
@@ -81,21 +79,27 @@ const ModulesPage = () => {
     const fetchData = async (lang = 'en') => {
       const f = JSON.parse(storedFarmer);
       try {
-        const [modulesRes, statsRes] = await Promise.all([
-          fetch(`${API_URL}/api/v1/lessons/modules?language=${lang}`),
-          fetch(`${API_URL}/farmers/${f.id}/stats`)
+        // Modules: static cache (5 min). Stats: farmer cache (30s).
+        const [modules, statsData] = await Promise.all([
+          cachedFetch(`${API_URL}/api/v1/lessons/modules?language=${lang}`, 'static'),
+          cachedFetch(`${API_URL}/farmers/${f.id}/stats`, 'farmer'),
         ]);
-        if (modulesRes.ok) setModules(await modulesRes.json());
-        if (statsRes.ok) {
-          const s = await statsRes.json();
-          setStats(s);
-          const preferred = s.preferred_language || 'en';
-          if (preferred !== lang) { setLanguageFilter(preferred); fetchData(preferred); return; }
-        }
+        setModules(Array.isArray(modules) ? modules : []);
+        setStats(statsData);
+        const preferred = statsData.preferred_language || 'en';
+        if (preferred !== lang) { setLanguageFilter(preferred); fetchData(preferred); return; }
       } catch (err) {
         console.error(err);
       } finally {
         setLoading(false);
+      }
+
+      // Daily feed loads after page is visible (non-blocking)
+      try {
+        const feedData = await cachedFetch(`${API_URL}/farmers/${f.id}/daily-feed?language=${lang}`, 'farmer');
+        setDailyFeed(feedData);
+      } catch (err) {
+        console.error('Feed load error:', err);
       }
     };
     fetchData(languageFilter);
@@ -113,8 +117,7 @@ const ModulesPage = () => {
     if (!farmer) return;
     setLessonCache({});
     setSearchParams({});
-    fetch(`${API_URL}/api/v1/lessons/modules?language=${languageFilter}`)
-      .then(r => r.ok ? r.json() : [])
+    cachedFetch(`${API_URL}/api/v1/lessons/modules?language=${languageFilter}`, 'static')
       .then(data => setModules(Array.isArray(data) ? data : []))
       .catch(console.error);
   }, [languageFilter, farmer]);
@@ -163,7 +166,8 @@ const ModulesPage = () => {
           <span className="font-black text-xl text-[#1A1C1E] tracking-tight">Care4Animals</span>
         </div>
         <nav className="flex-1 space-y-2">
-          <NavItem icon={<BookOpen />} label="My Lessons" active />
+          <NavItem icon={<Flame />} label="Daily Feed" onClick={() => navigate('/farmer/feed')} />
+          <NavItem icon={<BookOpen />} label="All Modules" active />
           <NavItem icon={<User />} label="My Settings" onClick={() => setShowSettings(true)} />
           <div className="mt-12 pt-8 border-t border-slate-100">
             <div className="flex items-center gap-2 mb-6">
@@ -224,6 +228,76 @@ const ModulesPage = () => {
           <StatCard label="Lessons Completed" value={stats.lessons_completed} color="bg-green-50 text-green-600" />
           <StatCard label="Last Activity" value={stats.last_activity ? new Date(stats.last_activity).toLocaleDateString() : 'None'} color="bg-orange-50 text-orange-600" />
         </div>
+
+        {/* Daily Feed Hero */}
+        {dailyFeed && !dailyFeed.curriculum_complete && (
+          <div className="mb-10 bg-gradient-to-br from-[#2D5A27] to-[#1E3D1A] rounded-[36px] p-8 text-white relative overflow-hidden shadow-2xl shadow-[#2D5A27]/20">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl pointer-events-none" />
+            <div className="relative z-10">
+              {/* Label */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-white/90 text-xs font-black uppercase tracking-widest mb-5 backdrop-blur-md">
+                <Flame className="w-4 h-4 text-orange-400" />
+                Today's Daily Feed · Batch {dailyFeed.batch_number}
+              </div>
+
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+                <div className="flex-1">
+                  <h2 className="text-2xl md:text-3xl font-black mb-2 leading-tight">
+                    {dailyFeed.current_module}
+                  </h2>
+                  <p className="text-white/70 font-medium mb-5">
+                    {dailyFeed.batch_lessons.filter(l => l.completed).length} of {dailyFeed.batch_lessons.length} lessons completed today
+                  </p>
+
+                  {/* Mini lesson list */}
+                  <div className="space-y-2 mb-6">
+                    {dailyFeed.batch_lessons.map((lesson, i) => (
+                      <div key={lesson.id} className="flex items-center gap-3">
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${lesson.completed ? 'bg-white text-[#2D5A27]' : 'bg-white/20 text-white/60'}`}>
+                          {lesson.completed
+                            ? <CheckCircle2 className="w-4 h-4" />
+                            : <span className="text-[10px] font-black">{i + 1}</span>
+                          }
+                        </div>
+                        <span className={`text-sm font-bold truncate ${lesson.completed ? 'text-white/50 line-through' : 'text-white'}`}>
+                          {lesson.title}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Progress bar */}
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 h-2 bg-white/20 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-white rounded-full transition-all duration-500"
+                        style={{ width: `${Math.round((dailyFeed.batch_lessons.filter(l => l.completed).length / dailyFeed.batch_lessons.length) * 100)}%` }}
+                      />
+                    </div>
+                    <span className="text-white/70 text-xs font-black">
+                      {Math.round((dailyFeed.batch_lessons.filter(l => l.completed).length / dailyFeed.batch_lessons.length) * 100)}%
+                    </span>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div className="flex flex-col gap-3 shrink-0">
+                  <Link
+                    to="/farmer/feed"
+                    className="flex items-center gap-2 px-7 py-4 bg-white text-[#2D5A27] rounded-2xl font-black hover:scale-105 transition-transform shadow-xl"
+                  >
+                    <Zap className="w-5 h-5" />
+                    Start Learning
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                  <p className="text-white/50 text-xs font-bold text-center">
+                    Module progress: {dailyFeed.module_completed}/{dailyFeed.module_total} lessons
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Library header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">

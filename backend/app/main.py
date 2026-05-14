@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 from .config import settings
-from .database import engine
-from . import models
+from .database import engine, warm_up_pool
+from . import models, cache
 
 # Import routers
 from .routers.health import router as health_router
@@ -13,23 +14,90 @@ from .routers.lessons import router as lessons_router
 from .routers.farmers import router as farmers_router
 from .routers.progress import router as progress_router
 
+
+def _prime_cache():
+    """
+    Pre-populate the in-memory cache with static lesson data.
+    Runs in a background thread so it never blocks server startup.
+    """
+    import threading
+
+    def _run():
+        from .database import SessionLocal
+        from sqlalchemy import func
+        db = SessionLocal()
+        try:
+            for lang in ("en", "lg", "sw"):
+                rows = (
+                    db.query(models.Lesson.theme, func.count(models.Lesson.id))
+                    .filter(models.Lesson.language == lang)
+                    .group_by(models.Lesson.theme)
+                    .order_by(models.Lesson.theme)
+                    .all()
+                )
+                modules = [{"module": t or "General", "lesson_count": c} for t, c in rows]
+                cache.set(f"modules:{lang}", modules, cache.TTL_STATIC)
+
+                for item in modules:
+                    mod = item["module"]
+                    lessons = (
+                        db.query(models.Lesson)
+                        .filter(models.Lesson.language == lang, models.Lesson.theme == mod)
+                        .order_by(models.Lesson.code)
+                        .all()
+                    )
+                    result = [
+                        {
+                            "id": l.id, "code": l.code, "title": l.title,
+                            "topic": l.topic, "content": l.content,
+                            "language": l.language, "theme": l.theme,
+                            "sms_text": l.sms_text, "target_animals": l.target_animals,
+                            "checklist": l.checklist,
+                        }
+                        for l in lessons
+                    ]
+                    cache.set(f"by_module:{lang}:{mod}", result, cache.TTL_STATIC)
+
+            print("INFO: Background cache priming complete.")
+        except Exception as e:
+            print(f"WARNING: Background cache priming failed (non-fatal): {e}")
+        finally:
+            db.close()
+
+    t = threading.Thread(target=_run, daemon=True)
+    t.start()
+    print("INFO: Background cache priming started.")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # ── Startup ──
+    print("INFO: Synchronizing database schema...")
+    try:
+        models.Base.metadata.create_all(bind=engine)
+        from sqlalchemy import text
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1 FROM farmers LIMIT 1"))
+        print("INFO: Database schema synchronized and verified.")
+    except Exception as e:
+        print(f"ERROR: Database verification failed: {e}")
+
+    warm_up_pool()
+    _prime_cache()
+
+    yield  # ── App runs ──
+
+    # ── Shutdown ──
+    cache.clear()
+    print("INFO: Cache cleared on shutdown.")
+
+
 # 1. Initialize the FastAPI instance
 app = FastAPI(
     title=settings.app_name,
-    version="2.0.0"
+    version="2.0.0",
+    lifespan=lifespan
 )
-
-# 2. Ensure Database Tables are created
-print("INFO: Synchronizing database schema...")
-try:
-    models.Base.metadata.create_all(bind=engine)
-    # Verify table existence
-    from sqlalchemy import text
-    with engine.connect() as conn:
-        conn.execute(text("SELECT 1 FROM farmers LIMIT 1"))
-    print("INFO: Database schema synchronized and verified.")
-except Exception as e:
-    print(f"ERROR: Database verification failed: {e}")
 
 
 # 3. Configure CORS for the React Dashboard
@@ -77,3 +145,9 @@ async def root():
         "version": "2.0.0",
         "partners": ["Bugema University", "WTS Foundation"]
     }
+
+@app.get("/_cache_status")
+async def cache_status():
+    """Internal health check — shows cache key count."""
+    from . import cache as c
+    return {"total_keys": len(c._store), "status": "ok"}
