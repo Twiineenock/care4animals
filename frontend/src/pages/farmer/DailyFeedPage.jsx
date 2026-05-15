@@ -13,6 +13,7 @@ const DailyFeedPage = () => {
   const [feed, setFeed] = useState(null);
   const [loading, setLoading] = useState(true);
   const [farmer, setFarmer] = useState(null);
+  const [stats, setStats] = useState(null);
   const navigate = useNavigate();
 
   const fetchFeed = useCallback(async (farmerId, lang = 'en') => {
@@ -32,9 +33,23 @@ const DailyFeedPage = () => {
     if (!stored) { navigate('/farmer/auth'); return; }
     const f = JSON.parse(stored);
     setFarmer(f);
-    // Show page shell immediately, fetch feed in background
-    setLoading(false);
-    fetchFeed(f.id);
+    
+    const loadData = async () => {
+      try {
+        // Fetch stats first (for profile pic)
+        const statsData = await cachedFetch(`${API_URL}/farmers/${f.id}/stats`, 'farmer');
+        setStats(statsData);
+        
+        // Then fetch feed
+        fetchFeed(f.id);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadData();
   }, [navigate, fetchFeed]);
 
   const handleLogout = () => {
@@ -52,27 +67,67 @@ const DailyFeedPage = () => {
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-outfit">
-      {/* Sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-100 hidden lg:flex flex-col p-8 z-50">
-        <div className="flex items-center gap-3 mb-12">
-          <div className="w-10 h-10 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white">
-            <Layout className="w-6 h-6" />
+      {/* Desktop Sidebar - Dark Theme Unified */}
+      <aside className="fixed left-0 top-0 h-full w-72 bg-[#012d1d] flex flex-col py-8 shadow-xl hidden lg:flex z-50 overflow-y-auto custom-scrollbar">
+        <div className="px-8 mb-12">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white shadow-lg shadow-black/20">
+              <Layout className="w-6 h-6" />
+            </div>
+            <span className="font-manrope font-black text-2xl text-white tracking-tight">Care4Animals</span>
           </div>
-          <span className="font-black text-xl text-[#1A1C1E] tracking-tight">Care4Animals</span>
+          <p className="text-[#A7C0A4] text-[10px] font-black uppercase tracking-[0.2em] ml-1">Farmer Feed</p>
         </div>
-        <nav className="flex-1 space-y-2">
-          <NavItem icon={<Flame />} label="Daily Feed" active onClick={() => navigate('/farmer/feed')} />
-          <NavItem icon={<BookOpen />} label="All Modules" onClick={() => navigate('/farmer/dashboard')} />
-          <NavItem icon={<User />} label="My Settings" onClick={() => {}} />
-        </nav>
-        <div className="pt-8 border-t border-slate-100">
-          <div className="bg-[#F8FAFB] rounded-2xl p-4 mb-6">
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Signed in as</p>
-            <p className="font-bold text-[#1A1C1E] truncate">{farmer?.username}</p>
+
+        <nav className="flex-1 px-4 space-y-1.5">
+          <SidebarItem 
+            icon="dashboard" 
+            label="Daily Feed" 
+            active={true} 
+            onClick={() => navigate('/farmer/feed')} 
+          />
+          <SidebarItem 
+            icon="menu_book" 
+            label="All Modules" 
+            active={false} 
+            onClick={() => navigate('/farmer/dashboard')} 
+          />
+          <SidebarItem 
+            icon="person" 
+            label="My Profile" 
+            onClick={() => navigate('/farmer/profile')} 
+          />
+          <SidebarItem 
+            icon="settings" 
+            label="Settings" 
+            onClick={() => {}} 
+          />
+          
+          <div className="pt-6 mt-6 border-t border-white/10">
+            <button 
+              onClick={handleLogout}
+              className="w-full flex items-center gap-3 px-6 py-4 text-red-300 hover:text-red-100 hover:bg-red-500/10 rounded-2xl transition-all group font-bold text-sm"
+            >
+              <span className="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">logout</span>
+              Sign Out
+            </button>
           </div>
-          <button onClick={handleLogout} className="w-full py-4 px-4 flex items-center gap-3 text-red-500 font-bold hover:bg-red-50 rounded-2xl transition-colors">
-            <LogOut className="w-5 h-5" /> Sign Out
-          </button>
+        </nav>
+
+        <div className="mt-auto px-6 py-6 border-t border-white/5 bg-black/10">
+          <div className="flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/5">
+            <div className="w-10 h-10 rounded-xl bg-[#2D5A27] flex items-center justify-center text-white font-black overflow-hidden border border-white/10">
+              {stats?.profile_picture_url ? (
+                <img src={stats.profile_picture_url} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                farmer?.username?.[0]?.toUpperCase()
+              )}
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-black text-[#A7C0A4] uppercase tracking-widest leading-none mb-1">Active Farmer</p>
+              <p className="text-sm font-bold text-white truncate">{farmer?.username}</p>
+            </div>
+          </div>
         </div>
       </aside>
 
@@ -281,15 +336,21 @@ const MobileNavItem = ({ icon, label, active = false, onClick }) => (
   </button>
 );
 
-const NavItem = ({ icon, label, active = false, onClick }) => (
-  <div
+const SidebarItem = ({ icon, label, active = false, onClick }) => (
+  <button 
     onClick={onClick}
-    className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-bold cursor-pointer transition-all ${
-      active ? 'bg-[#2D5A27] text-white shadow-lg shadow-[#2D5A27]/20' : 'text-slate-500 hover:bg-slate-50'
-    }`}
+    className={`${
+      active 
+        ? 'bg-[#2D5A27] text-white shadow-lg shadow-black/20' 
+        : 'text-[#A7C0A4] hover:text-white hover:bg-white/5'
+    } w-full rounded-2xl flex items-center px-6 py-4 gap-4 transition-all duration-200 active:scale-[0.98] group`}
   >
-    {React.cloneElement(icon, { className: 'w-5 h-5' })} {label}
-  </div>
+    <span className={`material-symbols-outlined text-[22px] transition-transform ${active ? '' : 'group-hover:scale-110'}`}>
+      {icon}
+    </span>
+    <span className="font-bold text-sm">{label}</span>
+    {active && <div className="ml-auto w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_white]" />}
+  </button>
 );
 
 export default DailyFeedPage;

@@ -10,6 +10,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 const ProfilePage = () => {
   const [farmer, setFarmer] = useState(null);
+  const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -40,6 +41,7 @@ const ProfilePage = () => {
     try {
       const res = await fetch(`${API_URL}/farmers/${id}/stats`);
       const data = await res.json();
+      setStats(data);
       setFormData({
         username: currentFarmer?.username || '',
         email: currentFarmer?.email || '',
@@ -160,6 +162,22 @@ const ProfilePage = () => {
             </button>
           </div>
         </nav>
+
+        <div className="mt-auto px-6 py-6 border-t border-white/5 bg-black/10">
+          <div className="flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/5">
+            <div className="w-10 h-10 rounded-xl bg-[#2D5A27] flex items-center justify-center text-white font-black overflow-hidden border border-white/10">
+              {stats?.profile_picture_url ? (
+                <img src={stats.profile_picture_url} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                farmer?.username?.[0]?.toUpperCase()
+              )}
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-black text-[#A7C0A4] uppercase tracking-widest leading-none mb-1">Active Farmer</p>
+              <p className="text-sm font-bold text-white truncate">{farmer?.username}</p>
+            </div>
+          </div>
+        </div>
       </aside>
 
       <main className="flex-1 lg:ml-72 p-6 md:p-12 pb-32 lg:pb-12">
