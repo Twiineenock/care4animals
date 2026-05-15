@@ -247,7 +247,7 @@ const ModulesPage = () => {
       </header>
 
       {/* Main */}
-      <main className="lg:ml-72 p-6 md:p-12 pb-32 lg:pb-12">
+      <main className="lg:ml-72 p-6 md:p-12 pb-32 lg:pb-12 overflow-x-hidden">
         {/* Top Header - Unified branding */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
@@ -279,7 +279,7 @@ const ModulesPage = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mb-10">
           <StatCard label="Available" value={stats.lessons_available} color="bg-blue-50 text-blue-600" />
           <StatCard label="Completed" value={stats.lessons_completed} color="bg-green-50 text-green-600" />
           <StatCard label="Last Seen" value={stats.last_activity ? new Date(stats.last_activity).toLocaleDateString([], { month: 'short', day: 'numeric' }) : 'None'} color="bg-orange-50 text-orange-600" />

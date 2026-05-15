@@ -180,7 +180,7 @@ const ProfilePage = () => {
         </div>
       </aside>
 
-      <main className="flex-1 lg:ml-72 p-6 md:p-12 pb-32 lg:pb-12">
+      <main className="flex-1 lg:ml-72 p-6 md:p-12 pb-32 lg:pb-12 overflow-x-hidden">
         {/* Mobile Header */}
         <header className="lg:hidden sticky top-0 z-[60] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center justify-between mb-8">
           <div className="flex items-center gap-3 min-w-0">

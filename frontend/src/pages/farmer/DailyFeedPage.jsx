@@ -156,7 +156,7 @@ const DailyFeedPage = () => {
         </div>
       </header>
 
-      <main className="lg:ml-72 p-6 md:p-12 pb-32">
+      <main className="lg:ml-72 p-6 md:p-12 pb-32 overflow-x-hidden">
         {/* Back link - Desktop only */}
         <Link to="/farmer/dashboard" className="hidden lg:inline-flex items-center gap-2 text-slate-400 font-bold text-sm hover:text-[#2D5A27] transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" /> Back to All Modules
@@ -190,8 +190,8 @@ const DailyFeedPage = () => {
         ) : (
           <>
             {/* Progress cards - Responsive/Scrollable */}
-            {/* Progress cards - Vertical Stacking for Mobile to avoid horizontal scroll */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-5 mb-10">
+            {/* Progress cards - Conservative grid to prevent overflow on medium/large screens */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-5 mb-10">
               {/* Batch progress */}
               <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 shadow-sm lg:shadow-none">
                 <p className="text-[10px] lg:text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Today's Batch</p>
