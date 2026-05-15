@@ -37,6 +37,12 @@ def invalidate(prefix: str) -> None:
         del _store[k]
 
 
+def delete(key: str) -> None:
+    """Remove a specific key from the cache."""
+    if key in _store:
+        del _store[key]
+
+
 def clear() -> None:
     _store.clear()
 

@@ -1,7 +1,7 @@
 import africastalking
-from app.config import settings  # <--- Aligned with your new config.py
+from ..config import settings
 from sqlalchemy.orm import Session
-from app.models import SMSLog
+from ..models import SMSLog
 
 # 1. Initialize Africa's Talking using Pydantic Settings
 # This is more robust than os.getenv

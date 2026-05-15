@@ -109,21 +109,49 @@ origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://care4animals.vercel.app",
-    "https://care4animals.vercel.app/",
 ]
 
 # Add specific frontend URL from settings
-if settings.frontend_url and settings.frontend_url not in origins:
+if settings.frontend_url and settings.frontend_url != "*" and settings.frontend_url not in origins:
     origins.append(settings.frontend_url)
 
 print(f"INFO: CORS Origins configured: {origins}")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins if settings.frontend_url != "*" else ["*"],
     allow_credentials=True if settings.frontend_url != "*" else False,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
+
+from fastapi.responses import JSONResponse
+from fastapi import Request
+
+@app.middleware("http")
+async def error_logging_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception as e:
+        import traceback
+        print(f"DEBUG: Internal Server Error occurred: {str(e)}")
+        traceback.print_exc()
+        
+        # Ensure CORS headers are included even on unhandled exceptions
+        origin = request.headers.get("origin")
+        headers = {}
+        if origin:
+            # Check if origin is allowed
+            if settings.frontend_url == "*" or origin in origins:
+                headers["Access-Control-Allow-Origin"] = origin
+                headers["Access-Control-Allow-Credentials"] = "true"
+            
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"Internal Server Error: {str(e)}"},
+            headers=headers
+        )
 
 
 

@@ -115,17 +115,31 @@ def update_farmer_profile(farmer_id: int, update_data: schemas.FarmerUpdateProfi
     if not farmer:
         raise HTTPException(status_code=404, detail="Farmer not found")
 
+    print(f"DEBUG: Updating profile for farmer {farmer_id}")
+    print(f"DEBUG: Update data: {update_data.model_dump()}")
+
     if update_data.username:
         # Check if username is taken
         existing = db.query(models.Farmer).filter(models.Farmer.username == update_data.username, models.Farmer.id != farmer_id).first()
         if existing:
+            print(f"DEBUG: Username {update_data.username} already taken")
             raise HTTPException(status_code=400, detail="Username already taken")
         farmer.username = update_data.username
     
     if update_data.email:
+        # Check if email is taken
+        existing = db.query(models.Farmer).filter(models.Farmer.email == update_data.email, models.Farmer.id != farmer_id).first()
+        if existing:
+            print(f"DEBUG: Email {update_data.email} already registered")
+            raise HTTPException(status_code=400, detail="Email already registered")
         farmer.email = update_data.email
     
     if update_data.phone_number:
+        # Check if phone is taken
+        existing = db.query(models.Farmer).filter(models.Farmer.phone_number == update_data.phone_number, models.Farmer.id != farmer_id).first()
+        if existing:
+            print(f"DEBUG: Phone {update_data.phone_number} already registered")
+            raise HTTPException(status_code=400, detail="Phone number already registered")
         farmer.phone_number = update_data.phone_number
     
     if update_data.bio is not None:
@@ -134,8 +148,14 @@ def update_farmer_profile(farmer_id: int, update_data: schemas.FarmerUpdateProfi
     if update_data.profile_picture_url is not None:
         farmer.profile_picture_url = update_data.profile_picture_url
 
-    db.commit()
-    db.refresh(farmer)
+    try:
+        db.commit()
+        db.refresh(farmer)
+        print(f"DEBUG: Profile updated successfully for farmer {farmer_id}")
+    except Exception as e:
+        db.rollback()
+        print(f"ERROR: Database error during profile update: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     
     # Invalidate cache
     cache.delete(f"farmer_stats:{farmer_id}")
