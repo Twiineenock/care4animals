@@ -229,17 +229,17 @@ const ModulesPage = () => {
           </div>
           <span className="font-black text-lg text-[#1A1C1E] tracking-tight truncate">Care4Animals</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button 
             onClick={handleLogout}
-            className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100"
+            className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100 shrink-0"
             title="Sign Out"
           >
             <LogOut className="w-5 h-5" />
           </button>
           <button 
             onClick={() => setShowSettings(true)}
-            className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100"
+            className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100 shrink-0"
           >
             <Settings className="w-5 h-5" />
           </button>
@@ -311,8 +311,8 @@ const ModulesPage = () => {
                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${isOpen ? 'bg-[#2D5A27] text-white' : 'bg-[#F2F8F3] text-[#2D5A27]'}`}>
                       {isOpen ? <FolderOpen className="w-6 h-6" /> : <Folder className="w-6 h-6" />}
                     </div>
-                    <div>
-                      <h3 className="text-lg font-black text-[#1A1C1E] group-hover:text-[#2D5A27] transition-colors">{moduleName}</h3>
+                    <div className="min-w-0">
+                      <h3 className="text-lg font-black text-[#1A1C1E] group-hover:text-[#2D5A27] transition-colors truncate">{moduleName}</h3>
                       <div className="flex items-center gap-3 mt-1">
                         <span className="text-xs font-bold text-slate-400">{lesson_count} lesson{lesson_count !== 1 ? 's' : ''}</span>
                         {completedCount > 0 && <span className="text-xs font-bold text-[#2D5A27]">· {completedCount} completed</span>}

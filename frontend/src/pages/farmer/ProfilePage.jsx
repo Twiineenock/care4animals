@@ -189,14 +189,14 @@ const ProfilePage = () => {
             </div>
             <span className="font-black text-lg text-[#1A1C1E] tracking-tight truncate">My Profile</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button 
               onClick={handleLogout}
-              className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100"
+              className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100 shrink-0"
             >
               <LogOut className="w-5 h-5" />
             </button>
-            <button onClick={() => navigate('/farmer/dashboard')} className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100">
+            <button onClick={() => navigate('/farmer/dashboard')} className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100 shrink-0">
               <ArrowLeft className="w-5 h-5" />
             </button>
           </div>

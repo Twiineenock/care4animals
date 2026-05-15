@@ -139,17 +139,17 @@ const DailyFeedPage = () => {
           </div>
           <span className="font-black text-lg text-[#1A1C1E] tracking-tight truncate">Daily Feed</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button 
             onClick={handleLogout}
-            className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100"
+            className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100 shrink-0"
             title="Sign Out"
           >
             <LogOut className="w-5 h-5" />
           </button>
           <button 
             onClick={() => navigate('/farmer/dashboard')}
-            className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100"
+            className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100 shrink-0"
           >
             <Home className="w-5 h-5" />
           </button>
@@ -229,24 +229,26 @@ const DailyFeedPage = () => {
               </div>
             </div>
 
-            {/* All-batch-complete banner */}
+            {/* All-batch-complete banner - Responsive Stack */}
             {feed?.all_complete && (
-              <div className="bg-gradient-to-r from-[#2D5A27] to-[#3d7a35] rounded-[28px] p-6 mb-8 flex items-center gap-5 text-white shadow-lg shadow-[#2D5A27]/20">
-                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center shrink-0">
-                  <Star className="w-7 h-7 text-yellow-300" />
-                </div>
-                <div>
-                  <p className="font-black text-lg">Batch {feed.batch_number} complete!</p>
-                  <p className="text-white/80 font-medium text-sm">
-                    Great work! Refresh the page to load your next batch of lessons.
-                  </p>
+              <div className="bg-gradient-to-r from-[#2D5A27] to-[#3d7a35] rounded-[28px] p-6 mb-8 flex flex-col md:flex-row items-center md:items-center gap-5 text-white shadow-lg shadow-[#2D5A27]/20">
+                <div className="flex items-center gap-5 w-full md:w-auto">
+                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center shrink-0">
+                    <Star className="w-7 h-7 text-yellow-300" />
+                  </div>
+                  <div>
+                    <p className="font-black text-lg">Batch {feed.batch_number} complete!</p>
+                    <p className="text-white/80 font-medium text-sm">
+                      Great work! Refresh the page for your next lessons.
+                    </p>
+                  </div>
                 </div>
                 <button
                   onClick={() => {
                     sessionStorage.removeItem(`feed_${farmer?.id}`);
                     fetchFeed(farmer.id);
                   }}
-                  className="ml-auto px-6 py-3 bg-white text-[#2D5A27] rounded-2xl font-black hover:scale-105 transition-transform shrink-0"
+                  className="w-full md:w-auto md:ml-auto px-6 py-3 bg-white text-[#2D5A27] rounded-2xl font-black hover:scale-105 transition-transform shrink-0"
                 >
                   Next Batch →
                 </button>
