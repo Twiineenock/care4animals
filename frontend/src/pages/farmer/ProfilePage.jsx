@@ -33,17 +33,17 @@ const ProfilePage = () => {
     }
     const f = JSON.parse(stored);
     setFarmer(f);
-    fetchProfile(f.id);
+    fetchProfile(f.id, f);
   }, [navigate]);
 
-  const fetchProfile = async (id) => {
+  const fetchProfile = async (id, currentFarmer) => {
     try {
       const res = await fetch(`${API_URL}/farmers/${id}/stats`);
       const data = await res.json();
       setFormData({
-        username: farmer?.username || '',
-        email: farmer?.email || '',
-        phone_number: farmer?.phone_number || '',
+        username: currentFarmer?.username || '',
+        email: currentFarmer?.email || '',
+        phone_number: currentFarmer?.phone_number || '',
         bio: data.bio || '',
         profile_picture_url: data.profile_picture_url || ''
       });
