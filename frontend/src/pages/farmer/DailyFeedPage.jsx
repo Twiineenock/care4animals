@@ -133,11 +133,11 @@ const DailyFeedPage = () => {
 
       {/* Mobile Top Bar */}
       <header className="lg:hidden sticky top-0 z-[60] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white shadow-lg shadow-[#2D5A27]/20">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-9 h-9 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white shadow-lg shadow-[#2D5A27]/20 shrink-0">
             <Flame className="w-5 h-5" />
           </div>
-          <span className="font-black text-lg text-[#1A1C1E] tracking-tight">Daily Feed</span>
+          <span className="font-black text-lg text-[#1A1C1E] tracking-tight truncate">Daily Feed</span>
         </div>
         <div className="flex items-center gap-2">
           <button 
