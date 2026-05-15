@@ -14,6 +14,8 @@ const DailyFeedPage = () => {
   const [loading, setLoading] = useState(true);
   const [farmer, setFarmer] = useState(null);
   const [stats, setStats] = useState(null);
+  const [sendingSMS, setSendingSMS] = useState({}); // { lessonId: boolean }
+  const [smsFeedback, setSmsFeedback] = useState({}); // { lessonId: { type, text } }
   const navigate = useNavigate();
 
   const fetchFeed = useCallback(async (farmerId, lang = 'en') => {
@@ -55,6 +57,41 @@ const DailyFeedPage = () => {
   const handleLogout = () => {
     localStorage.removeItem('farmer_user');
     navigate('/');
+  };
+
+  const handleSendSMS = async (e, lesson) => {
+    e.preventDefault(); // Prevent navigating to lesson
+    e.stopPropagation();
+
+    if (!farmer || sendingSMS[lesson.id]) return;
+    
+    setSendingSMS(prev => ({ ...prev, [lesson.id]: true }));
+    setSmsFeedback(prev => ({ ...prev, [lesson.id]: null }));
+
+    try {
+      const res = await fetch(`${API_URL}/sms/send-lesson?farmer_id=${farmer.id}&lesson_id=${lesson.id}`, { 
+        method: 'POST' 
+      });
+      
+      if (res.ok) {
+        setSmsFeedback(prev => ({ 
+          ...prev, 
+          [lesson.id]: { type: 'success', text: 'Sent!' } 
+        }));
+      } else {
+        throw new Error('Failed');
+      }
+    } catch (err) {
+      setSmsFeedback(prev => ({ 
+        ...prev, 
+        [lesson.id]: { type: 'error', text: 'Error' } 
+      }));
+    } finally {
+      setSendingSMS(prev => ({ ...prev, [lesson.id]: false }));
+      setTimeout(() => {
+        setSmsFeedback(prev => ({ ...prev, [lesson.id]: null }));
+      }, 3000);
+    }
   };
 
   const completedInBatch = feed?.batch_lessons?.filter(l => l.completed).length ?? 0;
@@ -307,14 +344,32 @@ const DailyFeedPage = () => {
 
                   {/* Footer */}
                   <div className="px-6 pb-4 flex items-center justify-between border-t border-slate-100/60 pt-3">
-                    <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{lesson.code}</span>
+                    <div className="flex items-center gap-4">
+                      <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{lesson.code}</span>
+                      <button
+                        onClick={(e) => handleSendSMS(e, lesson)}
+                        disabled={sendingSMS[lesson.id]}
+                        className={`flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest transition-all ${
+                          smsFeedback[lesson.id]?.type === 'success' ? 'text-green-600' :
+                          smsFeedback[lesson.id]?.type === 'error' ? 'text-red-500' :
+                          'text-[#2D5A27] hover:text-[#1E3D1A]'
+                        }`}
+                      >
+                        {sendingSMS[lesson.id] ? (
+                          <div className="w-3 h-3 border-2 border-[#2D5A27]/20 border-t-[#2D5A27] rounded-full animate-spin" />
+                        ) : (
+                          <Smartphone className="w-3.5 h-3.5" />
+                        )}
+                        {smsFeedback[lesson.id] ? smsFeedback[lesson.id].text : 'Send SMS'}
+                      </button>
+                    </div>
                     {lesson.completed ? (
                       <span className="flex items-center gap-1.5 text-[#2D5A27] text-xs font-black">
                         <CheckCircle2 className="w-3.5 h-3.5" /> Completed
                       </span>
                     ) : (
                       <span className="flex items-center gap-1.5 text-orange-400 text-xs font-black">
-                        <BookOpen className="w-3.5 h-3.5" /> Tap to read &amp; complete
+                        <BookOpen className="w-3.5 h-3.5" /> Tap to read
                       </span>
                     )}
                   </div>

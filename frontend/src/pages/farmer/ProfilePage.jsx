@@ -305,6 +305,7 @@ const ProfilePage = () => {
                         type="tel"
                         className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border-2 border-transparent rounded-2xl focus:border-[#2D5A27]/10 focus:bg-white outline-none transition-all font-bold text-[#1A1C1E]"
                         value={formData.phone_number}
+                        placeholder="+256700000000"
                         onChange={e => setFormData({ ...formData, phone_number: e.target.value })}
                       />
                     </div>
