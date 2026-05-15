@@ -189,9 +189,17 @@ const ProfilePage = () => {
             </div>
             <span className="font-black text-lg text-[#1A1C1E] tracking-tight">My Profile</span>
           </div>
-          <button onClick={() => navigate('/farmer/dashboard')} className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100">
-            <ArrowLeft className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={handleLogout}
+              className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
+            <button onClick={() => navigate('/farmer/dashboard')} className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100">
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+          </div>
         </header>
 
         {/* Desktop Header */}
@@ -341,7 +349,7 @@ const ProfilePage = () => {
         <MobileNavItem icon={<Layout />} label="Home" onClick={() => navigate('/farmer/dashboard')} />
         <MobileNavItem icon={<Flame />} label="Feed" onClick={() => navigate('/farmer/feed')} />
         <MobileNavItem icon={<BookOpen />} label="Library" onClick={() => navigate('/farmer/dashboard')} />
-        <MobileNavItem icon={<User />} label="Profile" active />
+        <MobileNavItem icon={<User />} label="Profile" active onClick={() => navigate('/farmer/profile')} />
       </nav>
     </div>
   );

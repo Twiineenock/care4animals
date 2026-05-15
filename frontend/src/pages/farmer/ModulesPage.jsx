@@ -229,12 +229,21 @@ const ModulesPage = () => {
           </div>
           <span className="font-black text-lg text-[#1A1C1E] tracking-tight">Care4Animals</span>
         </div>
-        <button 
-          onClick={() => setShowSettings(true)}
-          className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100"
-        >
-          <Settings className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={handleLogout}
+            className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100"
+            title="Sign Out"
+          >
+            <LogOut className="w-5 h-5" />
+          </button>
+          <button 
+            onClick={() => setShowSettings(true)}
+            className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100"
+          >
+            <Settings className="w-5 h-5" />
+          </button>
+        </div>
       </header>
 
       {/* Main */}
@@ -270,7 +279,7 @@ const ModulesPage = () => {
         </div>
 
         {/* Stats */}
-        <div className="flex lg:grid lg:grid-cols-3 gap-4 lg:gap-6 mb-10 overflow-x-auto pb-4 lg:pb-0 no-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-10">
           <StatCard label="Available" value={stats.lessons_available} color="bg-blue-50 text-blue-600" />
           <StatCard label="Completed" value={stats.lessons_completed} color="bg-green-50 text-green-600" />
           <StatCard label="Last Seen" value={stats.last_activity ? new Date(stats.last_activity).toLocaleDateString([], { month: 'short', day: 'numeric' }) : 'None'} color="bg-orange-50 text-orange-600" />
@@ -375,10 +384,10 @@ const ModulesPage = () => {
 
       {/* Mobile Bottom Navigation */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/90 backdrop-blur-xl border-t border-slate-100 px-6 py-3 flex items-center justify-between shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
-        <MobileNavItem icon={<Home />} label="Home" active onClick={() => navigate('/farmer/dashboard')} />
+        <MobileNavItem icon={<Layout />} label="Home" active onClick={() => navigate('/farmer/dashboard')} />
         <MobileNavItem icon={<Flame />} label="Feed" onClick={() => navigate('/farmer/feed')} />
         <MobileNavItem icon={<BookOpen />} label="Library" onClick={() => navigate('/farmer/dashboard')} />
-        <MobileNavItem icon={<User />} label="Profile" onClick={() => setShowSettings(true)} />
+        <MobileNavItem icon={<User />} label="Profile" onClick={() => navigate('/farmer/profile')} />
       </nav>
     </div>
   );

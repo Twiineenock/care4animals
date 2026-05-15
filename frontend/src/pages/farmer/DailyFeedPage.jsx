@@ -139,12 +139,21 @@ const DailyFeedPage = () => {
           </div>
           <span className="font-black text-lg text-[#1A1C1E] tracking-tight">Daily Feed</span>
         </div>
-        <button 
-          onClick={() => navigate('/farmer/dashboard')}
-          className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100"
-        >
-          <Home className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={handleLogout}
+            className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100"
+            title="Sign Out"
+          >
+            <LogOut className="w-5 h-5" />
+          </button>
+          <button 
+            onClick={() => navigate('/farmer/dashboard')}
+            className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100"
+          >
+            <Home className="w-5 h-5" />
+          </button>
+        </div>
       </header>
 
       <main className="lg:ml-72 p-6 md:p-12 pb-32">
@@ -181,9 +190,10 @@ const DailyFeedPage = () => {
         ) : (
           <>
             {/* Progress cards - Responsive/Scrollable */}
-            <div className="flex lg:grid lg:grid-cols-3 gap-4 lg:gap-5 mb-10 overflow-x-auto pb-4 lg:pb-0 no-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0">
+            {/* Progress cards - Vertical Stacking for Mobile to avoid horizontal scroll */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-5 mb-10">
               {/* Batch progress */}
-              <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 min-w-[240px] lg:min-w-0 flex-1 shrink-0 lg:shrink shadow-sm lg:shadow-none">
+              <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 shadow-sm lg:shadow-none">
                 <p className="text-[10px] lg:text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Today's Batch</p>
                 <p className="text-2xl lg:text-3xl font-black text-[#1A1C1E] mb-3">{completedInBatch} / {feed?.batch_lessons?.length ?? 5}</p>
                 <div className="h-1.5 lg:h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -193,7 +203,7 @@ const DailyFeedPage = () => {
               </div>
 
               {/* Module progress */}
-              <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 min-w-[240px] lg:min-w-0 flex-1 shrink-0 lg:shrink shadow-sm lg:shadow-none">
+              <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 shadow-sm lg:shadow-none">
                 <p className="text-[10px] lg:text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Current Module</p>
                 <p className="text-xs lg:text-sm font-black text-[#1A1C1E] mb-1 truncate">{feed?.current_module ?? '—'}</p>
                 <p className="text-2xl lg:text-3xl font-black text-[#1A1C1E] mb-3">{feed?.module_completed ?? 0} / {feed?.module_total ?? 0}</p>
@@ -204,7 +214,7 @@ const DailyFeedPage = () => {
               </div>
 
               {/* Overall progress */}
-              <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 min-w-[240px] lg:min-w-0 flex-1 shrink-0 lg:shrink shadow-sm lg:shadow-none">
+              <div className="bg-white rounded-2xl lg:rounded-[28px] border border-slate-100 p-5 lg:p-6 shadow-sm lg:shadow-none">
                 <p className="text-[10px] lg:text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Overall Growth</p>
                 <p className="text-2xl lg:text-3xl font-black text-[#1A1C1E] mb-3">{feed?.completed_count ?? 0} / {feed?.total_lessons ?? 0}</p>
                 <div className="h-1.5 lg:h-2 bg-slate-100 rounded-full overflow-hidden">
