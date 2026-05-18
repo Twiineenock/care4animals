@@ -14,8 +14,6 @@ const DailyFeedPage = () => {
   const [loading, setLoading] = useState(true);
   const [farmer, setFarmer] = useState(null);
   const [stats, setStats] = useState(null);
-  const [sendingSMS, setSendingSMS] = useState({}); // { lessonId: boolean }
-  const [smsFeedback, setSmsFeedback] = useState({}); // { lessonId: { type, text } }
   const navigate = useNavigate();
 
   const fetchFeed = useCallback(async (farmerId, lang = 'en') => {
@@ -57,41 +55,6 @@ const DailyFeedPage = () => {
   const handleLogout = () => {
     localStorage.removeItem('farmer_user');
     navigate('/');
-  };
-
-  const handleSendSMS = async (e, lesson) => {
-    e.preventDefault(); // Prevent navigating to lesson
-    e.stopPropagation();
-
-    if (!farmer || sendingSMS[lesson.id]) return;
-    
-    setSendingSMS(prev => ({ ...prev, [lesson.id]: true }));
-    setSmsFeedback(prev => ({ ...prev, [lesson.id]: null }));
-
-    try {
-      const res = await fetch(`${API_URL}/sms/send-lesson?farmer_id=${farmer.id}&lesson_id=${lesson.id}`, { 
-        method: 'POST' 
-      });
-      
-      if (res.ok) {
-        setSmsFeedback(prev => ({ 
-          ...prev, 
-          [lesson.id]: { type: 'success', text: 'Sent!' } 
-        }));
-      } else {
-        throw new Error('Failed');
-      }
-    } catch (err) {
-      setSmsFeedback(prev => ({ 
-        ...prev, 
-        [lesson.id]: { type: 'error', text: 'Error' } 
-      }));
-    } finally {
-      setSendingSMS(prev => ({ ...prev, [lesson.id]: false }));
-      setTimeout(() => {
-        setSmsFeedback(prev => ({ ...prev, [lesson.id]: null }));
-      }, 3000);
-    }
   };
 
   const completedInBatch = feed?.batch_lessons?.filter(l => l.completed).length ?? 0;
@@ -137,7 +100,7 @@ const DailyFeedPage = () => {
           <SidebarItem 
             icon="settings" 
             label="Settings" 
-            onClick={() => {}} 
+            onClick={() => navigate('/farmer/dashboard?settings=true')} 
           />
           
           <div className="pt-6 mt-6 border-t border-white/10">

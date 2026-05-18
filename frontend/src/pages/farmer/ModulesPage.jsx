@@ -3,7 +3,8 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import {
   BookOpen, Search, LogOut, User, Layout, ChevronDown,
   PlayCircle, Clock, CheckCircle2, FolderOpen,
-  Folder, Flame, Zap, ChevronRight, Home, Settings, Menu
+  Folder, Flame, Zap, ChevronRight, Home, Settings, Menu,
+  Smartphone, Info, Globe, X
 } from 'lucide-react';
 import { cachedFetch, invalidateFarmerCache } from '../../utils/apiCache';
 
@@ -26,7 +27,56 @@ const ModulesPage = () => {
   const [recentActivity, setRecentActivity] = useState([]);
   const [showSettings, setShowSettings] = useState(false);
   const [isUpdatingAnimals, setIsUpdatingAnimals] = useState(false);
+  const [isSubscribingSms, setIsSubscribingSms] = useState(false);
+  const [isUpdatingLanguage, setIsUpdatingLanguage] = useState(false);
   const [dailyFeed, setDailyFeed] = useState(null);
+
+  const handleToggleSmsSubscription = async (subscribeStatus) => {
+    if (!farmer) return;
+    setIsSubscribingSms(true);
+    try {
+      const response = await fetch(`${API_URL}/farmers/${farmer.id}/sms-subscription?is_subscribed=${subscribeStatus}`, {
+        method: 'PUT'
+      });
+      if (response.ok) {
+        invalidateFarmerCache(farmer.id);
+        const statsRes = await fetch(`${API_URL}/farmers/${farmer.id}/stats`);
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          setStats(statsData);
+        }
+      }
+    } catch (err) {
+      console.error("Error toggling SMS subscription:", err);
+    } finally {
+      setIsSubscribingSms(false);
+    }
+  };
+
+  const handleUpdateLanguage = async (newLang) => {
+    if (!farmer) return;
+    setIsUpdatingLanguage(true);
+    try {
+      const response = await fetch(`${API_URL}/farmers/${farmer.id}/language`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ preferred_language: newLang })
+      });
+      if (response.ok) {
+        invalidateFarmerCache(farmer.id);
+        setLanguageFilter(newLang);
+        const statsRes = await fetch(`${API_URL}/farmers/${farmer.id}/stats`);
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          setStats(statsData);
+        }
+      }
+    } catch (err) {
+      console.error("Error updating language:", err);
+    } finally {
+      setIsUpdatingLanguage(false);
+    }
+  };
 
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -111,6 +161,13 @@ const ModulesPage = () => {
       fetchModuleLessons(decodeURIComponent(openModuleParam));
     }
   }, [openModuleParam]);
+
+  // Sync settings param from URL
+  useEffect(() => {
+    if (searchParams.get('settings') === 'true') {
+      setShowSettings(true);
+    }
+  }, [searchParams]);
 
   // Reload modules when language changes
   useEffect(() => {
@@ -381,6 +438,177 @@ const ModulesPage = () => {
           })}
         </div>
       </main>
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-[#1A1C1E]/60 backdrop-blur-xl" 
+            onClick={() => {
+              setShowSettings(false);
+              if (searchParams.get('settings')) setSearchParams({});
+            }} 
+          />
+          <div className="bg-white w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl relative z-10 p-8 md:p-10 animate-in fade-in zoom-in duration-200 custom-scrollbar">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-[#E7F3E8] text-[#2D5A27] rounded-xl flex items-center justify-center">
+                  <Settings className="w-5 h-5 text-[#2D5A27]" />
+                </div>
+                <h3 className="text-2xl font-black text-[#1A1C1E] tracking-tight">Farm Settings</h3>
+              </div>
+              <button 
+                onClick={() => {
+                  setShowSettings(false);
+                  if (searchParams.get('settings')) setSearchParams({});
+                }}
+                className="w-10 h-10 bg-slate-50 hover:bg-slate-100 border border-slate-100 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Farmed Animals Section */}
+            <div className="mb-8">
+              <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                <Info className="w-3.5 h-3.5" /> Personalized Curriculums
+              </h4>
+              <p className="text-sm text-slate-500 font-medium mb-4">Select the animals you deal with to prioritize and personalize your library feed.</p>
+              <div className="grid grid-cols-2 gap-3">
+                {['cow', 'dog', 'pig', 'chicken', 'goat'].map((animal) => {
+                  const isSelected = (stats.farmed_animals || 'cow').split(',').includes(animal);
+                  return (
+                    <button
+                      key={animal}
+                      onClick={async () => {
+                        const current = (stats.farmed_animals || 'cow').split(',');
+                        let updated;
+                        if (current.includes(animal)) {
+                          updated = current.filter(a => a !== animal);
+                        } else {
+                          updated = [...current, animal];
+                        }
+                        if (updated.length === 0) return; // Must have at least one
+
+                        setIsUpdatingAnimals(true);
+                        try {
+                          const res = await fetch(`${API_URL}/farmers/${farmer.id}/animals`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ farmed_animals: updated.join(',') })
+                          });
+                          if (res.ok) {
+                            invalidateFarmerCache(farmer.id);
+                            const statsRes = await fetch(`${API_URL}/farmers/${farmer.id}/stats`);
+                            const statsData = await statsRes.json();
+                            setStats(statsData);
+                          }
+                        } catch (e) {
+                          console.error(e);
+                        } finally {
+                          setIsUpdatingAnimals(false);
+                        }
+                      }}
+                      className={`flex items-center gap-3 p-4 rounded-2xl border-2 text-left transition-all ${
+                        isSelected 
+                          ? 'border-[#2D5A27] bg-[#F2F8F3] text-[#1A1C1E]' 
+                          : 'border-slate-100 hover:border-slate-200 text-slate-400'
+                      }`}
+                    >
+                      <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${
+                        isSelected ? 'bg-[#2D5A27] text-white' : 'bg-slate-100 text-slate-300'
+                      }`}>
+                        {isSelected && <CheckCircle2 className="w-3.5 h-3.5" />}
+                      </div>
+                      <span className="font-bold text-sm capitalize">
+                        {animal}s
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Language Preference Section */}
+            <div className="mb-8">
+              <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                <Globe className="w-3.5 h-3.5" /> Language Preference
+              </h4>
+              <p className="text-sm text-slate-500 font-medium mb-4">Choose your preferred reading language. All modules and instructions will translate instantly.</p>
+              <div className="flex bg-slate-50 p-1.5 rounded-2xl border border-slate-100 gap-1">
+                {[
+                  { id: 'en', label: 'English' },
+                  { id: 'lg', label: 'Luganda' },
+                  { id: 'sw', label: 'Swahili' }
+                ].map((lang) => {
+                  const isSelected = languageFilter === lang.id;
+                  return (
+                    <button
+                      key={lang.id}
+                      onClick={() => handleUpdateLanguage(lang.id)}
+                      disabled={isUpdatingLanguage}
+                      className={`flex-1 py-3 px-4 rounded-xl text-sm font-black transition-all ${
+                        isSelected 
+                          ? 'bg-[#2D5A27] text-white shadow-md' 
+                          : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100/50'
+                      }`}
+                    >
+                      {lang.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* SMS Subscription Section */}
+            <div className="mb-8">
+              <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                <Smartphone className="w-3.5 h-3.5" /> SMS Learning Feed
+              </h4>
+              
+              <div className="bg-[#F8FAFB] border border-slate-100 rounded-3xl p-6 transition-all">
+                <div className="flex items-center justify-between gap-4 mb-4">
+                  <div>
+                    <h5 className="font-black text-[#1A1C1E] text-base">Care4Animals SMS Group</h5>
+                    <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">Offline learning feed</p>
+                  </div>
+                  {/* Premium iOS-style Toggle Switch */}
+                  <button
+                    onClick={() => handleToggleSmsSubscription(!stats.is_subscribed_to_sms)}
+                    disabled={isSubscribingSms}
+                    className={`w-14 h-8 rounded-full p-1 transition-all duration-300 ${
+                      stats.is_subscribed_to_sms ? 'bg-[#2D5A27]' : 'bg-slate-200'
+                    }`}
+                  >
+                    <div className={`bg-white w-6 h-6 rounded-full shadow-md transition-all duration-300 ${
+                      stats.is_subscribed_to_sms ? 'translate-x-6' : 'translate-x-0'
+                    }`} />
+                  </button>
+                </div>
+                
+                <p className="text-slate-500 text-xs font-medium leading-relaxed mb-4">
+                  Get single animal care lessons sent directly to your phone (<strong>{farmer?.phone_number || "registered number"}</strong>) via SMS. Turn it on to be eligible to receive automated updates broadcasted by the administration.
+                </p>
+
+                <div className="p-3 bg-yellow-50/50 text-yellow-800 text-[11px] font-bold rounded-xl border border-yellow-100/50 flex items-start gap-2.5">
+                  <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                  <span>Standard carrier rates apply. You can turn this off at any time.</span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                setShowSettings(false);
+                if (searchParams.get('settings')) setSearchParams({});
+              }}
+              className="w-full py-5 bg-[#2D5A27] text-white rounded-2xl font-bold text-lg shadow-xl shadow-[#2D5A27]/10 hover:scale-[1.01] active:scale-[0.99] transition-all"
+            >
+              Save & Done
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Bottom Navigation */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/90 backdrop-blur-xl border-t border-slate-100 px-6 py-3 flex items-center justify-between shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">

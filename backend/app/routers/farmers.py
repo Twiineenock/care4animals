@@ -184,6 +184,44 @@ def update_sms_subscription(farmer_id: int, is_subscribed: bool, db: Session = D
     return {"message": "SMS Subscription updated successfully", "is_subscribed_to_sms": farmer.is_subscribed_to_sms}
 
 
+@router.put("/{farmer_id}/animals")
+def update_farmer_animals(farmer_id: int, animals_data: schemas.FarmerUpdateAnimals, db: Session = Depends(get_db)):
+    farmer = db.query(models.Farmer).filter(models.Farmer.id == farmer_id).first()
+    if not farmer:
+        raise HTTPException(status_code=404, detail="Farmer not found")
+    
+    farmer.farmed_animals = animals_data.farmed_animals
+    try:
+        db.commit()
+        db.refresh(farmer)
+        # Invalidate cache
+        cache.delete(f"farmer_stats:{farmer_id}")
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        
+    return {"message": "Farmed animals updated successfully", "farmed_animals": farmer.farmed_animals}
+
+
+@router.put("/{farmer_id}/language")
+def update_farmer_language(farmer_id: int, language_data: schemas.FarmerUpdateLanguage, db: Session = Depends(get_db)):
+    farmer = db.query(models.Farmer).filter(models.Farmer.id == farmer_id).first()
+    if not farmer:
+        raise HTTPException(status_code=404, detail="Farmer not found")
+    
+    farmer.preferred_language = language_data.preferred_language
+    try:
+        db.commit()
+        db.refresh(farmer)
+        # Invalidate cache
+        cache.delete(f"farmer_stats:{farmer_id}")
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        
+    return {"message": "Preferred language updated successfully", "preferred_language": farmer.preferred_language}
+
+
 @router.get("/{farmer_id}/stats", response_model=schemas.FarmerDashboardStats)
 def get_farmer_stats(farmer_id: int, db: Session = Depends(get_db)):
     cache_key = f"farmer_stats:{farmer_id}"
@@ -208,6 +246,7 @@ def get_farmer_stats(farmer_id: int, db: Session = Depends(get_db)):
         "lessons_available": lessons_available,
         "lessons_completed": lessons_completed,
         "farmed_animals": farmer.farmed_animals,
+        "preferred_language": farmer.preferred_language or "en",
         "profile_picture_url": farmer.profile_picture_url,
         "bio": farmer.bio,
         "last_activity": farmer.last_interaction,

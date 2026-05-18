@@ -155,7 +155,7 @@ const ProfilePage = () => {
           <SidebarItem icon="dashboard" label="Daily Feed" onClick={() => navigate('/farmer/feed')} />
           <SidebarItem icon="menu_book" label="All Modules" onClick={() => navigate('/farmer/dashboard')} />
           <SidebarItem icon="person" label="My Profile" active={true} />
-          <SidebarItem icon="settings" label="Settings" onClick={() => {}} />
+          <SidebarItem icon="settings" label="Settings" onClick={() => navigate('/farmer/dashboard?settings=true')} />
           <div className="pt-6 mt-6 border-t border-white/10">
             <button onClick={handleLogout} className="w-full flex items-center gap-3 px-6 py-4 text-red-300 hover:text-red-100 hover:bg-red-500/10 rounded-2xl transition-all group font-bold text-sm">
               <span className="material-symbols-outlined text-[20px]">logout</span> Sign Out
