@@ -75,6 +75,19 @@ const DailyFeedPage = () => {
             <span className="font-manrope font-black text-2xl text-white tracking-tight group-hover:text-slate-200 transition-colors">Care4Animals</span>
           </Link>
           <p className="text-[#A7C0A4] text-[10px] font-black uppercase tracking-[0.2em] ml-1">Farmer Feed</p>
+          <div className="mt-4 p-3 bg-white/5 border border-white/10 rounded-2xl">
+            <p className="text-[#A7C0A4] text-[9px] font-bold uppercase tracking-wider mb-2">Supported by:</p>
+            <div className="flex items-center gap-2">
+              <img src="/wts_logo.png" alt="WTS" className="h-4 object-contain filter brightness-0 invert" />
+              <div className="h-3 w-px bg-white/20" />
+              <img src="/bugema_logo.png" alt="Bugema" className="h-6 object-contain filter brightness-0 invert" />
+              <div className="h-3 w-px bg-white/20" />
+              <div className="flex items-center gap-1 text-[#A7C0A4] font-bold text-[9px]">
+                <span className="material-symbols-outlined text-[12px] text-white">public</span>
+                <span>GAF</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <nav className="flex-1 px-4 space-y-1.5">

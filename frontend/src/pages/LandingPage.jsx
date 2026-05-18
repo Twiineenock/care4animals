@@ -5,23 +5,41 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-background text-on-background font-inter selection:bg-secondary-fixed selection:text-on-secondary-fixed">
       {/* Navigation */}
-      <nav className="flex justify-between items-center px-8 md:px-16 py-6 sticky top-0 bg-background/80 backdrop-blur-md z-50">
-        <Link to="/" className="flex items-center gap-3 group">
-          <img src="/care4animals.png" alt="Care4Animals Logo" className="w-12 h-12 object-contain bg-white rounded-xl p-0.5 shadow-md group-hover:scale-105 transition-transform" />
-          <span className="font-manrope text-2xl font-black text-primary tracking-tight group-hover:text-primary/85 transition-colors">Care4Animals</span>
-        </Link>
-        <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-on-surface-variant">
-          <a href="#about" className="hover:text-primary transition-colors">Our Mission</a>
-          <a href="#impact" className="hover:text-primary transition-colors">Impact</a>
-          <a href="#partners" className="hover:text-primary transition-colors">Partners</a>
+      <nav className="flex flex-col md:flex-row justify-between items-center gap-4 px-8 md:px-16 py-4 sticky top-0 bg-background/90 backdrop-blur-md border-b border-outline-variant z-50 shadow-sm">
+        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-6">
+          <Link to="/" className="flex items-center gap-3 group shrink-0">
+            <img src="/care4animals.png" alt="Care4Animals Logo" className="w-12 h-12 object-contain bg-white rounded-xl p-0.5 shadow-md group-hover:scale-105 transition-transform" />
+            <span className="font-manrope text-2xl font-black text-primary tracking-tight group-hover:text-primary/85 transition-colors">Care4Animals</span>
+          </Link>
+          <div className="h-6 w-px bg-slate-200 hidden sm:block" />
+          <div className="flex items-center gap-2.5">
+            <span className="text-[9px] font-black uppercase tracking-wider text-slate-400">Supported by:</span>
+            <div className="flex items-center gap-3 bg-white border border-outline-variant rounded-full px-3.5 py-1.5 shadow-sm">
+              <img src="/wts_logo.png" alt="WTS" className="h-6 object-contain" />
+              <div className="h-3 w-px bg-slate-200" />
+              <img src="/bugema_logo.png" alt="Bugema" className="h-8 object-contain" />
+              <div className="h-3 w-px bg-slate-200" />
+              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
+                <span className="material-symbols-outlined text-[16px] text-primary">public</span>
+                <span className="tracking-tight text-[11px] font-black uppercase">Global Animal Fund</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex items-center gap-4">
-          <Link to="/farmer/auth" className="px-6 py-2.5 rounded-full text-sm font-bold text-primary hover:bg-primary/5 transition-all">
-            Farmer Portal
-          </Link>
-          <Link to="/login" className="px-6 py-2.5 rounded-full text-sm font-bold bg-primary text-on-primary hover:shadow-lg hover:shadow-primary/20 transition-all">
-            Admin Login
-          </Link>
+        <div className="flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-6 text-sm font-bold text-on-surface-variant">
+            <a href="#about" className="hover:text-primary transition-colors">Our Mission</a>
+            <a href="#impact" className="hover:text-primary transition-colors">Impact</a>
+            <a href="#partners" className="hover:text-primary transition-colors">Partners</a>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link to="/farmer/auth" className="px-5 py-2 rounded-full text-xs font-bold text-primary hover:bg-primary/5 transition-all">
+              Farmer Portal
+            </Link>
+            <Link to="/login" className="px-5 py-2.5 rounded-full text-xs font-bold bg-primary text-on-primary hover:shadow-lg hover:shadow-primary/20 transition-all">
+              Admin Login
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -77,12 +95,12 @@ const LandingPage = () => {
       <section id="partners" className="py-24 bg-surface-container-low border-y border-outline-variant">
         <div className="max-w-7xl mx-auto px-8">
           <p className="text-center text-xs font-bold text-on-surface-variant uppercase tracking-[0.3em] mb-12">Trusted By Global Leaders</p>
-          <div className="flex flex-wrap justify-center items-center gap-16 md:gap-32 grayscale opacity-50">
-            <img src="/wts_logo.png" alt="WTS" className="h-12 md:h-16 object-contain hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer" />
-            <img src="/bugema_logo.png" alt="Bugema" className="h-16 md:h-20 object-contain hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer" />
-            <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-4xl">public</span>
-              <span className="font-manrope text-xl font-bold">Global Animal Fund</span>
+          <div className="flex flex-wrap justify-center items-center gap-16 md:gap-32">
+            <img src="/wts_logo.png" alt="WTS" className="h-14 md:h-16 object-contain hover:scale-105 transition-all cursor-pointer" />
+            <img src="/bugema_logo.png" alt="Bugema" className="h-16 md:h-20 object-contain hover:scale-105 transition-all cursor-pointer" />
+            <div className="flex items-center gap-3 text-primary hover:scale-105 transition-all cursor-pointer">
+              <span className="material-symbols-outlined text-4xl text-primary">public</span>
+              <span className="font-manrope text-xl font-black uppercase tracking-tight">Global Animal Fund</span>
             </div>
           </div>
         </div>

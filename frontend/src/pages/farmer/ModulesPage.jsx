@@ -222,6 +222,19 @@ const ModulesPage = () => {
             <span className="font-manrope font-black text-2xl text-white tracking-tight group-hover:text-slate-200 transition-colors">Care4Animals</span>
           </Link>
           <p className="text-[#A7C0A4] text-[10px] font-black uppercase tracking-[0.2em] ml-1">Farmer Dashboard</p>
+          <div className="mt-4 p-3 bg-white/5 border border-white/10 rounded-2xl">
+            <p className="text-[#A7C0A4] text-[9px] font-bold uppercase tracking-wider mb-2">Supported by:</p>
+            <div className="flex items-center gap-2">
+              <img src="/wts_logo.png" alt="WTS" className="h-4 object-contain filter brightness-0 invert" />
+              <div className="h-3 w-px bg-white/20" />
+              <img src="/bugema_logo.png" alt="Bugema" className="h-6 object-contain filter brightness-0 invert" />
+              <div className="h-3 w-px bg-white/20" />
+              <div className="flex items-center gap-1 text-[#A7C0A4] font-bold text-[9px]">
+                <span className="material-symbols-outlined text-[12px] text-white">public</span>
+                <span>GAF</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <nav className="flex-1 px-4 space-y-1.5">
@@ -277,25 +290,38 @@ const ModulesPage = () => {
       </aside>
 
       {/* Mobile Top Bar */}
-      <header className="lg:hidden sticky top-0 z-[60] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 min-w-0 group">
-          <img src="/care4animals.png" alt="Care4Animals Logo" className="w-9 h-9 object-contain bg-white rounded-xl p-0.5 shadow-lg shadow-[#2D5A27]/20 shrink-0 group-hover:scale-105 transition-transform" />
-          <span className="font-black text-lg text-[#1A1C1E] tracking-tight truncate">Care4Animals</span>
-        </Link>
-        <div className="flex items-center gap-2 shrink-0">
-          <button 
-            onClick={handleLogout}
-            className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100 shrink-0"
-            title="Sign Out"
-          >
-            <LogOut className="w-5 h-5" />
-          </button>
-          <button 
-            onClick={() => setShowSettings(true)}
-            className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100 shrink-0"
-          >
-            <Settings className="w-5 h-5" />
-          </button>
+      <header className="lg:hidden sticky top-0 z-[60] bg-white/95 backdrop-blur-xl border-b border-slate-100 px-6 py-3 flex flex-col gap-2 shrink-0">
+        <div className="flex items-center justify-between w-full">
+          <Link to="/" className="flex items-center gap-2 group">
+            <img src="/care4animals.png" alt="Care4Animals Logo" className="w-8 h-8 object-contain bg-white rounded-lg p-0.5 shadow-md group-hover:scale-105 transition-transform shrink-0" />
+            <span className="font-black text-base text-[#1A1C1E] tracking-tight truncate">Care4Animals</span>
+          </Link>
+          <div className="flex items-center gap-2 shrink-0">
+            <button 
+              onClick={handleLogout}
+              className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500 border border-red-100 shrink-0"
+              title="Sign Out"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
+            <button 
+              onClick={() => setShowSettings(true)}
+              className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-500 border border-slate-100 shrink-0"
+            >
+              <Settings className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 bg-slate-50 border border-slate-100 rounded-full px-3 py-1.5 w-fit">
+          <span className="text-[8px] font-black uppercase tracking-wider text-slate-400">Supported by:</span>
+          <img src="/wts_logo.png" alt="WTS" className="h-3 object-contain shrink-0" />
+          <div className="h-2.5 w-px bg-slate-200" />
+          <img src="/bugema_logo.png" alt="Bugema" className="h-5 object-contain shrink-0" />
+          <div className="h-2.5 w-px bg-slate-200" />
+          <div className="flex items-center gap-1 text-[#2D5A27] font-bold text-[8px] shrink-0">
+            <span className="material-symbols-outlined text-[10px]">public</span>
+            <span>GAF</span>
+          </div>
         </div>
       </header>
 
