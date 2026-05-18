@@ -36,6 +36,7 @@ class FarmerResponse(BaseModel):
     phone_number: str
     profile_picture_url: Optional[str] = None
     bio: Optional[str] = None
+    is_subscribed_to_sms: bool = False
 
     class Config:
         from_attributes = True
@@ -104,7 +105,8 @@ def login(credentials: FarmerLogin, db: Session = Depends(get_db)):
             "email": farmer.email,
             "phone_number": farmer.phone_number,
             "profile_picture_url": farmer.profile_picture_url,
-            "bio": farmer.bio
+            "bio": farmer.bio,
+            "is_subscribed_to_sms": farmer.is_subscribed_to_sms
         }
     }
 
@@ -163,6 +165,25 @@ def update_farmer_profile(farmer_id: int, update_data: schemas.FarmerUpdateProfi
     return farmer
 
 
+@router.put("/{farmer_id}/sms-subscription")
+def update_sms_subscription(farmer_id: int, is_subscribed: bool, db: Session = Depends(get_db)):
+    farmer = db.query(models.Farmer).filter(models.Farmer.id == farmer_id).first()
+    if not farmer:
+        raise HTTPException(status_code=404, detail="Farmer not found")
+    
+    farmer.is_subscribed_to_sms = is_subscribed
+    try:
+        db.commit()
+        db.refresh(farmer)
+        # Invalidate cache
+        cache.delete(f"farmer_stats:{farmer_id}")
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        
+    return {"message": "SMS Subscription updated successfully", "is_subscribed_to_sms": farmer.is_subscribed_to_sms}
+
+
 @router.get("/{farmer_id}/stats", response_model=schemas.FarmerDashboardStats)
 def get_farmer_stats(farmer_id: int, db: Session = Depends(get_db)):
     cache_key = f"farmer_stats:{farmer_id}"
@@ -190,7 +211,8 @@ def get_farmer_stats(farmer_id: int, db: Session = Depends(get_db)):
         "profile_picture_url": farmer.profile_picture_url,
         "bio": farmer.bio,
         "last_activity": farmer.last_interaction,
-        "completed_lesson_ids": completed_lesson_ids
+        "completed_lesson_ids": completed_lesson_ids,
+        "is_subscribed_to_sms": farmer.is_subscribed_to_sms
     }
     cache.set(cache_key, result, cache.TTL_FARMER)
     return result

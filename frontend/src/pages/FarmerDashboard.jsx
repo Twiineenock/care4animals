@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Search, LogOut, User, Layout, ChevronRight, ChevronDown, PlayCircle, Clock, X, Languages, Info, Sparkles, CheckCircle2, FolderOpen, Folder } from 'lucide-react';
+import { BookOpen, Search, LogOut, User, Layout, ChevronRight, ChevronDown, PlayCircle, Clock, X, Languages, Info, Sparkles, CheckCircle2, FolderOpen, Folder, Smartphone, MessageSquare } from 'lucide-react';
 
 const FarmerDashboard = () => {
   const [modules, setModules] = useState([]);       // lightweight: [{module, lesson_count}]
@@ -15,12 +15,15 @@ const FarmerDashboard = () => {
     lessons_available: 0,
     lessons_completed: 0,
     last_activity: null,
-    completed_lesson_ids: []
+    completed_lesson_ids: [],
+    is_subscribed_to_sms: false
   });
   const [recentActivity, setRecentActivity] = useState([]);
   const [isMarking, setIsMarking] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState('cow');
   const [showSettings, setShowSettings] = useState(false);
+  const [showSmsModal, setShowSmsModal] = useState(false);
+  const [isSubscribingSms, setIsSubscribingSms] = useState(false);
   const [isUpdatingAnimals, setIsUpdatingAnimals] = useState(false);
   const [openModules, setOpenModules] = useState(new Set());
   const navigate = useNavigate();
@@ -163,6 +166,29 @@ const FarmerDashboard = () => {
     }
   };
 
+  const handleToggleSmsSubscription = async (subscribeStatus) => {
+    if (!farmer) return;
+    setIsSubscribingSms(true);
+    try {
+      const response = await fetch(`${API_URL}/farmers/${farmer.id}/sms-subscription?is_subscribed=${subscribeStatus}`, {
+        method: 'PUT'
+      });
+      if (response.ok) {
+        // Refresh stats
+        const statsRes = await fetch(`${API_URL}/farmers/${farmer.id}/stats`);
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          setStats(statsData);
+        }
+        setShowSmsModal(false);
+      }
+    } catch (err) {
+      console.error("Error toggling SMS subscription:", err);
+    } finally {
+      setIsSubscribingSms(false);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('farmer_user');
     navigate('/');
@@ -276,6 +302,42 @@ const FarmerDashboard = () => {
           <StatCard label="Lessons Available" value={stats.lessons_available} color="bg-blue-50 text-blue-600" />
           <StatCard label="Modules Finished" value={stats.lessons_completed} color="bg-green-50 text-green-600" />
           <StatCard label="Last Activity" value={stats.last_activity ? new Date(stats.last_activity).toLocaleDateString() : 'None'} color="bg-orange-50 text-orange-600" />
+        </div>
+
+        {/* SMS Subscription Banner */}
+        <div className="bg-white rounded-[32px] border border-slate-100 p-8 mb-12 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.03)] flex flex-col md:flex-row items-center justify-between gap-6 transition-all hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.06)]">
+          <div className="flex items-center gap-5">
+            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${stats.is_subscribed_to_sms ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'} shrink-0`}>
+              <Smartphone className="w-7 h-7" />
+            </div>
+            <div>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h3 className="text-xl font-black text-[#1A1C1E] tracking-tight">Care4Animals SMS Learning Group</h3>
+                {stats.is_subscribed_to_sms ? (
+                  <span className="px-3 py-1 bg-green-100 text-green-700 text-[10px] font-black uppercase tracking-widest rounded-full flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 animate-pulse" /> Active
+                  </span>
+                ) : (
+                  <span className="px-3 py-1 bg-slate-100 text-slate-400 text-[10px] font-black uppercase tracking-widest rounded-full">
+                    Not Joined
+                  </span>
+                )}
+              </div>
+              <p className="text-slate-500 text-sm font-medium mt-1.5 leading-relaxed max-w-xl">
+                Get single branded animal care lessons sent directly to your mobile phone via SMS whenever updates are broadcasted by the administration. Highly recommended for offline study!
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setShowSmsModal(true)}
+            className={`px-8 py-4 rounded-2xl font-black transition-all whitespace-nowrap shadow-md hover:scale-[1.02] active:scale-[0.98] ${
+              stats.is_subscribed_to_sms
+                ? 'bg-slate-100 hover:bg-red-50 hover:text-red-600 text-slate-600'
+                : 'bg-orange-500 hover:bg-orange-600 text-white shadow-orange-500/10'
+            }`}
+          >
+            {stats.is_subscribed_to_sms ? 'Manage Subscription' : 'Subscribe to SMS Group'}
+          </button>
         </div>
 
         {/* Daily Tip Spotlight */}
@@ -675,6 +737,62 @@ const FarmerDashboard = () => {
               >
                 Done
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* SMS Subscription Modal */}
+        {showSmsModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-[#1A1C1E]/60 backdrop-blur-xl" onClick={() => setShowSmsModal(false)} />
+            <div className="bg-white w-full max-w-md rounded-[40px] shadow-2xl relative z-10 p-10 animate-in fade-in zoom-in duration-200">
+              <div className="flex items-center gap-4 mb-6">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${stats.is_subscribed_to_sms ? 'bg-red-50 text-red-600' : 'bg-orange-50 text-orange-600'}`}>
+                  <Smartphone className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-black text-[#1A1C1E]">
+                    {stats.is_subscribed_to_sms ? 'Leave SMS Group?' : 'Join SMS Group?'}
+                  </h3>
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">Offline learning feed</p>
+                </div>
+              </div>
+
+              <div className="bg-[#F8FAFB] p-6 rounded-3xl border border-slate-100 mb-8 space-y-4 text-sm leading-relaxed text-slate-600">
+                {stats.is_subscribed_to_sms ? (
+                  <p>
+                    You are currently subscribed to receive SMS animal care lessons. If you opt out, you will no longer receive automated SMS curriculum lessons on your phone.
+                  </p>
+                ) : (
+                  <p>
+                    By joining, you deliberately opt in to receive targeted, single animal care lessons directly to your registered phone number (<strong>{farmer?.phone_number}</strong>) via SMS.
+                  </p>
+                )}
+                <div className="p-3.5 bg-yellow-50 text-yellow-800 text-xs font-bold rounded-xl border border-yellow-100 flex items-start gap-2.5">
+                  <Info className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span>Standard local network carrier rates apply when receiving messages. You can unsubscribe at any time.</span>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setShowSmsModal(false)}
+                  className="flex-1 py-4.5 bg-slate-50 hover:bg-slate-100 text-slate-500 rounded-2xl font-black transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleToggleSmsSubscription(!stats.is_subscribed_to_sms)}
+                  disabled={isSubscribingSms}
+                  className={`flex-1 py-4.5 text-white rounded-2xl font-black shadow-lg transition-all ${
+                    stats.is_subscribed_to_sms
+                      ? 'bg-red-500 hover:bg-red-600 shadow-red-500/10'
+                      : 'bg-[#2D5A27] hover:bg-[#1E3D1A] shadow-[#2D5A27]/10'
+                  }`}
+                >
+                  {isSubscribingSms ? 'Processing...' : stats.is_subscribed_to_sms ? 'Yes, Opt Out' : 'Yes, Subscribe'}
+                </button>
+              </div>
             </div>
           </div>
         )}

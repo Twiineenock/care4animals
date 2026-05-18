@@ -293,7 +293,7 @@ const Dashboard = () => {
                         SMS Broadcast Console
                       </h4>
                       <p className="text-on-surface-variant text-[14px] mt-1">
-                        Instantly send today's daily feed to offline farmers' phones using your paired Textbee Android Gateway.
+                        Broadcast the next curriculum lesson as a branded SMS directly to all opted-in, subscribed farmers.
                       </p>
                     </div>
                   </div>
@@ -301,7 +301,7 @@ const Dashboard = () => {
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 shrink-0">
                     <div className="bg-orange-50/70 border border-orange-100 rounded-xl p-3 max-w-[280px]">
                       <p className="text-[10px] text-orange-700 font-bold leading-relaxed">
-                        ⚠️ <strong>Testing Mode Active:</strong> Outbox is restricted to <strong>ONLY 1 farmer</strong> (the first record) to preserve your free Textbee credits.
+                        📢 <strong>Subscription Policy Active:</strong> SMS lessons will only reach farmers who deliberately subscribed via their portal. Perfect for offline users!
                       </p>
                     </div>
 
@@ -318,12 +318,12 @@ const Dashboard = () => {
                       {smsSending ? (
                         <>
                           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                          Broadcasting Daily Feed...
+                          Broadcasting Lessons...
                         </>
                       ) : (
                         <>
                           <span className="material-symbols-outlined text-[16px]">send</span>
-                          Send Daily Feed SMS
+                          Broadcast SMS Lessons
                         </>
                       )}
                     </button>

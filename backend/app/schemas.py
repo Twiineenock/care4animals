@@ -100,3 +100,4 @@ class FarmerDashboardStats(BaseModel):
     bio: Optional[str] = None
     last_activity: Optional[datetime] = None
     completed_lesson_ids: List[int] = []
+    is_subscribed_to_sms: bool = False

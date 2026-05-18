@@ -172,41 +172,45 @@ def send_lesson_to_phone(
 @router.post("/send-daily-feed")
 def send_daily_feed_sms(db: Session = Depends(get_db)):
     """
-    Sends the daily feed notification SMS to farmers.
-    Under testing conditions, this only sends to the FIRST farmer (or one farmer)
-    in the database to save Textbee credits.
+    Sends the next single educational lesson as an SMS to all opted-in farmers.
+    Branded as '[Care4Animals]' so that it stands out professionally.
+    Only queries farmers who explicitly subscribed to get SMS notifications.
     """
-    farmers = db.query(models.Farmer).all()
-    if not farmers:
-        raise HTTPException(status_code=404, detail="No farmers found in the database")
+    # Fetch all farmers who deliberately subscribed to SMS notifications
+    farmers_to_send = db.query(models.Farmer).filter(models.Farmer.is_subscribed_to_sms == True).all()
     
-    # Target the newly registered test farmer 'buay' specifically for this testing phase,
-    # and fallback to the first farmer if 'buay' is not found.
-    farmer_buay = db.query(models.Farmer).filter(models.Farmer.username == "buay").first()
-    if farmer_buay:
-        farmers_to_send = [farmer_buay]
-    else:
-        farmers_to_send = [farmers[0]]
+    if not farmers_to_send:
+        return {
+            "message": "No farmers are currently subscribed to SMS notifications. Opt-in via the farmer's portal first!",
+            "farmers_attempted": [],
+            "results": [],
+            "errors": []
+        }
     
     sent_count = 0
     errors = []
     results = []
     
     for farmer in farmers_to_send:
+        if not farmer.phone_number:
+            errors.append(f"Farmer {farmer.username} does not have a phone number.")
+            continue
+            
         language = farmer.preferred_language or "en"
         
-        # Get id rows (lessons) for this language
-        id_rows = (
-            db.query(models.Lesson.id, models.Lesson.theme, models.Lesson.code, models.Lesson.title)
+        # Get all lessons for this language, ordered by theme/code
+        lessons = (
+            db.query(models.Lesson)
             .filter(models.Lesson.language == language)
             .order_by(models.Lesson.theme, models.Lesson.code)
             .all()
         )
         
-        if not id_rows:
-            errors.append(f"No lessons found for language {language} for farmer {farmer.username}.")
+        if not lessons:
+            errors.append(f"No lessons found in the database for language: {language}")
             continue
             
+        # Get completed lessons
         completed_ids = set(
             p.lesson_id for p in
             db.query(models.LessonProgress.lesson_id)
@@ -214,29 +218,37 @@ def send_daily_feed_sms(db: Session = Depends(get_db)):
             .all()
         )
         
-        batch_size = 5
-        batches = [id_rows[i:i + batch_size] for i in range(0, len(id_rows), batch_size)]
-        
-        current_batch_rows = None
-        for batch in batches:
-            batch_ids = {r.id for r in batch}
-            if not batch_ids.issubset(completed_ids):
-                current_batch_rows = batch
+        # Find the FIRST uncompleted lesson
+        next_lesson = None
+        for lesson in lessons:
+            if lesson.id not in completed_ids:
+                next_lesson = lesson
                 break
                 
-        if not current_batch_rows:
-            message = "Care4Animals: Congratulations! You have completed all lessons in our curriculum. Keep up the great work!"
+        if not next_lesson:
+            # All lessons completed! Send a congratulations message
+            message = f"[Care4Animals] Congratulations {farmer.username}! You have successfully completed all animal care lessons in our curriculum. Keep up the amazing work!"
+            lesson_code = "completed"
         else:
-            lines = []
-            for r in current_batch_rows:
-                lines.append(f"- {r.title} (Reply {r.code})")
+            # Build branded lesson SMS text
+            lesson_title = next_lesson.title
+            lesson_body = next_lesson.sms_text or next_lesson.content
+            if len(lesson_body) > 300:
+                lesson_body = lesson_body[:297] + "..."
+                
+            message = f"[Care4Animals] Lesson: {lesson_title}\n{lesson_body}\nReply with {next_lesson.code} to review or reply NEXT for the next lesson!"
+            lesson_code = next_lesson.code
             
-            lessons_text = "\n".join(lines)
-            message = f"Care4Animals Daily Feed:\n{lessons_text}\nReply with a code to receive the full lesson!"
-
-        if not farmer.phone_number:
-            errors.append(f"Farmer {farmer.username} does not have a phone number.")
-            continue
+            # Automatically record this lesson progress so they advance next time!
+            try:
+                progress = models.LessonProgress(farmer_id=farmer.id, lesson_id=next_lesson.id)
+                db.add(progress)
+                # Invalidate cache
+                cache.delete(f"farmer_stats:{farmer.id}")
+                cache.delete(f"daily_feed:{farmer.id}:{language}")
+            except Exception as pe:
+                db.rollback()
+                print(f"Error marking lesson progress: {pe}")
             
         try:
             sms_status = send_and_log_sms(db, farmer.id, farmer.phone_number, message)
@@ -249,16 +261,22 @@ def send_daily_feed_sms(db: Session = Depends(get_db)):
             })
             
             # Log to Analytics
-            log_event(db, "daily_feed_sms_sent", {
+            log_event(db, "single_lesson_sms_sent", {
                 "farmer_id": farmer.id,
                 "phone": farmer.phone_number,
-                "batch_number": current_batch_rows[0].theme if current_batch_rows else "completed"
+                "lesson_code": lesson_code
             })
         except Exception as e:
             errors.append(f"Failed to send to {farmer.username}: {str(e)}")
             
+    # Commit any progress updates
+    try:
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        
     return {
-        "message": f"Successfully sent daily feed SMS to {sent_count} farmer(s). (Testing Mode)",
+        "message": f"Successfully broadcasted SMS lessons to {sent_count} subscribed farmer(s).",
         "farmers_attempted": [f.username for f in farmers_to_send],
         "results": results,
         "errors": errors

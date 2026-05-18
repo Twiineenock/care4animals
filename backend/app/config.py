@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -19,7 +20,7 @@ class Settings(BaseSettings):
     # Textbee Configuration (cost-free Android SMS gateway alternative)
     textbee_api_key: str = "090b7569-08ea-477b-9563-d1e2b581b397"
     textbee_device_id: str = "6a0a86f89b9db0a6fefac9fa"
-    textbee_sim_subscription_id: int = None
+    textbee_sim_subscription_id: Optional[int] = None
     
     # Supabase Configuration
     supabase_url: str = ""
