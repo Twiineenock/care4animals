@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { Activity, BookOpen, Globe, Filter, ListTree } from 'lucide-react';
+import { Activity, BookOpen, Globe, Filter, ListTree, Send, Smartphone, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 
 const AdminDashboard = () => {
   const [rawStats, setRawStats] = useState<any>(null);
@@ -9,9 +9,36 @@ const AdminDashboard = () => {
   const [selectedLang, setSelectedLang] = useState('ALL');
   const [isOnline, setIsOnline] = useState(false);
 
+  // SMS Broadcast States
+  const [smsSending, setSmsSending] = useState(false);
+  const [smsResult, setSmsResult] = useState<any>(null);
+  const [smsError, setSmsError] = useState<string | null>(null);
+
   const NAVY = "#2E5B96";
   const EMERALD = "#4CAF50";
   const AMBER = "#F59E0B";
+
+  const handleSendDailyFeedSMS = async () => {
+    setSmsSending(true);
+    setSmsResult(null);
+    setSmsError(null);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/sms/send-daily-feed`, {
+        method: 'POST'
+      });
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.detail || "Failed to send daily feed SMS");
+      }
+      const data = await response.json();
+      setSmsResult(data);
+    } catch (err: any) {
+      console.error(err);
+      setSmsError(err.message || "An unexpected error occurred while sending SMS.");
+    } finally {
+      setSmsSending(false);
+    }
+  };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -99,6 +126,81 @@ const AdminDashboard = () => {
             <div className="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-[#4CAF50]">
                 <p className="text-xs text-gray-500 font-bold uppercase">Active Themes</p>
                 <p className="text-4xl font-black text-gray-800">{Object.keys(rawStats?.theme_stats || {}).length}</p>
+            </div>
+
+            {/* Premium SMS Broadcast Console Card */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-orange-500 flex flex-col gap-4">
+                <div>
+                    <h4 className="text-sm font-bold text-gray-800 flex items-center gap-2">
+                        <Smartphone size={16} className="text-orange-500 animate-pulse" />
+                        SMS Broadcast Console
+                    </h4>
+                    <p className="text-xs text-gray-500 mt-1 font-medium leading-relaxed">
+                        Instantly send today's daily feed to offline farmers' phones using your paired Textbee Android Gateway.
+                    </p>
+                </div>
+
+                <button
+                    id="send-sms-button"
+                    onClick={handleSendDailyFeedSMS}
+                    disabled={smsSending}
+                    className={`w-full py-3 px-4 rounded-xl text-xs font-black uppercase tracking-wider text-white shadow-md transition-all flex items-center justify-center gap-2 ${
+                        smsSending
+                            ? 'bg-orange-300 cursor-not-allowed'
+                            : 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 hover:scale-[1.02] active:scale-[0.98]'
+                    }`}
+                >
+                    {smsSending ? (
+                        <>
+                            <Loader size={14} className="animate-spin" />
+                            Broadcasting Daily Feed...
+                        </>
+                    ) : (
+                        <>
+                            <Send size={14} />
+                            Send Daily Feed SMS
+                        </>
+                    )}
+                </button>
+
+                <div className="bg-orange-50/70 border border-orange-100 rounded-xl p-3">
+                    <p className="text-[10px] text-orange-700 font-bold leading-relaxed flex items-start gap-1">
+                        <span className="text-xs">⚠️</span>
+                        <span>
+                            <strong>Testing Mode Active:</strong> Outbox is restricted to <strong>ONLY 1 farmer</strong> (the first record) to preserve your free Textbee credits.
+                        </span>
+                    </p>
+                </div>
+
+                {/* SMS Broadcast Results */}
+                {smsResult && (
+                    <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex flex-col gap-1.5 animate-fadeIn">
+                        <p className="text-xs text-green-800 font-bold flex items-center gap-1.5">
+                            <CheckCircle size={14} className="text-green-600" />
+                            {smsResult.message}
+                        </p>
+                        {smsResult.results?.map((res: any, idx: number) => (
+                            <div key={idx} className="text-[10px] text-green-700 bg-white/60 p-2 rounded-lg border border-green-100/50 flex flex-col font-medium">
+                                <span className="font-bold">Farmer: {res.farmer}</span>
+                                <span>Phone: {res.phone}</span>
+                                <span className="flex items-center gap-1">
+                                    Status: <strong className="uppercase">{res.status}</strong>
+                                    {res.message_id && <span className="text-[9px] text-gray-400 font-normal">({res.message_id})</span>}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {smsError && (
+                    <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-start gap-2 text-xs text-red-800 font-medium animate-fadeIn">
+                        <AlertCircle size={16} className="text-red-600 shrink-0 mt-0.5" />
+                        <div>
+                            <p className="font-bold">Failed to broadcast</p>
+                            <p className="text-[10px] text-red-600 mt-0.5">{smsError}</p>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
       </div>

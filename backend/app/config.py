@@ -12,8 +12,13 @@ class Settings(BaseSettings):
     
     # SMS Gateway Configuration (Issue #10)
     # These will be automatically populated from your .env file
+    sms_provider: str = "africastalking" # "africastalking" or "textbee"
     at_username: str = "sandbox"  # Default to sandbox for testing
     at_api_key: str = "change-me"
+    
+    # Textbee Configuration (cost-free Android SMS gateway alternative)
+    textbee_api_key: str = ""
+    textbee_device_id: str = ""
     
     # Supabase Configuration
     supabase_url: str = ""

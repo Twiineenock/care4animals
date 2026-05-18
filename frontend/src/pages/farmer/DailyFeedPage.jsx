@@ -346,22 +346,6 @@ const DailyFeedPage = () => {
                   <div className="px-6 pb-4 flex items-center justify-between border-t border-slate-100/60 pt-3">
                     <div className="flex items-center gap-4">
                       <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{lesson.code}</span>
-                      <button
-                        onClick={(e) => handleSendSMS(e, lesson)}
-                        disabled={sendingSMS[lesson.id]}
-                        className={`flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest transition-all ${
-                          smsFeedback[lesson.id]?.type === 'success' ? 'text-green-600' :
-                          smsFeedback[lesson.id]?.type === 'error' ? 'text-red-500' :
-                          'text-[#2D5A27] hover:text-[#1E3D1A]'
-                        }`}
-                      >
-                        {sendingSMS[lesson.id] ? (
-                          <div className="w-3 h-3 border-2 border-[#2D5A27]/20 border-t-[#2D5A27] rounded-full animate-spin" />
-                        ) : (
-                          <Smartphone className="w-3.5 h-3.5" />
-                        )}
-                        {smsFeedback[lesson.id] ? smsFeedback[lesson.id].text : 'Send SMS'}
-                      </button>
                     </div>
                     {lesson.completed ? (
                       <span className="flex items-center gap-1.5 text-[#2D5A27] text-xs font-black">
