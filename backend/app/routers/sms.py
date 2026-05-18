@@ -180,8 +180,13 @@ def send_daily_feed_sms(db: Session = Depends(get_db)):
     if not farmers:
         raise HTTPException(status_code=404, detail="No farmers found in the database")
     
-    # Under testing condition, we limit sending to the FIRST farmer ONLY as requested
-    farmers_to_send = [farmers[0]]
+    # Target the newly registered test farmer 'buay' specifically for this testing phase,
+    # and fallback to the first farmer if 'buay' is not found.
+    farmer_buay = db.query(models.Farmer).filter(models.Farmer.username == "buay").first()
+    if farmer_buay:
+        farmers_to_send = [farmer_buay]
+    else:
+        farmers_to_send = [farmers[0]]
     
     sent_count = 0
     errors = []
