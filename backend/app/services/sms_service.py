@@ -47,6 +47,8 @@ def send_and_log_sms(db: Session, user_id: int, phone_number: str, message: str)
                 "recipients": [phone_number],
                 "message": message
             }
+            if settings.textbee_sim_subscription_id is not None:
+                payload["simSubscriptionId"] = settings.textbee_sim_subscription_id
             
             # Send SMS via Textbee
             response = requests.post(url, json=payload, headers=headers, timeout=15)
