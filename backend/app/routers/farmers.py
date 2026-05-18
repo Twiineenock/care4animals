@@ -41,6 +41,10 @@ class FarmerResponse(BaseModel):
     class Config:
         from_attributes = True
 
+@router.get("", response_model=List[FarmerResponse])
+def get_all_farmers(db: Session = Depends(get_db)):
+    return db.query(models.Farmer).order_by(models.Farmer.id.desc()).all()
+
 # Helper functions
 def get_password_hash(password):
     return pwd_context.hash(password)
