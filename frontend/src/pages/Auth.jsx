@@ -39,16 +39,11 @@ const Auth = () => {
           <Link to="/" className="inline-block hover:scale-105 transition-transform mb-4" title="Go to Home">
             <img src="/care4animals.png" alt="Care4Animals Logo" className="w-24 h-24 object-contain bg-white rounded-2xl p-0.5 shadow-md mx-auto" />
           </Link>
-          <div className="flex items-center gap-2.5 mb-6 bg-white border border-slate-100 rounded-full px-4 py-2 shadow-sm max-w-sm justify-center mx-auto">
+          <div className="flex items-center gap-3 mb-6 bg-slate-50 border border-slate-100 rounded-full px-4 py-2 shadow-sm max-w-sm justify-center mx-auto">
             <span className="text-[9px] font-black uppercase tracking-wider text-slate-400">Supported by:</span>
-            <img src="/wts_logo.png" alt="WTS" className="h-4 object-contain" />
+            <img src="/wts_logo.png" alt="WTS" className="h-5 object-contain" />
             <div className="h-3 w-px bg-slate-200" />
-            <img src="/bugema_logo.png" alt="Bugema" className="h-6 object-contain" />
-            <div className="h-3 w-px bg-slate-200" />
-            <div className="flex items-center gap-1 text-[#2D5A27] font-bold text-[9px]">
-              <span className="material-symbols-outlined text-[12px] text-[#2E7D32]">public</span>
-              <span className="font-extrabold uppercase">GAF</span>
-            </div>
+            <img src="/bugema_logo.png" alt="Bugema" className="h-7 object-contain" />
           </div>
           <h2 className="font-manrope text-3xl font-extrabold text-primary tracking-tight">
             Admin Portal

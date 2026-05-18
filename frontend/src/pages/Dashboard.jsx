@@ -110,15 +110,10 @@ const Dashboard = () => {
           <p className="text-on-primary-container text-[12px] font-semibold uppercase tracking-wider ml-1">Precision Farming</p>
           <div className="mt-4 p-3 bg-white/5 border border-white/10 rounded-2xl">
             <p className="text-on-primary-container text-[9px] font-bold uppercase tracking-wider mb-2">Supported by:</p>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <img src="/wts_logo.png" alt="WTS" className="h-4 object-contain filter brightness-0 invert" />
               <div className="h-3 w-px bg-white/20" />
               <img src="/bugema_logo.png" alt="Bugema" className="h-6 object-contain filter brightness-0 invert" />
-              <div className="h-3 w-px bg-white/20" />
-              <div className="flex items-center gap-1 text-on-primary-container font-bold text-[9px]">
-                <span className="material-symbols-outlined text-[12px] text-white">public</span>
-                <span>GAF</span>
-              </div>
             </div>
           </div>
         </div>

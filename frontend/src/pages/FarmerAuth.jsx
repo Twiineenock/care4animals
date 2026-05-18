@@ -144,16 +144,11 @@ const FarmerAuth = () => {
           >
             <img src="/care4animals.png" alt="Care4Animals Logo" className="w-24 h-24 object-contain bg-white rounded-2xl p-0.5 shadow-md mx-auto" />
           </div>
-          <div className="flex items-center gap-2.5 mb-6 bg-white border border-slate-100 rounded-full px-4 py-2 shadow-sm max-w-sm justify-center">
+          <div className="flex items-center gap-3 mb-6 bg-slate-50 border border-slate-100 rounded-full px-4 py-2 shadow-sm max-w-sm justify-center">
             <span className="text-[9px] font-black uppercase tracking-wider text-slate-400">Supported by:</span>
-            <img src="/wts_logo.png" alt="WTS" className="h-4 object-contain" />
+            <img src="/wts_logo.png" alt="WTS" className="h-5 object-contain" />
             <div className="h-3 w-px bg-slate-200" />
-            <img src="/bugema_logo.png" alt="Bugema" className="h-6 object-contain" />
-            <div className="h-3 w-px bg-slate-200" />
-            <div className="flex items-center gap-1 text-[#2D5A27] font-bold text-[9px]">
-              <span className="material-symbols-outlined text-[12px] text-[#2E7D32]">public</span>
-              <span className="font-extrabold uppercase">GAF</span>
-            </div>
+            <img src="/bugema_logo.png" alt="Bugema" className="h-7 object-contain" />
           </div>
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#E7F3E8] rounded-full text-[#2D5A27] text-sm font-bold mb-4">
             <span className="w-2 h-2 bg-[#4CAF50] rounded-full animate-pulse" />
