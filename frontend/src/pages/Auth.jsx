@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
 const Auth = () => {
@@ -36,9 +36,9 @@ const Auth = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="max-w-md w-full bg-surface-container-lowest rounded-[40px] shadow-2xl shadow-primary/10 border border-outline-variant p-10 space-y-8">
         <div className="text-center space-y-2">
-          <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-on-primary mx-auto mb-6 shadow-xl shadow-primary/20">
-            <span className="material-symbols-outlined text-3xl">shield_person</span>
-          </div>
+          <Link to="/" className="inline-block hover:scale-105 transition-transform mb-6" title="Go to Home">
+            <img src="/care4animals.png" alt="Care4Animals Logo" className="w-24 h-24 object-contain bg-white rounded-2xl p-0.5 shadow-md mx-auto" />
+          </Link>
           <h2 className="font-manrope text-3xl font-extrabold text-primary tracking-tight">
             Admin Portal
           </h2>

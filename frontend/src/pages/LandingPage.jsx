@@ -6,12 +6,10 @@ const LandingPage = () => {
     <div className="min-h-screen bg-background text-on-background font-inter selection:bg-secondary-fixed selection:text-on-secondary-fixed">
       {/* Navigation */}
       <nav className="flex justify-between items-center px-8 md:px-16 py-6 sticky top-0 bg-background/80 backdrop-blur-md z-50">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-on-primary">
-            <span className="material-symbols-outlined">pets</span>
-          </div>
-          <span className="font-manrope text-2xl font-bold text-primary tracking-tight">Care4Animals</span>
-        </div>
+        <Link to="/" className="flex items-center gap-3 group">
+          <img src="/care4animals.png" alt="Care4Animals Logo" className="w-12 h-12 object-contain bg-white rounded-xl p-0.5 shadow-md group-hover:scale-105 transition-transform" />
+          <span className="font-manrope text-2xl font-black text-primary tracking-tight group-hover:text-primary/85 transition-colors">Care4Animals</span>
+        </Link>
         <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-on-surface-variant">
           <a href="#about" className="hover:text-primary transition-colors">Our Mission</a>
           <a href="#impact" className="hover:text-primary transition-colors">Impact</a>
@@ -56,11 +54,8 @@ const LandingPage = () => {
           
           <div className="relative">
             <div className="absolute -inset-4 bg-primary/5 rounded-[40px] rotate-3 blur-2xl"></div>
-            <div className="relative aspect-square bg-surface-container-high rounded-[40px] overflow-hidden border-8 border-white shadow-2xl">
-              {/* Image Placeholder - In real use, this would be an image of cattle or farmers */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary to-tertiary flex items-center justify-center text-white/20">
-                <span className="material-symbols-outlined text-[120px]">agriculture</span>
-              </div>
+            <div className="relative aspect-square bg-white rounded-[40px] overflow-hidden border-8 border-white shadow-2xl flex items-center justify-center p-6">
+              <img src="/care4animals.png" alt="Care4Animals Banner" className="w-full h-full object-contain" />
             </div>
             {/* Floating Card */}
             <div className="absolute -bottom-10 -left-10 bg-white p-6 rounded-3xl shadow-2xl border border-outline-variant animate-bounce-slow">
@@ -124,12 +119,10 @@ const LandingPage = () => {
       <footer className="bg-primary text-on-primary py-20 px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
           <div className="col-span-2 space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-on-primary rounded-lg flex items-center justify-center text-primary">
-                <span className="material-symbols-outlined text-[20px]">pets</span>
-              </div>
-              <span className="font-manrope text-xl font-bold">Care4Animals</span>
-            </div>
+            <Link to="/" className="flex items-center gap-3 group">
+              <img src="/care4animals.png" alt="Care4Animals Logo" className="w-10 h-10 object-contain bg-white rounded-lg p-0.5 shadow-sm group-hover:scale-105 transition-transform" />
+              <span className="font-manrope text-xl font-black text-white tracking-tight">Care4Animals</span>
+            </Link>
             <p className="text-on-primary-container max-w-sm">
               Protecting livelihoods by protecting animals. We are committed to sustainable farming and veterinary excellence.
             </p>

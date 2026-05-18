@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { supabase } from '../supabaseClient';
 
@@ -103,8 +103,11 @@ const Dashboard = () => {
       {/* Sidebar Navigation */}
       <aside className="fixed left-0 top-0 h-full w-[280px] bg-primary flex flex-col py-8 shadow-md z-50">
         <div className="px-6 mb-10">
-          <h1 className="text-on-primary font-manrope text-[24px] font-bold tracking-tight">Care4Animals</h1>
-          <p className="text-on-primary-container text-[12px] font-semibold uppercase tracking-wider">Precision Farming</p>
+          <Link to="/" className="flex items-center gap-3 mb-2 group">
+            <img src="/care4animals.png" alt="Care4Animals Logo" className="w-12 h-12 object-contain bg-white rounded-xl p-0.5 shadow-lg shadow-black/20 group-hover:scale-105 transition-transform" />
+            <span className="font-manrope text-xl font-bold text-on-primary tracking-tight">Care4Animals</span>
+          </Link>
+          <p className="text-on-primary-container text-[12px] font-semibold uppercase tracking-wider ml-1">Precision Farming</p>
         </div>
         
         <nav className="flex-1 space-y-2 px-2">

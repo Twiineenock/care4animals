@@ -136,7 +136,14 @@ const FarmerAuth = () => {
     <div className="min-h-screen bg-[#FDFCFB] flex items-center justify-center p-4 font-outfit">
       <div className="max-w-[480px] w-full">
         {/* Logo/Header Area */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 flex flex-col items-center">
+          <div 
+            onClick={() => navigate('/')} 
+            className="cursor-pointer hover:scale-105 transition-transform mb-6"
+            title="Go to Home"
+          >
+            <img src="/care4animals.png" alt="Care4Animals Logo" className="w-24 h-24 object-contain bg-white rounded-2xl p-0.5 shadow-md mx-auto" />
+          </div>
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#E7F3E8] rounded-full text-[#2D5A27] text-sm font-bold mb-4">
             <span className="w-2 h-2 bg-[#4CAF50] rounded-full animate-pulse" />
             FOR OUR FARMERS

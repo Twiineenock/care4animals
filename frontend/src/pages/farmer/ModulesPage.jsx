@@ -217,12 +217,10 @@ const ModulesPage = () => {
       {/* Desktop Sidebar - Admin-style Design */}
       <aside className="fixed left-0 top-0 h-full w-72 bg-[#012d1d] flex flex-col py-8 shadow-xl hidden lg:flex z-50 overflow-y-auto custom-scrollbar">
         <div className="px-8 mb-12">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white shadow-lg shadow-black/20">
-              <Layout className="w-6 h-6" />
-            </div>
-            <span className="font-manrope font-black text-2xl text-white tracking-tight">Care4Animals</span>
-          </div>
+          <Link to="/" className="flex items-center gap-3 mb-2 group">
+            <img src="/care4animals.png" alt="Care4Animals Logo" className="w-12 h-12 object-contain bg-white rounded-xl p-0.5 shadow-lg shadow-black/20 group-hover:scale-105 transition-transform" />
+            <span className="font-manrope font-black text-2xl text-white tracking-tight group-hover:text-slate-200 transition-colors">Care4Animals</span>
+          </Link>
           <p className="text-[#A7C0A4] text-[10px] font-black uppercase tracking-[0.2em] ml-1">Farmer Dashboard</p>
         </div>
 
@@ -280,12 +278,10 @@ const ModulesPage = () => {
 
       {/* Mobile Top Bar */}
       <header className="lg:hidden sticky top-0 z-[60] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="w-9 h-9 bg-[#2D5A27] rounded-xl flex items-center justify-center text-white shadow-lg shadow-[#2D5A27]/20 shrink-0">
-            <Layout className="w-5 h-5" />
-          </div>
+        <Link to="/" className="flex items-center gap-3 min-w-0 group">
+          <img src="/care4animals.png" alt="Care4Animals Logo" className="w-9 h-9 object-contain bg-white rounded-xl p-0.5 shadow-lg shadow-[#2D5A27]/20 shrink-0 group-hover:scale-105 transition-transform" />
           <span className="font-black text-lg text-[#1A1C1E] tracking-tight truncate">Care4Animals</span>
-        </div>
+        </Link>
         <div className="flex items-center gap-2 shrink-0">
           <button 
             onClick={handleLogout}
